@@ -1,0 +1,17 @@
+
+
+Liner Model Statistics for: Stress_Tolerant
+
+Coefficients
+Estimate    Std. Error    t value    Pr(>|t|)
+-0.000338912 0.000254014 -1.334225 0.1837612
+p-value
+0.1837612
+
+Spearman's Correlation
+
+Correlation Estimate:
+-0.05787036
+p-value
+0.4302009
+

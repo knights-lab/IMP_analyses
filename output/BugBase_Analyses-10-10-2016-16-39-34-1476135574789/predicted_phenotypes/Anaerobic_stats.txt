@@ -1,0 +1,17 @@
+
+
+Liner Model Statistics for: Anaerobic
+
+Coefficients
+Estimate    Std. Error    t value    Pr(>|t|)
+0.0006050395 0.0004205995 1.438517 0.1519679
+p-value
+0.1519679
+
+Spearman's Correlation
+
+Correlation Estimate:
+0.0829726
+p-value
+0.2576224
+

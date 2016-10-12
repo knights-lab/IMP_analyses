@@ -1,0 +1,17 @@
+
+
+Liner Model Statistics for: Pathogenic
+
+Coefficients
+Estimate    Std. Error    t value    Pr(>|t|)
+-0.0008480908 0.0006928841 -1.224001 0.2225
+p-value
+0.2225
+
+Spearman's Correlation
+
+Correlation Estimate:
+0.03191004
+p-value
+0.6637649
+

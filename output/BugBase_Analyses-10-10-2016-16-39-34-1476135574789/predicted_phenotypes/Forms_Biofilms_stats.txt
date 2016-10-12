@@ -1,0 +1,17 @@
+
+
+Liner Model Statistics for: Forms_Biofilms
+
+Coefficients
+Estimate    Std. Error    t value    Pr(>|t|)
+-0.0009879849 0.0007005743 -1.41025 0.160136
+p-value
+0.160136
+
+Spearman's Correlation
+
+Correlation Estimate:
+-0.03739277
+p-value
+0.610428
+
