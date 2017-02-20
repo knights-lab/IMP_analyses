@@ -4,9 +4,9 @@
 # mapfile: mapping metadata file
 # otufile: OTU table in classic format
 # normalize: normalizes, transforms, then collapses OTU table; set this to false when working with merged L1,..,L6 taxa files 
-# minOTUInSamples: drop OTUs in less than this ratio of samples
+# minOTUInSamples: drop OTUs in less than this ratio of samples (usually .001)
 # returns otu, map, and kegg vector containing kegg descriptions (named by whatever KEGG level was passed in)
-load.data<-function(mapfile, otufile, minOTUInSamples=.001, minPrevalence = .10, normalize=TRUE)
+load.data<-function(mapfile, otufile, minOTUInSamples=NA, minPrevalence = .10, normalize=TRUE)
 {
 	source("/Users/pvangay/Dropbox/UMN/Rscripts/collapse-features.r")
 	require(biom)
@@ -38,7 +38,9 @@ load.data<-function(mapfile, otufile, minOTUInSamples=.001, minPrevalence = .10,
 	if(normalize==TRUE){
 		 otu <- sweep(otu, 1, rowSums(otu), '/')
 
-# 		otu <- otu[, colMeans(otu) > minOTUInSamples, drop=FALSE]
+        if(!is.na(minOTUInSamples)){
+     		otu <- otu[, colMeans(otu) > minOTUInSamples, drop=FALSE]
+     	}
 
  		prevalences <- apply(otu, 2, function(bug.col) mean(bug.col > 0))
  		otu <- otu[, prevalences >= minPrevalence]

@@ -1,6 +1,6 @@
 # plots bar graphs showing within and between differences, and permutation based tests for pvalues
 
-plot.group.distances() <- function(map, dm, between.groups.fn)
+plot.group.distances <- function(map, dm, between.groups.fn)
 {
     # peek at the data
     # table(map[,c("Ethnicity","BMI.Class","Residence.Class")])
@@ -32,10 +32,12 @@ plot.group.distances() <- function(map, dm, between.groups.fn)
     lookup <- c("green","orange","red")
     names(lookup) <- as.character(levels(map$BMI.Class))
     cols <- lookup[groups.bmi]
+    pdf(file="within.group.distances.pdf",useDingbats=F)
     par(cex.axis=.4)
     beeswarm(groups.within.dm$Distance ~ groups.within.dm$Group, col=cols,xlab="Groups",ylab="Unweighted Unifrac Distance")
     boxplot(groups.within.dm$Distance ~ groups.within.dm$Group,names=NA,ylab="",add=T)
-
+    dev.off()
+    
     ######## between-group variation ########
 
     # read in table with specific between-group comparisons
@@ -80,10 +82,12 @@ plot.group.distances() <- function(map, dm, between.groups.fn)
     rownames(groups.between.dm) <- make.names(1:nrow(groups.between.dm))
     groups.between.dm$Distance <- as.numeric(groups.between.dm$Distance)
     # plot it
+    pdf(file="between.group.distances.pdf",useDingbats=F)
     par(cex.axis=.5)
     beeswarm(groups.between.dm$Distance ~ groups.between.dm$GroupLabel, col="gray",xlab=NA,ylab="Unweighted Unifrac Distance")
     boxplot(groups.between.dm$Distance ~ groups.between.dm$GroupLabel,names=NA,ylab="",add=T)
-
+    dev.off()
+    
     # permutation test to calc differences between groups
     grouplabels <- unique(groups.between.dm$GroupLabel)
     

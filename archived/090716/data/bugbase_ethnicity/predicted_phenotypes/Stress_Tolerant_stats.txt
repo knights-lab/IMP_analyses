@@ -1,0 +1,33 @@
+
+
+Stress_Tolerant
+Number of samples in each treatment group:
+
+  Hmong   Karen Karenni 
+     85      97       6 
+
+Proportion with phenotype (mean):
+     Hmong      Karen    Karenni 
+0.02321908 0.03613409 0.03802401 
+
+Proportion with phenotype (median):
+     Hmong      Karen    Karenni 
+0.01968949 0.03256216 0.03594513 
+
+Standard deviation:
+     Hmong      Karen    Karenni 
+0.01172592 0.01949828 0.02337434 
+
+Pairwise Mann-Whitney-Wilcoxon Tests were performed.
+Pairwise p-values are:
+  Hmong_vs_Karen Hmong_vs_Karenni Karen_vs_Karenni 
+      2.1137e-07       9.1567e-02       8.9359e-01 
+
+FDR-corrected pairwise p-values are:
+  Hmong_vs_Karen Hmong_vs_Karenni Karen_vs_Karenni 
+    6.341205e-07     1.373501e-01     8.935900e-01 
+
+Kruskal-Wallis Test was performed.
+
+Group p-value is:
+1.079738e-06 

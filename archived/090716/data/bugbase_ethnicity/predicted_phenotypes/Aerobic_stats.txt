@@ -1,0 +1,33 @@
+
+
+Aerobic
+Number of samples in each treatment group:
+
+  Hmong   Karen Karenni 
+     85      97       6 
+
+Proportion with phenotype (mean):
+     Hmong      Karen    Karenni 
+0.01924426 0.01928014 0.02109040 
+
+Proportion with phenotype (median):
+     Hmong      Karen    Karenni 
+0.01728877 0.01876753 0.01983832 
+
+Standard deviation:
+      Hmong       Karen     Karenni 
+0.010613250 0.008328809 0.012953592 
+
+Pairwise Mann-Whitney-Wilcoxon Tests were performed.
+Pairwise p-values are:
+  Hmong_vs_Karen Hmong_vs_Karenni Karen_vs_Karenni 
+         0.61965          0.54870          0.68821 
+
+FDR-corrected pairwise p-values are:
+  Hmong_vs_Karen Hmong_vs_Karenni Karen_vs_Karenni 
+       0.6882073        0.6882073        0.6882073 
+
+Kruskal-Wallis Test was performed.
+
+Group p-value is:
+0.7744397 
