@@ -153,6 +153,7 @@ plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", co
         map_temp <- map[query_samples_list[[i]],]
         map_temp <- map_temp[map_temp$BMI.Class %in% c("Normal","Obese"),]
         new_query_samples <- rownames(map_temp)
+        # calculate the relative distances to reference groups as response variable
         rel.dists <- lapply(dms, function(xx) get.relative.distance(new_query_samples, ref_samples_list[[i]], xx))    
         multiplot.boxplot.by.group.x.bmi(map_temp, rel.dists, rep("Distance to Thai Reference",3), mains, outputfn = paste0("boxplot-BMI-x-RelativeDistance-",fn_ext[i],".pdf"))
     }

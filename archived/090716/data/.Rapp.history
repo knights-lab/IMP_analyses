@@ -1,193 +1,0 @@
-Sys.getenv("PATH")
-source("/Users/pvangay/Copy/UMN/Knights Lab/Probiotics/to send/diff.otus.R")
-library(pwr)
-?pwr.anova.test
-pwr.anova.test(k=2, f=.1, power=.8)
-pwr.anova.test(k=2, f=.25, power=.8)
-pwr.anova.test(k=2, f=.4, power=.8)
-paste("a", letters[1:3])
-agrep
-agrep(pattern="[0-9]+", x=c("tesres2222", "sfsd"))
-?agrep
-agrep(pattern="[:digit:]+", x=c("tesres2222", "sfsd"))
-agrep(pattern="[:digit:]", x=c("tesres2222", "sfsd"))
-agrep(pattern="^tes", x=c("tesres2222", "sfsd"))
-agrep(pattern="([0-9])", x=c("tesres2222", "sfsd"))
-?outlier
-x <- cbind(1:5, 5:10)
-x <- cbind(1:5, 5:9)
-x
-c(x)
-c(as.data.frame(x))
-c(as.matrix(as.data.frame(x)))
-counts = 17689
-lengths = 225
-eps = 0.05
-a <- (1-eps)^counts    b <- (1 / (3^(counts-1)))    c <- eps^counts    x <- a / (a + b * c)    y <- 1 - x^lengths
-y[1]
-a[1]
-b[1]
-c[1]
-x[1]
-b[1]==0
-x <- (1-eps)^counts / ((1-eps)^counts + (1 / (3^(counts-1)))*eps^counts)
-x[1]
-counts = 11420
-a <- (1-eps)^counts    b <- (1 / (3^(counts-1)))    c <- eps^counts    x <- a / (a + b * c)    y <- 1 - x^lengths
-a[1]
-(1-.05)^15000
-(1-.05)^14000
-min(double)
-double.xmin
-.Machine
-.Machine$double.xmin
-a <- .Machine$double.xmin
-a / (a + a*a)
-print(a)
-1-a^225
-a <- NA
-is.na(a)
-is.null(a)
-is.null(NULL)
-356563*.05
-7/17828.15
-1-7/17828.15
-?scan
-x <- c(3,4,56,3,5,3,3)
-unique(x)
-library(pwr)
-pwr.anova.test(k=2, f=abs(-0.0157416/(2*0.0213438)), power=.8)
-pwr.anova.test(k=2, f=abs(-0.0157416/(2*0.095)), power=.8)
-pwr.anova.test(k=2, f=abs(-0.1557416/(2*0.01)), power=.8)
-pwr.anova.test(k=2, f=abs(0.155/(2*0.0107)), power=.8)
-pwr.anova.test(k=2, f=abs(0.03345/(2*0.00928)), power=.8)
-pwr.anova.test(k=2, f=abs(0.013/(2*.03)), power=.8)
-pwr.anova.test(k=2, f=abs(0.006/(2*.011)), power=.8)
-pwr.anova.test(k=2, f=abs(0.005/(2*.009)), power=.8)
-pwr.anova.test(k=2, f=abs(0.001/(2*.0002)), power=.8)
-x <- (0.7628,0.0147,0.9342,0.1107,0.6797,3.77E-08)
-x <- c(0.7628,0.0147,0.9342,0.1107,0.6797,3.77E-08)
-apply(p.adjust, x, n=118)
-apply(x, 1, p.adjust, n=118)
-lapply(x, p.adjust, n=118)
-unlist(lapply(x, p.adjust, n=118))
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- c(0.99027,0.01113,0.4947,0.00593,0.68112,2.00E-16)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- c(0.762751,0.014663,0.934182,0.110733,0.6797,0.000474)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.99027,0.01113,0.4947,0.00593,0.68112,0.11016)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.0151,0.2543,0.5273,0.1373,0.6461)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.24,0.982,0.711,0.135,0.252)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(00.23701,0.00406,0.5826,0.17664,0.35576)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.7822,0.00425,0.49998,0.00642,0.83877)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.62879,0.24398,0.85792,0.56728,0.17594,0.00197,0.34862)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.595889,0.057916,0.783039,0.699298,0.195882,0.000785,0.905865)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.422,0.103,0.596,0.188,0.281,0.445,0.434)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.859907,0.019876,0.927471,0.210074,0.912991,0.033952,0.000183)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.39105,0.00896,0.56906,0.85463,0.82854,0.00265,0.6415)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.842973,0.191493,0.899186,0.697909,0.624673,0.000883,0.100037)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.6204,0.0262,0.8081,0.2157,0.5274)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.5176,0.0166,0.8463,0.1508,0.3899)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.685,0.0109,0.6065,0.1982,0.3044)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.83045,0.000583,0.629129,0.593527,0.735863)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.93858,0.00515,0.83757,0.49479,0.92551)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- rep(0.0147, 119)
-p.adjust(x, method="fdr")
-x
-x <- cbind(c(1,1,1), c(2,2,2))
-x
-colMeans(x)
-x <- cbind(c(1,1,1), c(2,2,2))
-x
-rownames(x) <- c("a","b","c")
-rownames(x)[which(x[,1] %in% c(1,2))]
-rownames(x)[x[,1] %in% c(1,2)]
-x[,1] %in% c(1,2)
-?rank
-library(beeswarm)
-beeswarm(x=-log10(rep(1:10)), main="Alpha Diversity",#
-			ylab="Effect Size", pwpch=rep(23,length(unlist(cols))), pwcol=unlist(cols), pwbg=unlist(cols))#
-legend("topright", legend = c("Yes", "No"), pch = pch , col = 1:2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity",#
-			ylab="Effect Size", pwpch=rep(23,length(unlist(cols))), pwcol=unlist(cols), pwbg=unlist(cols))#
-legend("topright", legend = c("Yes", "No"), pch = pch , col = 1:2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity")
-line(1)
-abline(h=2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity")
-abline(h=2, lty=2)
-?wilcox.test
-?lm
-test <- cbind(1:2,1:2)
-rownames(test) <- "#S"
-rownames(test) <- c("#S", "1")
-test
-setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data")
-nutrients <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)
-nutrients <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)
-nutrients <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)
-nutrients <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)
-head(nutrients)
-datadir_99rare <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/99/rare10002"datadir_97 <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/97"datadir <- datadir_97
-otufn <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/97/taxon_summaries/taxa_s2_L6.txt"
-ret <- load.data(mapfile="/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt", otufile=otufn)map <- ret$maptaxa <- ret$otu
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/load.data.r")
-ret <- load.data(mapfile="/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt", otufile=otufn)map <- ret$maptaxa <- ret$otu
-map$Age <- as.numeric(map$Age)map$Years.in.US <- as.numeric(map$Years.in.US)# originally NAmap$Years.in.US[is.na(map$Years.in.US)] <- 0# refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # let's interpret Karenni as Karen - they are essentially the same (n=2)map$Ethnicity[map$Ethnicity=="Karenni"] <- "Karen"# let's remap the residence years for plotting laterResidence.Class <- character(nrow(map))Residence.Class[map$Years.in.US != 0 & map$Years.in.US < 5] <- "Short"Residence.Class[map$Years.in.US >=5 & map$Years.in.US < 10] <- "Medium"Residence.Class[map$Years.in.US >=10 & map$Years.in.US < 15] <- "Long"Residence.Class[map$Years.in.US >=15 ] <- "VeryLong"Residence.Class[map$Years.in.US == 0 ] <- "USborn"    Residence.Class <- factor(Residence.Class, levels=c("Short", "Medium", "Long", "VeryLong", "USborn")) map <- data.frame(map, Residence.Class)
-head(map)
-?intersect
-nutrients0 <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)    sharedids <- intersect(rownames(nutrients0), map$Old.Participant.ID.x)
-sharedids
-nutrients0[sharedids,]
-sharedids
-nutrients <- nutrients0[sharedids,]
-dim(nutrients)
-colnames(nutrients)
-plot(nutrients$Dietary.Fiber.in.Grams ~ map[sharedids,"Years.in.US"])
-plot(nutrients$Protein.in.Grams ~ map[sharedids,"Years.in.US"])
-plot(nutrients$Total.Calories ~ map[sharedids,"Years.in.US"])
-plot(nutrients$Total.Sugars.in.Grams ~ map[sharedids,"Years.in.US"])
-plot(nutrients$Total.Fat.Percent.Calories ~ map[sharedids,"Years.in.US"])
-plot(nutrients$Carbohydrate.in.Grams ~ map[sharedids,"Years.in.US"])
-ids <- rownames(map[map$Ethnicity=="Karen",])    map <- map[ids,]    nutrients <- nutrients[ids,]#
-    pdf(file="Nutrients_Karen.pdf")    par(mfrow=c(3,3))    plot(nutrients$Dietary.Fiber.in.Grams ~ map$Years.in.US)    plot(nutrients$Protein.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Calories ~ map$Years.in.US)    plot(nutrients$Total.Sugars.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Fat.Percent.Calories ~ map$Years.in.US)    plot(nutrients$Carbohydrate.in.Grams ~ map$Years.in.US)    dev.off()
-ret <- load.data(mapfile="/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt", otufile=otufn)map <- ret$maptaxa <- ret$otu# write out relative abundance OTU file out # recode metadatamap$Age <- as.numeric(map$Age)map$Years.in.US <- as.numeric(map$Years.in.US)# originally NAmap$Years.in.US[is.na(map$Years.in.US)] <- 0# refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # let's interpret Karenni as Karen - they are essentially the same (n=2)map$Ethnicity[map$Ethnicity=="Karenni"] <- "Karen"# let's remap the residence years for plotting laterResidence.Class <- character(nrow(map))Residence.Class[map$Years.in.US != 0 & map$Years.in.US < 5] <- "Short"Residence.Class[map$Years.in.US >=5 & map$Years.in.US < 10] <- "Medium"Residence.Class[map$Years.in.US >=10 & map$Years.in.US < 15] <- "Long"Residence.Class[map$Years.in.US >=15 ] <- "VeryLong"Residence.Class[map$Years.in.US == 0 ] <- "USborn"    Residence.Class <- factor(Residence.Class, levels=c("Short", "Medium", "Long", "VeryLong", "USborn")) map <- data.frame(map, Residence.Class)
-map0 <- map
-nutrients0 <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)    sharedids <- intersect(rownames(nutrients0), map0$Old.Participant.ID.x)    map <- map0[sharedids,]    nutrients <- nutrients0[sharedids,]#
-    # subset map     ids <- rownames(map[map$Ethnicity=="Hmong",])    map <- map[ids,]    nutrients <- nutrients[ids,]#
-    pdf(file="Nutrients_Hmong.pdf")    par(mfrow=c(3,3))    plot(nutrients$Dietary.Fiber.in.Grams ~ map$Years.in.US)    plot(nutrients$Protein.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Calories ~ map$Years.in.US)    plot(nutrients$Total.Sugars.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Fat.Percent.Calories ~ map$Years.in.US)    plot(nutrients$Carbohydrate.in.Grams ~ map$Years.in.US)    dev.off()
-head(map0)
-ret <- load.data(mapfile="/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt", otufile=otufn)map <- ret$maptaxa <- ret$otu# write out relative abundance OTU file out # recode metadatamap$Age <- as.numeric(map$Age)map$Years.in.US <- as.numeric(map$Years.in.US)# originally NAmap$Years.in.US[is.na(map$Years.in.US)] <- 0# refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # let's interpret Karenni as Karen - they are essentially the same (n=2)map$Ethnicity[map$Ethnicity=="Karenni"] <- "Karen"# let's remap the residence years for plotting laterResidence.Class <- character(nrow(map))Residence.Class[map$Years.in.US != 0 & map$Years.in.US < 5] <- "Short"Residence.Class[map$Years.in.US >=5 & map$Years.in.US < 10] <- "Medium"Residence.Class[map$Years.in.US >=10 & map$Years.in.US < 15] <- "Long"Residence.Class[map$Years.in.US >=15 ] <- "VeryLong"Residence.Class[map$Years.in.US == 0 ] <- "USborn"    Residence.Class <- factor(Residence.Class, levels=c("Short", "Medium", "Long", "VeryLong", "USborn")) map <- data.frame(map, Residence.Class)
-head(map)
-map0 <- map
-nutrients0 <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)    samples <- intersect(rownames(nutrients0), map0$Old.Participant.ID.x)    map <- map0[map$Old.Participant.ID.x %in% samples,]    nutrients <- nutrients0[samples,]#
-    # subset map     ids <- rownames(map[map$Ethnicity=="Hmong",])    map <- map[ids,]    nutrients <- nutrients[ids,]
-pdf(file="Nutrients_Hmong.pdf")    par(mfrow=c(3,3))    plot(nutrients$Dietary.Fiber.in.Grams ~ map$Years.in.US)    plot(nutrients$Protein.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Calories ~ map$Years.in.US)    plot(nutrients$Total.Sugars.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Fat.Percent.Calories ~ map$Years.in.US)    plot(nutrients$Carbohydrate.in.Grams ~ map$Years.in.US)    dev.off()
-nutrients0 <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)    samples <- intersect(rownames(nutrients0), map0$Old.Participant.ID.x)    map <- map0[map$Old.Participant.ID.x %in% samples,]    nutrients <- nutrients0[samples,]#
-    # subset map     ids <- rownames(map[map$Ethnicity=="Karen",])    map <- map[ids,]    nutrients <- nutrients[ids,]#
-    pdf(file="Nutrients_Karen.pdf")    par(mfrow=c(3,3))    plot(nutrients$Dietary.Fiber.in.Grams ~ map$Years.in.US)    plot(nutrients$Protein.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Calories ~ map$Years.in.US)    plot(nutrients$Total.Sugars.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Fat.Percent.Calories ~ map$Years.in.US)    plot(nutrients$Carbohydrate.in.Grams ~ map$Years.in.US)    dev.off()
-levels(map$BMI.Class)
-as.character(map$BMI.Class)
-ids <- rownames(map[map$Ethnicity=="Karen",])    map <- map[ids,]    nutrients <- nutrients[ids,]#
-    lookup <- c("green","orange","red")    names(lookup) <- levels(map$BMI.Class)     cols <- lookup[as.character(map$BMI.Class)]     names(cols) <- rownames(map)    pdf(file="Nutrients_Karen.pdf")    par(mfrow=c(3,3))    plot(nutrients$Dietary.Fiber.in.Grams ~ map$Years.in.US, col=cols)    plot(nutrients$Protein.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Calories ~ map$Years.in.US)    plot(nutrients$Total.Sugars.in.Grams ~ map$Years.in.US)    plot(nutrients$Total.Fat.Percent.Calories ~ map$Years.in.US)    plot(nutrients$Carbohydrate.in.Grams ~ map$Years.in.US)    dev.off()
-lookup <- c("green","orange","red")    names(lookup) <- levels(map$BMI.Class)     cols <- lookup[as.character(map$BMI.Class)]     names(cols) <- rownames(map)    pdf(file="Nutrients_Karen.pdf")    par(mfrow=c(3,3))    plot(nutrients$Dietary.Fiber.in.Grams ~ map$Years.in.US, col=cols)    plot(nutrients$Protein.in.Grams ~ map$Years.in.US, col=cols)    plot(nutrients$Total.Calories ~ map$Years.in.US, col=cols)    plot(nutrients$Total.Sugars.in.Grams ~ map$Years.in.US, col=cols)    plot(nutrients$Total.Fat.Percent.Calories ~ map$Years.in.US, col=cols)    plot(nutrients$Carbohydrate.in.Grams ~ map$Years.in.US, col=cols)    dev.off()
-nutrients0 <- read.table("Nutrients_101716.txt", sep="\t", header=T, row=1)    samples <- intersect(rownames(nutrients0), map0$Old.Participant.ID.x)    map <- map0[map$Old.Participant.ID.x %in% samples,]    nutrients <- nutrients0[samples,]#
-    # subset map     ids <- rownames(map[map$Ethnicity=="Hmong",])    map <- map[ids,]    nutrients <- nutrients[ids,]#
-    lookup <- c("green","orange","red")    names(lookup) <- levels(map$BMI.Class)     cols <- lookup[as.character(map$BMI.Class)]     names(cols) <- rownames(map)    pdf(file="Nutrients_Hmong.pdf")    par(mfrow=c(3,3))    plot(nutrients$Dietary.Fiber.in.Grams ~ map$Years.in.US, col=cols)    plot(nutrients$Protein.in.Grams ~ map$Years.in.US, col=cols)    plot(nutrients$Total.Calories ~ map$Years.in.US, col=cols)    plot(nutrients$Total.Sugars.in.Grams ~ map$Years.in.US, col=cols)    plot(nutrients$Total.Fat.Percent.Calories ~ map$Years.in.US, col=cols)    plot(nutrients$Carbohydrate.in.Grams ~ map$Years.in.US, col=cols)    dev.off()
