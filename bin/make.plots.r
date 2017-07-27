@@ -160,17 +160,9 @@ plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", co
 
 ### MB americanization (BP Ratio) - Lean vs. Obese only
 
-
-
-
-
-
-
-
-
-
-
-
+    bp <- get.taxa.ratio(taxa, bug1=bacteroides, bug2=prevotella) # calculate bp for everyone
+    p <- plot.boxplot.by.group.x.bmi(map[cs,], bp[cs], "B-P Ratio", main="") # plot cross sectional only
+    save_plot("boxplot-BMI-x-BPRatio.pdf", p, base_aspect_ratio = 1.3)
 
 
 

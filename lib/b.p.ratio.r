@@ -66,18 +66,24 @@ plot.b.p.ratio <- function(map0, otu, bug1, bug2, outputfn, longitudinal=F)
     invisible(bp)
 }
 
-
-plot.b.p.ratio.all <- function(map0, otu, bug1, bug2, outputfn, g1, g2, g3)
+get.taxa.ratio <- function(otu, bug1, bug2)
 {
-    map0 <- map0[c(g1,g2,g3),]
-    otu <- otu[rownames(map0),]
-
     # add .00001 to any that are 0 abundance
     otu[otu[,bug1] == 0, bug1] <- .00001
     otu[otu[,bug2] == 0, bug2] <- .00001
     
     bp <- otu[,bug1]/otu[,bug2]
     names(bp) <- rownames(otu)
+
+    return(bp)
+}
+
+plot.b.p.ratio.all <- function(map0, otu, bug1, bug2, outputfn, g1, g2, g3)
+{
+    map0 <- map0[c(g1,g2,g3),]
+    otu <- otu[rownames(map0),]
+    
+    bp <- get.taxa.ratio(otu, bug1, bug2)
 
     pch <- get.pch(map0)
 
