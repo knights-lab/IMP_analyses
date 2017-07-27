@@ -1,2 +1,2 @@
-# IMP_analyses
-immigrant microbiome project related analyses
+# IMP analyses
+Code for analyses of immigrant microbiome project
