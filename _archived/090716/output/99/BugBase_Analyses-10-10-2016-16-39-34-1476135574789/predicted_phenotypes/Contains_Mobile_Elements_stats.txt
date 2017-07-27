@@ -1,0 +1,17 @@
+
+
+Liner Model Statistics for: Contains_Mobile_Elements
+
+Coefficients
+Estimate    Std. Error    t value    Pr(>|t|)
+-0.002073562 0.0006690645 -3.099196 0.002241811
+p-value
+0.002241811
+
+Spearman's Correlation
+
+Correlation Estimate:
+-0.1490725
+p-value
+0.04117438
+
