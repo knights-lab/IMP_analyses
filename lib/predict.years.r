@@ -1,4 +1,5 @@
-source("lib/rf.cross.validation.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/rf.cross.validation.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/balanced.folds.r")
 
 predict.years <- function(map, otu)
 {

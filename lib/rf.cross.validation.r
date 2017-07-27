@@ -12,7 +12,6 @@
 # importances: importances of features as predictors
 # regression: does both regression or classification (RMSE and r_squared will be meaningless here)
 require(randomForest)
-source("lib/balanced.folds.r")
 "rf.cross.validation" <- function(x, y, nfolds=10, verbose=FALSE, regression=FALSE, ...){
     if(regression==FALSE)
    	{
