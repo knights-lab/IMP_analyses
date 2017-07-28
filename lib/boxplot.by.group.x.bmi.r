@@ -10,15 +10,20 @@ require(RColorBrewer)
 test.samples <- function(y, x)
 {
     comparisons <- combn(levels(x), 2)
+    
     pvals <- NULL
     for(i in 1:ncol(comparisons))
     {
-        this.y <- y[x %in% comparisons[,1]]
-        this.x <- x[x %in% comparisons[,1]]
+
+        this.y <- y[x %in% comparisons[,i]]
+        this.x <- x[x %in% comparisons[,i]]
         m <- wilcox.test(this.y ~ this.x)
         pvals <- c(pvals, m$p.value)
+        
+        print(paste0(comparisons[1,i], " VS ", comparisons[2,i], ": ", m$p.value))
     }
     return(p.adjust(pvals, method="fdr"))
+
 }
 
 
@@ -67,6 +72,8 @@ plot.boxplot.by.group.x.bmi <- function(map00, y, ylab, main) # vector y = varia
     d$Group <- factor(d$Group) # remove any levels that aren't present
     d$BMI.Class <- factor(d$BMI.Class) # remove any levels that aren't present
     
+    print(d$BMI.Class)
+    
     # within sample groups, test for differences in BMI class
     groups <- levels(d$Group)
 
@@ -76,10 +83,11 @@ plot.boxplot.by.group.x.bmi <- function(map00, y, ylab, main) # vector y = varia
         pvals <- c(pvals, test.samples(d[d$Group==groups[i], "y"], d[d$Group==groups[i], "BMI.Class"]))
     }    
     pval.labels <- sapply(pvals, get.signif.symbol)
+    print(pval.labels)
     
     ymax <- max(d$y)*1.05 # add ymax to make space for pvalues
     p <- ggplot(d, aes(Group, y)) + geom_boxplot(aes(fill = BMI.Class)) +  geom_point(aes(y=y, fill = BMI.Class), position=position_dodge(width=.75), color=alpha("black",.3), shape=1) +
-        scale_fill_manual(name = "Sample Groups", values = c("#ffffcc","#a1dab4","#41b6c4")) +      #, labels = c("0" = "T", "1" = "Bar"))
+        scale_fill_manual(name = "Sample Groups", values = c("#ffffcc","#a1dab4","#41b6c4")) +      
         ggtitle(main) + coord_cartesian(ylim = c(min(d$y), ymax)) +
         ylab(ylab) + xlab("BMI Class") + theme(axis.text.x = element_text(size=10))
 
