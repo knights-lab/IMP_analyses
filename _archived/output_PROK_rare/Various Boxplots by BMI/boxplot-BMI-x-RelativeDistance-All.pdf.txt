@@ -1,0 +1,23 @@
+Non-parametric two-sample test, adjusted for number of comparisons (P-value and Adjusted P-value)
+
+Unweighted Unifrac 
+1st-Gen 
+Lean VS Obese: 0.074	0.074
+2nd-Gen 
+Lean VS Obese: 0.57	0.57
+
+
+Weighted Unifrac 
+1st-Gen 
+Lean VS Obese: 0.2	0.2
+2nd-Gen 
+Lean VS Obese: 0.047	0.047
+
+
+Bray-Curtis 
+1st-Gen 
+Lean VS Obese: 0.14	0.14
+2nd-Gen 
+Lean VS Obese: 0.78	0.78
+
+

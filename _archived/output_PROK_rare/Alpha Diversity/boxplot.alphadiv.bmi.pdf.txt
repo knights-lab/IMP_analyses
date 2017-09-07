@@ -1,0 +1,47 @@
+Non-parametric two-sample test, adjusted for number of comparisons (P-value and Adjusted P-value)
+
+PD_whole_tree 
+Thai 
+Lean VS Overweight: 0.07	0.11
+Lean VS Obese: 0.04	0.11
+Overweight VS Obese: 0.44	0.44
+1st-Gen 
+Lean VS Overweight: 0.78	0.78
+Lean VS Obese: 0.4	0.6
+Overweight VS Obese: 0.3	0.6
+2nd-Gen 
+Lean VS Overweight: 0.085	0.13
+Lean VS Obese: 0.61	0.61
+Overweight VS Obese: 0.026	0.077
+
+
+shannon 
+Thai 
+Lean VS Overweight: 0.082	0.25
+Lean VS Obese: 0.29	0.44
+Overweight VS Obese: 0.99	0.99
+1st-Gen 
+Lean VS Overweight: 0.24	0.24
+Lean VS Obese: 0.055	0.083
+Overweight VS Obese: 0.018	0.054
+2nd-Gen 
+Lean VS Overweight: 0.029	0.044
+Lean VS Obese: 0.95	0.95
+Overweight VS Obese: 0.0025	0.0076
+
+
+simpson 
+Thai 
+Lean VS Overweight: 0.1	0.31
+Lean VS Obese: 0.73	0.73
+Overweight VS Obese: 0.6	0.73
+1st-Gen 
+Lean VS Overweight: 0.26	0.26
+Lean VS Obese: 0.16	0.25
+Overweight VS Obese: 0.031	0.093
+2nd-Gen 
+Lean VS Overweight: 0.099	0.15
+Lean VS Obese: 1	1
+Overweight VS Obese: 0.077	0.15
+
+

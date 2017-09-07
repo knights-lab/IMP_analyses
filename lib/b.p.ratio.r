@@ -3,32 +3,29 @@ require(plyr)
 require(ggplot2)
 require(cowplot)
 
-# plot.b.p.ratio.L <- function(map0, otu, bug1, bug2, outputfn)
-# {        
-#     otu <- otu[rownames(map0),]
-# 
-#     # add .00001 to any that are 0 abundance
-#     otu[otu[,bug1] == 0, bug1] <- .00001
-#     otu[otu[,bug2] == 0, bug2] <- .00001
-#     
-#     bp <- otu[,bug1]/otu[,bug2]
-#     names(bp) <- rownames(otu)
-# 
-#     lookup <- c(19,17) # point type
-#     names(lookup) <- sort(unique(map0$Ethnicity)) # let's Hmong to solid filled circle, Karen to filled triangle
-#     pch <- lookup[as.character(map0$Ethnicity)] 
-# 
-#     d <- data.frame(x = map0$Sample.Order, y = log10(bp), id = map0$Subject.ID)
-#     p <- ggplot(data=d, aes(x, y, color = id)) + geom_point() + geom_line() +
-#         theme_bw() + # white background
-#         ggtitle("Bacteroides-Prevotella Ratio - Longitudinal") + # title
-#         ylab("log10(Bacteroides-Prevotella Ratio)") + xlab("Month in the US") +
-#         scale_x_continuous(breaks=1:6) +
-#         theme(legend.key = element_blank()) # removes borders from legend
-#             
-#     ggsave(plot=p,outputfn, useDingbats=FALSE)
-# }
 
+plot.b.p.ratio.x.bmi <- function(map0, otu, bug1, bug2, outputfn)
+{        
+    otu <- otu[rownames(map0),]
+
+    # add .00001 to any that are 0 abundance
+    otu[otu[,bug1] == 0, bug1] <- .00001
+    otu[otu[,bug2] == 0, bug2] <- .00001
+    
+    bp <- otu[,bug1]/otu[,bug2]
+    names(bp) <- rownames(otu)
+        
+    p <- NULL
+    d <- data.frame(x = map0$Years.in.US, y = log10(bp), group=map0$BMI.Class)
+    p <- ggplot(data=d, aes(x, y, color=group)) + geom_point() + 
+        geom_smooth(method = "nls", formula = y ~ a * x + b, se = F, method.args = list(start = list(a = 0.1, b = 0.1))) + 
+        scale_color_manual(name = "BMI Class", values = alpha(c("#31625b","#fcd167","#c45565"),.5)) +
+        xlab("Years in the US") +
+        ggtitle("Bacteroides-Prevotella Ratio over US residency") + 
+        ylab("log10(Bacteroides-Prevotella Ratio)") + theme(legend.position='none') # remove legend
+
+    save_plot(outputfn, p, useDingbats=FALSE, base_aspect_ratio = 1.3 )
+}
 
 plot.b.p.ratio <- function(map0, otu, bug1, bug2, outputfn, longitudinal=F)
 {        
@@ -55,9 +52,7 @@ plot.b.p.ratio <- function(map0, otu, bug1, bug2, outputfn, longitudinal=F)
         d <- data.frame(x = map0$Years.in.US, y = log10(bp))
         p <- ggplot(data=d, aes(x, y)) + geom_point(color = alpha("black", .3), shape=pch) + geom_smooth(color="#ae017e", size=.5) + xlab("Years in the US")
     }
-    p <- p + 
-        theme_bw() + # white background
-        ggtitle("Bacteroides-Prevotella Ratio over US residency") + # title
+    p <- p  + ggtitle("Bacteroides-Prevotella Ratio over US residency") + 
         ylab("log10(Bacteroides-Prevotella Ratio)") +
         theme(legend.key = element_blank()) # removes borders from legend
 

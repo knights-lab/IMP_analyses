@@ -1,3 +1,44 @@
+c[1]
+x[1]
+b[1]==0
+x <- (1-eps)^counts / ((1-eps)^counts + (1 / (3^(counts-1)))*eps^counts)
+x[1]
+counts = 11420
+a <- (1-eps)^counts    b <- (1 / (3^(counts-1)))    c <- eps^counts    x <- a / (a + b * c)    y <- 1 - x^lengths
+a[1]
+(1-.05)^15000
+(1-.05)^14000
+min(double)
+double.xmin
+.Machine
+.Machine$double.xmin
+a <- .Machine$double.xmin
+a / (a + a*a)
+print(a)
+1-a^225
+a <- NA
+is.na(a)
+is.null(a)
+is.null(NULL)
+356563*.05
+7/17828.15
+1-7/17828.15
+?scan
+x <- c(3,4,56,3,5,3,3)
+unique(x)
+library(pwr)
+pwr.anova.test(k=2, f=abs(-0.0157416/(2*0.0213438)), power=.8)
+pwr.anova.test(k=2, f=abs(-0.0157416/(2*0.095)), power=.8)
+pwr.anova.test(k=2, f=abs(-0.1557416/(2*0.01)), power=.8)
+pwr.anova.test(k=2, f=abs(0.155/(2*0.0107)), power=.8)
+pwr.anova.test(k=2, f=abs(0.03345/(2*0.00928)), power=.8)
+pwr.anova.test(k=2, f=abs(0.013/(2*.03)), power=.8)
+pwr.anova.test(k=2, f=abs(0.006/(2*.011)), power=.8)
+pwr.anova.test(k=2, f=abs(0.005/(2*.009)), power=.8)
+pwr.anova.test(k=2, f=abs(0.001/(2*.0002)), power=.8)
+x <- (0.7628,0.0147,0.9342,0.1107,0.6797,3.77E-08)
+x <- c(0.7628,0.0147,0.9342,0.1107,0.6797,3.77E-08)
+apply(p.adjust, x, n=118)
 apply(x, 1, p.adjust, n=118)
 lapply(x, p.adjust, n=118)
 unlist(lapply(x, p.adjust, n=118))
@@ -90,177 +131,126 @@ pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.007/.001)
 pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.145/.02)
 pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.001746/.0002)
 .03345/.00928
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/lib/convert.to.relative.abundance.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/convert.to.relative.abundance.r")
-convert.to.relative.abundance("merged_otutable_s2_3000.txt", "test.txt")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/convert.to.relative.abundance.r")
-convert.to.relative.abundance("merged_otutable_s2_3000.txt", "test.txt")
-otufile = "merged_otutable_s2_3000.txt"; outputfile = "test.txt"
-fnlength <- nchar(otufile)	if(substr(otufile, fnlength-4, fnlength) == ".biom") {		otu0 <- as.matrix(biom_data(read_biom(otufile)))	} else {		line1 <-readLines(otufile,n=1)		if(line1=="# Constructed from biom file") {			otu0 <-read.table(otufile,sep='\t',head=T,row=1,comment='',quote="",skip=1)		} else {			otu0 <-read.table(otufile,sep='\t',head=T,row=1,comment='',quote="")		}	}	taxonomy <- otu0$taxonomy
-head(taxonomy)
-otu0[1,]
-otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')
-otu[1,]
-otu <- t(otu)
-otu[1,]
-otu[1:5,1]
-dim(otu)
-dim(otu0)
-length(taxonomy)
-otu[,"taxonomy"] <- taxonomy
-taxonomy
-class(otu)
-otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')#
-    otu <- t(otu)
-otu_df <- as.data.frame(otu)
-otu_df[1:5,1]
-otu_df[1:5,1:2]
-otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')#
-    otu <- as.data.frame(t(otu))#
-    otu[,"taxonomy"] <- taxonomy
-otu_df[1:5,1:2]
-otu[1:5,1:2]
-otu[1:100,1:2]
-min(otu)
-otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')#
-    otu <- as.data.frame(t(otu))
-min(otu)
-min(otu[otu != 0])
-decimalplaces <- function(x) {    if ((x %% 1) != 0) {        nchar(strsplit(sub('0+$', '', as.character(x)), ".", fixed=TRUE)[[1]][[2]])    } else {        return(0)    }}
-decimalplaces(min(otu[otu != 0]))
-otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')    prevalences <- apply(otu, 2, function(bug.col) mean(bug.col > 0))    otu <- otu[, prevalences >= .10]#
-    min(otu[otu != 0])
-sort(otu[otu != 0])
-min(otu[otu != 0])
-min(otu[otu != 0])*10^18
-min(otu[otu != 0])*10^13
-min(otu[otu != 0])*10^6
-?signif
-trunc(min(otu[otu != 0]))
-x <- min(otu[otu != 0])
-1-x
-x
-decimalplaces(1-x)
-1%%x
-x%%1
-as.character(x0)
-as.character(x)
-attr(regexpr("(?<=\\.)0+", x, perl = TRUE), "match.length")
-x
-zeros_after_period <- function(x) {if (isTRUE(all.equal(round(x),x))) return (0) # y would be -Inf for integer valuesy <- log10(abs(x)-floor(abs(x)))   ifelse(isTRUE(all.equal(round(y),y)), -y-1, -ceiling(y))} # corrects case ending with ..01
-zeros_after_period(x)
-x*10^5
-x*10^(5+2)
-?exp
-taxonomy <- otu0$taxonomy#
-	otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')    prevalences <- apply(otu, 2, function(bug.col) mean(bug.col > 0))    otu <- otu[, prevalences >= .10]    # turn all rel abundances to abs counts based on the smallest rel abundance value    x <- min(otu[otu!=0])        otu <- otu*10^(zeros_after_period(x) + 2)#
-    otu <- as.data.frame(t(otu))#
-    otu[,"taxonomy"] <- taxonomy
-otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')    prevalences <- apply(otu, 2, function(bug.col) mean(bug.col > 0))    otu <- otu[, prevalences >= .10]
-x <- min(otu[otu!=0])
-zeros_after_period(x) + 2
-10^(zeros_after_period(x) + 2)
-otu1 <- otu*10^(zeros_after_period(x) + 2)
-dim(otu1)
-dim(otu)
-otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')    prevalences <- apply(otu, 2, function(bug.col) mean(bug.col > 0))    otu <- otu[, prevalences >= .10]    # turn all rel abundances to abs counts based on the smallest rel abundance value    x <- min(otu[otu!=0])        otu <- otu*10^(zeros_after_period(x) + 2)#
-    otu <- as.data.frame(t(otu))
-otu[1:5,1:5]
-dim(otu)
-length(taxonomy)
-taxonomy <- otu0$taxonomy
-length(taxonomy)
-fnlength <- nchar(otufile)	if(substr(otufile, fnlength-4, fnlength) == ".biom") {		otu0 <- as.matrix(biom_data(read_biom(otufile)))	} else {		line1 <-readLines(otufile,n=1)		if(line1=="# Constructed from biom file") {			otu0 <-read.table(otufile,sep='\t',head=T,row=1,comment='',quote="",skip=1)		} else {			otu0 <-read.table(otufile,sep='\t',head=T,row=1,comment='',quote="")		}	}	taxonomy <- otu0$taxonomy    names(taxonomy) <- rownames(otu0)#
-	otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')    prevalences <- apply(otu, 2, function(bug.col) mean(bug.col > 0))    otu <- otu[, prevalences >= .10]    # turn all rel abundances to abs counts based on the smallest rel abundance value    x <- min(otu[otu!=0])        otu <- otu*10^(zeros_after_period(x) + 2)#
-    otu <- as.data.frame(t(otu))
-dim(otu0)
-dim(otu)
-otu <- t(otu0[,1:(ncol(otu0)-1)])    otu <- sweep(otu, 1, rowSums(otu), '/')
-dim(otu)
-prevalences <- apply(otu, 2, function(bug.col) mean(bug.col > 0))    otu <- otu[, prevalences >= .10]
-dim(otu)
-x <- min(otu[otu!=0])
-x
-otu <- otu*10^(zeros_after_period(x) + 2)#
-    otu <- as.data.frame(t(otu))
-otu[,"taxonomy"] <- taxonomy[rownames(otu)]
-write.table(otu, outputfile,sep="/t",quote=F)
-write.table(otu, outputfile,sep="\t",quote=F)
-?cat
-cat("\t", outputfile)    write.table(otu, outputfile,sep="\t",quote=F, append=T)
-?write.table
-cat("\t", outputfile)
-cat("\t", file=outputfile)
-cat("\t", file=outputfile)    write.table(otu, outputfile,sep="\t",quote=F, append=T)
-cat("#OTU ID\t", file=outputfile)    write.table(otu, outputfile,sep="\t",quote=F, append=T)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/convert.to.relative.abundance.r")
-convert.to.relative.abundance("merged_otutable_s2_3000.txt", "final_otu.txt")
-setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.alphadiv.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.relative.distance.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/fraction.hits.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/load.data.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.b.p.ratio.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.group.distances.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.nutrients.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.alphadiv.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.pcoa.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.body.trends.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/predict.years.r")datadir <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data"otufn <- paste(datadir,"merged_otutable_s2_3000_L6.txt",sep="/")# load datawuf_dm <- read.table(paste(datadir, "weighted_unifrac_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)uwuf_dm <- read.table(paste(datadir,"unweighted_unifrac_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)#bc_dm <- read.table(paste(datadir,"bray_curtis_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)# let's try uwuf firstdm <- uwuf_dm#dm <- wuf_dmalphadiv0 <- read.table(paste(datadir,"alpha.txt",sep="/"), sep="\t", quote="", row=1, head=T, comment.char="")
-ret <- load.data(mapfile=paste(datadir,"mapping.txt",sep="/"), otufile=otufn, normalize=F)map <- ret$maptaxa <- ret$otu# write out relative abundance OTU file out # only work with samples that are in both the mapping AND the dm/alpha filesvalid_samples <- intersect(rownames(dm), rownames(map))map <- map[valid_samples,]dm <- dm[valid_samples, valid_samples]# required: refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # include 1st sample of longitudinal samples in any CS analysescs_samples <- rownames(map)[is.na(map$Sample.Order) | map$Sample.Order==1]
-otufn <- paste(datadir,"final_otu.txt",sep="/")
-bc_dm <- read.table(paste(datadir,"bray_curtis_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)
-ret <- load.data(mapfile=paste(datadir,"mapping.txt",sep="/"), otufile=otufn, normalize=F)map <- ret$maptaxa <- ret$otu# write out relative abundance OTU file out # only work with samples that are in both the mapping AND the dm/alpha filesvalid_samples <- intersect(rownames(dm), rownames(map))map <- map[valid_samples,]dm <- dm[valid_samples, valid_samples]# required: refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # include 1st sample of longitudinal samples in any CS analysescs_samples <- rownames(map)[is.na(map$Sample.Order) | map$Sample.Order==1]
-otufn <- paste(datadir,"final_otu_L6.txt",sep="/")
-ret <- load.data(mapfile=paste(datadir,"mapping.txt",sep="/"), otufile=otufn, normalize=F)map <- ret$maptaxa <- ret$otu# write out relative abundance OTU file out # only work with samples that are in both the mapping AND the dm/alpha filesvalid_samples <- intersect(rownames(dm), rownames(map))map <- map[valid_samples,]dm <- dm[valid_samples, valid_samples]# required: refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # include 1st sample of longitudinal samples in any CS analysescs_samples <- rownames(map)[is.na(map$Sample.Order) | map$Sample.Order==1]
-plot.alphadiv(cbind(map[cs_samples,], alphadiv0[cs_samples,"PD_whole_tree"], stringsAsFactors=F))
-plot.pcoa(map[cs_samples,], wuf_dm, "Weighted Unifrac")
-plot.pcoa(map[cs_samples,], uwuf_dm, "Unweighted Unifrac")
-plot.pcoa(map[cs_samples,], bc_dm, "Bray Curtis")
-non_second_gen_cs <- rownames(map)[map$Sample.Group != "Hmong2nd" & (is.na(map$Sample.Order) | map$Sample.Order==1)]second_gen_cs <- rownames(map)[map$Sample.Group == "Hmong2nd"]plot.relative.distance(map=map, dm=uwuf_dm, query_samples=non_second_gen_cs, ref_samples=second_gen_cs, filename="relative_distance_uwuf.pdf")plot.relative.distance(map=map, dm=wuf_dm, query_samples=non_second_gen_cs, ref_samples=second_gen_cs, filename="relative_distance_wuf.pdf")
-plot.b.p.ratio(map[cs_samples,], taxa[cs_samples,])
-predict.years(map[cs_samples,], taxa[cs_samples,], n=1)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/convert.to.relative.abundance.r")
-convert.to.relative.abundance("merged_otutable_s2_3000.txt", "final_otu.txt")
-setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.alphadiv.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.relative.distance.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/fraction.hits.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/load.data.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.b.p.ratio.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.group.distances.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.nutrients.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.alphadiv.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.pcoa.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.body.trends.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/predict.years.r")datadir <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data"otufn <- paste(datadir,"final_otu_L6.txt",sep="/")# load datawuf_dm <- read.table(paste(datadir, "weighted_unifrac_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)uwuf_dm <- read.table(paste(datadir,"unweighted_unifrac_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)bc_dm <- read.table(paste(datadir,"bray_curtis_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)# let's try uwuf firstdm <- uwuf_dm#dm <- wuf_dmalphadiv0 <- read.table(paste(datadir,"alpha.txt",sep="/"), sep="\t", quote="", row=1, head=T, comment.char="")# load mapping and otu/taxa file - automatically normalizes, filters, and merges ret <- load.data(mapfile=paste(datadir,"mapping.txt",sep="/"), otufile=otufn, normalize=F)map <- ret$maptaxa <- ret$otu# write out relative abundance OTU file out # only work with samples that are in both the mapping AND the dm/alpha filesvalid_samples <- intersect(rownames(dm), rownames(map))map <- map[valid_samples,]dm <- dm[valid_samples, valid_samples]# required: refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # include 1st sample of longitudinal samples in any CS analysescs_samples <- rownames(map)[is.na(map$Sample.Order) | map$Sample.Order==1]
-plot.b.p.ratio(map[cs_samples,], taxa[cs_samples,])
-plot.alphadiv(cbind(map[cs_samples,], alphadiv0[cs_samples,"PD_whole_tree"], stringsAsFactors=F))
-plot.pcoa(map[cs_samples,], wuf_dm, "Weighted Unifrac")plot.pcoa(map[cs_samples,], uwuf_dm, "Unweighted Unifrac")plot.pcoa(map[cs_samples,], bc_dm, "Bray Curtis")
-non_second_gen_cs <- rownames(map)[map$Sample.Group != "Hmong2nd" & (is.na(map$Sample.Order) | map$Sample.Order==1)]second_gen_cs <- rownames(map)[map$Sample.Group == "Hmong2nd"]plot.relative.distance(map=map, dm=uwuf_dm, query_samples=non_second_gen_cs, ref_samples=second_gen_cs, filename="relative_distance_uwuf.pdf")plot.relative.distance(map=map, dm=wuf_dm, query_samples=non_second_gen_cs, ref_samples=second_gen_cs, filename="relative_distance_wuf.pdf")
-ret <- load.data(mapfile=paste(datadir,"mapping.txt",sep="/"), otufile=otufn, normalize=T)map <- ret$maptaxa <- ret$otu# write out relative abundance OTU file out # only work with samples that are in both the mapping AND the dm/alpha filesvalid_samples <- intersect(rownames(dm), rownames(map))map <- map[valid_samples,]dm <- dm[valid_samples, valid_samples]# required: refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # include 1st sample of longitudinal samples in any CS analysescs_samples <- rownames(map)[is.na(map$Sample.Order) | map$Sample.Order==1]
-plot.b.p.ratio(map[cs_samples,], taxa[cs_samples,])
-asin(sqrt(.2))
-asin(sqrt(.1))
-ret <- load.data(mapfile=paste(datadir,"mapping.txt",sep="/"), otufile=otufn, normalize=F)map <- ret$maptaxa <- ret$otu
-plot.b.p.ratio(map[cs_samples,], taxa[cs_samples,])
-dim(taxa)
-predict.years(map[cs_samples,], taxa[cs_samples,], n=1)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/predict.years.r")
-predict.years(map[cs_samples,], taxa[cs_samples,], n=1)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/predict.years.r")
-prediction <- predict.years(map[cs_samples,], taxa[cs_samples,], n=1)
-prediction
-plot(prediction$predicted, prediction$y, col=alpha("black",.5))
-cs_samples[40]
-map[cs_samples,"Years.in.US"]
-map[non_second_gen_cs,"Years.in.US"]
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/predict.years.r")
-prediction <- predict.years(map[non_second_gen_cs,], taxa[non_second_gen_cs,], n=1)
-plot.relative.longitudinal(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], dm=wuf_dm,                        ref.sample = 6, xlab="Month in the US", outputfn="relative_L_wuf.pdf")plot.relative.longitudinal(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], dm=bc_dm,                        ref.sample = 6, xlab="Month in the US", outputfn="relative_L_bc.pdf")# plot relative distance to selfplot.relative.longitudinal(map = map[map$Subject.ID == "IMP.000",], dm=uwuf_dm,                        ref.sample.order = 21, xlab="Day", outputfn="relative_self_uwuf.pdf")plot.relative.longitudinal(map = map[map$Subject.ID == "IMP.000",], dm=wuf_dm,                        ref.sample.order = 21, xlab="Day", outputfn="relative_self_wuf.pdf")plot.relative.longitudinal(map = map[map$Subject.ID == "IMP.000",], dm=bc_dm,                        ref.sample.order = 21, xlab="Day", outputfn="relative_self_bc.pdf")
-plot.relative.longitudinal(map = map[map$Subject.ID == "IMP.000",], dm=uwuf_dm,                        ref.sample.order = 1, xlab="Day", outputfn="relative_self_uwuf.pdf")plot.relative.longitudinal(map = map[map$Subject.ID == "IMP.000",], dm=wuf_dm,                        ref.sample.order = 1, xlab="Day", outputfn="relative_self_wuf.pdf")plot.relative.longitudinal(map = map[map$Subject.ID == "IMP.000",], dm=bc_dm,                        ref.sample.order = 1, xlab="Day", outputfn="relative_self_bc.pdf")
-plot.relative.longitudinal(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], dm=uwuf_dm,                        ref_samples.order = 1, xlab="Month in the US", outputfn="Long_to_Thai_uwuf.pdf",                        ref_samples=rownames(map)[map$Sample.Group == "KarenThai"])plot.relative.longitudinal(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], dm=wuf_dm,                        ref.sample.order = 1, xlab="Month in the US", outputfn="Long_to_Thai_wuf.pdf",                        ref_samples=rownames(map)[map$Sample.Group == "KarenThai"])plot.relative.longitudinal(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], dm=bc_dm,                        ref.sample.order = 1, xlab="Month in the US", outputfn="Long_to_Thai_bc.pdf",                        ref_samples=rownames(map)[map$Sample.Group == "KarenThai"])
-prediction
-unique(map$Sample.Group)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/predict.years.r")
-prediction_karen <- predict.years(map[map$Ethnicity=="Karen" & (is.na(map$Sample.Order) | map$Sample.Order==1),], taxa)
-karen_firstgen_cs <- rownames(map)[map$Ethnicity=="Karen" & (is.na(map$Sample.Order) | map$Sample.Order==1)]karenthai <- rownames(map)[map$Sample.Group=="KarenThai"]
-prediction_karen
-map[map$Ethnicity=="Karen" & map$Years.in.US > 9,]
-prediction_karen
-prediction_hmong <- predict.years(map[map$Ethnicity=="Hmong" & map$Subject.ID != "IMP.000",], taxa)
-prediction_hmong
-map[map$Ethnicity=="Hmong" & map$Subject.ID != "IMP.000","Years.in.US"]
-map[map$Ethnicity=="Hmong" & map$Subject.ID != "IMP.000","Years.in.US",drop=F]
-prediction_hmong <- predict.years(map[map$Ethnicity=="Hmong" & map$Subject.ID != "IMP.000" & map$Sample.Group=="Hmong1st",], taxa)
-prediction_hmong <- predict.years(map[map$Ethnicity=="Hmong" & map$Subject.ID != "IMP.000" & map$Sample.Group !="Hmong2nd",], taxa)
-prediction_hmong
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.relative.distance.r")
-pdf("Karen_CS_to_Thai.pdf",useDingbats=F)    par(mfrow=c(1,3))    plot.relative.CS(map=map, dm=uwuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_uwuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=wuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_wuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=bc_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_bc.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    dev.off()
-?pdf
-pdf("Karen_CS_to_Thai.pdf",useDingbats=F, width=7, height=3.5)    par(mfrow=c(1,3))    plot.relative.CS(map=map, dm=uwuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_uwuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=wuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_wuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=bc_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_bc.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    dev.off()
-pdf("Karen_CS_to_Thai.pdf",useDingbats=F, width=7, height=3)    par(mfrow=c(1,3))    plot.relative.CS(map=map, dm=uwuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_uwuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=wuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_wuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=bc_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_bc.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    dev.off()
-pdf("Karen_CS_to_Thai.pdf",useDingbats=F, width=7, height=2)    par(mfrow=c(1,3))    plot.relative.CS(map=map, dm=uwuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_uwuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=wuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_wuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=bc_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_bc.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    dev.off()
-pdf("Karen_CS_to_Thai.pdf",useDingbats=F, width=7, height=2.5)    par(mfrow=c(1,3))    plot.relative.CS(map=map, dm=uwuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_uwuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=wuf_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_wuf.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    plot.relative.CS(map=map, dm=bc_dm, query_samples=karen_firstgen_cs, ref_samples=karenthai, filename="karen_relative_distance_bc.pdf", ylab="Distance to Karen in Thailand",saveplot=F)    dev.off()
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.relative.distance.r")
-pdf("Karen_CS_to_Thai.pdf",useDingbats=F, width=7, height=2.5)    par(mfrow=c(1,3))    ylab <- "Distance to Karen in Thailand"    plot.relative.CS(map=map, dm=uwuf_dm, main="Unweighted Unifrac", query_samples=karen_firstgen_cs, ref_samples=karenthai, ylab=ylab,saveplot=F)    plot.relative.CS(map=map, dm=wuf_dm, main="Weighted Unifrac", query_samples=karen_firstgen_cs, ref_samples=karenthai, ylab=ylab,saveplot=F)    plot.relative.CS(map=map, dm=bc_dm, main="Bray Curtis", query_samples=karen_firstgen_cs, ref_samples=karenthai, ylab=ylab,saveplot=F)    dev.off()
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.relative.distance.r")
-pdf("Karen_CS_to_Thai.pdf",useDingbats=F, width=7, height=2.5)    par(mfrow=c(1,3))    ylab <- "Distance to Karen in Thailand"    plot.relative.CS(map=map, dm=uwuf_dm, main="Unweighted Unifrac", query_samples=karen_firstgen_cs, ref_samples=karenthai, ylab=ylab,saveplot=F)    plot.relative.CS(map=map, dm=wuf_dm, main="Weighted Unifrac", query_samples=karen_firstgen_cs, ref_samples=karenthai, ylab=ylab,saveplot=F)    plot.relative.CS(map=map, dm=bc_dm, main="Bray Curtis", query_samples=karen_firstgen_cs, ref_samples=karenthai, ylab=ylab,saveplot=F)    dev.off()
+?Sys.geten
+?Sys.getenv
+library(optparse)
+install.packages("optparse")
+library(optparse)
+?hclust
+setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")use.rare <- FALSE# load all source files, data, and prep any variables for reusesource("bin/load.r")
+taxa_clr_L7_fn <- paste(datadir,"taxa.clr.L7.txt",sep="/")taxa_clr_L6_fn <- paste(datadir,"taxa.clr.L6.txt",sep="/")taxa_clr_L2_fn <- paste(datadir,"taxa.clr.L2.txt",sep="/")taxa_clr_L7 <- load.data(mapfile, otufile=taxa_clr_L7_fn, normalize=F)$otutaxa_clr_L6 <- load.data(mapfile, otufile=taxa_clr_L6_fn, normalize=F)$otutaxa_clr_L2 <- load.data(mapfile, otufile=taxa_clr_L2_fn, normalize=F)$otu
+euc_ret <- plot.within.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="within.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+euc_ret <- plot.within.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="within.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
+plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+plot.relative.L(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
+?vegdist
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+plot.relative.L(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
+plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
+p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_Day0.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=6, xlab="Days Since US Arrival",                     ylab="Dissimilarity to Last Sample", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_DayM6.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, to.previous=T, xlab="Days Since US Arrival",                     ylab="Dissimilarity to Previous Sample", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_Previous.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
+# L to KarenThai    p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_KarenThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # L to 2ndGenHmong    p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_USborn.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)#
+    # IMP000 to Day 0        # relative to first day    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Day0.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # overall variability -- relative to previous sample    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase", to.previous=T)    save_plot("IMP000_to_Previous.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # relative to Hmong Thai    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmongthai, xlab="Day",                     ylab="Distance to Hmong Thai", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_HmongThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)#
+    # relative to 2nd Gen Hmong    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Day",                     ylab="Distance to 2nd Gen Hmong", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Hmong2nd.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+p <- plot.relative.L(map0 = map[rownames(map) %in% hmong_secondgen_cs | (map$Sub.Study == "L" & map$Subject.ID != "IMP.000"),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")
+map[rownames(map) %in% hmong_secondgen_cs | (map$Sub.Study == "L" & map$Subject.ID != "IMP.000"),]
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+p <- plot.relative.L(map0 = map[rownames(map) %in% hmong_secondgen_cs | (map$Sub.Study == "L" & map$Subject.ID != "IMP.000"),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+l.samples <- rownames(map)[map$Sub.Study == "L" & map$Subject.ID != "IMP.000"]    p <- plot.relative.L(map0 = map[c(l.samples, karenthai),], otu0=taxa_clr_L7, main="Euclidean", query.samples=l.samples, ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+l.samples <- rownames(map)[map$Sub.Study == "L" & map$Subject.ID != "IMP.000"]    p <- plot.relative.L(map0 = map[c(l.samples, karenthai),], otu0=taxa_clr_L7, main="Euclidean", query.samples=l.samples, ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")
+l.samples <- rownames(map)[map$Sub.Study == "L" & map$Subject.ID != "IMP.000"]    p <- plot.relative.L(map0 = map[c(l.samples, karenthai),], otu0=taxa_clr_L7, main="Euclidean", query.samples=l.samples, ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_KarenThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # L to 2ndGenHmong    p <- plot.relative.L(map0 = map[c(l.samples, hmong_secondgen_cs),], otu0=taxa_clr_L7, main="Euclidean", query.samples=l.samples, ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_USborn.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
+map.000 <- map[map$Subject.ID == "IMP.000",]    map.000$Sample.Day.Since.First.Sample <- as.numeric(as.Date(map.000$Sample.Date, format="%m/%d/%y") - as.Date("08/01/16", format="%m/%d/%y")) # hard code first sample date    map.000[,"travel.phase"] <- "Traveling"    map.000[map.000$Sample.Day.Since.First.Sample <= 2,"travel.phase"] <- "Pre"    map.000[map.000$Sample.Day.Since.First.Sample >= 28,"travel.phase"] <- "Post"    map.000$travel.phase <- factor(map.000$travel.phase, levels=c("Pre", "Traveling", "Post"))
+p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Day0.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # overall variability -- relative to previous sample    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase", to.previous=T)    save_plot("IMP000_to_Previous.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmongthai, xlab="Day",                     ylab="Distance to Hmong Thai", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_HmongThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
+p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Day",                     ylab="Distance to 2nd Gen Hmong", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Hmong2nd.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
+p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Day0.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # overall variability -- relative to previous sample    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase", to.previous=T)    save_plot("IMP000_to_Previous.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
+l.samples <- rownames(map)[map$Sub.Study == "L" & map$Subject.ID != "IMP.000"]    p <- plot.relative.L(map0 = map[l.samples,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_KarenThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # L to 2ndGenHmong    p <- plot.relative.L(map0 = map[l.samples,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_USborn.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
+xlab="Years in US"    x.var="Years.in.US"
+plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
+plot.relative.CS(map0=map[karen_firstgen_cs,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=karenthai, xlab=xlab, x.var=x.var, ylab="Distance to Karen Thai", outputfn="Karen_CS_to_Thai.pdf")    # 1stKaren to 2ndGenHmong    plot.relative.CS(map0=map[karen_firstgen_cs,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab=xlab, x.var=x.var, ylab="Distance to 2nd-gen", outputfn="Karen_CS_to_USborn.pdf")    # 1stHmong to HmongThai    plot.relative.CS(map0=map[hmong_firstgen_cs,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmongthai, xlab=xlab, x.var=x.var, ylab="Distance to Hmong Thai", outputfn="Hmong_CS_to_Thai.pdf")    # 1stHmong to 2ndHmong    plot.relative.CS(map0=map[hmong_firstgen_cs,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab=xlab, x.var=x.var, ylab="Distance to US born Hmong", outputfn="Hmong_CS_to_USbornHmong.pdf")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=T, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", order.by.num.otus=TRUE)
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=FALSE)
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=FALSE)
+range(taxa_clr_L6)
+colSums(taxa_clr_L6)
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=FALSE)
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=FALSE)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
+make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)

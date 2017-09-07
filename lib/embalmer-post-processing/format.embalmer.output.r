@@ -1,12 +1,4 @@
-#Simple way to process the embalmer (embalmulate) output for this study:
-
-#### Loading ####
-setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/sequences_062717")
-
-
-summarize.taxa.embalmer("taxatable.txt", 7, "taxatable_L7.txt")
-summarize.taxa.embalmer("taxatable.txt", 6, "taxatable_L6.txt")
-summarize.taxa.embalmer("taxatable.txt", 2, "taxatable_L2.txt")
+library('optparse')
 
 # level = 7 for species, 6 for genus, 2 for phyla 
 summarize.taxa.embalmer <- function(taxafn, level, outputfn)
@@ -15,13 +7,14 @@ summarize.taxa.embalmer <- function(taxafn, level, outputfn)
     
     split <- strsplit(rownames(taxa),";")           
     taxaStrings <- sapply(split,function(x) paste(x[1:level],collapse=";"))
-    taxaStrings <- gsub("NA", "Other", taxaStrings) 
+#    taxaStrings <- gsub("NA", "Other", taxaStrings) 
     taxa <- rowsum(taxa,taxaStrings) # rowsum and group by taxastrings
 
     cat("#Taxonomy\t", file=outputfn)
     write.table(taxa,file=outputfn,quote=F,sep="\t",append = T)
 }
 
+#make sure to turn underscores to spaces in otutable and get rid of all text after the ID itself. also there seems to be a blank for anything that was interpolated as something between archaea and bacteria — so fill that in with something like k_transkingdom instead
 format.otu.table <- function(otufn, outputfn)
 {
     otu <- read.delim(otufn,row=1)
@@ -37,3 +30,19 @@ format.otu.table <- function(otufn, outputfn)
     write.table(otu, file=outputfn, quote=F, sep="\t", append=T)
     
 }
+
+# make option list and parse command line
+ 	option_list <- list(
+ 		make_option(c("-i", "--taxafile"), type="character", 
+ 			help="taxa file to be summarized [REQUIRED]")
+ 			)
+
+ 	opts <- parse_args(OptionParser(option_list=option_list), 
+ 		args=commandArgs(trailing=TRUE))
+ 
+    taxafile <- opts$taxafile
+
+summarize.taxa.embalmer(taxafile, 7, gsub(".txt","_L7.txt",taxafile))
+summarize.taxa.embalmer(taxafile, 6, gsub(".txt","_L6.txt",taxafile))
+summarize.taxa.embalmer(taxafile, 2, gsub(".txt","_L2.txt",taxafile))
+

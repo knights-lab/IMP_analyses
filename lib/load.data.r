@@ -7,10 +7,7 @@
 # minOTUInSamples: drop OTUs in less than this ratio of samples (usually .001)
 # returns otu, map, and kegg vector containing kegg descriptions (named by whatever KEGG level was passed in)
 load.data<-function(mapfile, otufile, minOTUInSamples=NA, minPrevalence = .10, normalize=TRUE)
-{
-	source("/Users/pvangay/Dropbox/UMN/Rscripts/collapse-features.r")
-	require(biom)
-	
+{	
 	map <- read.table(mapfile,sep='\t',head=T,row=1,comment='')
 #	rownames(map) <- make.names(rownames(map)) # this is automatically done for otu table, so do this here to make sure sample ids are exactly the same 
 

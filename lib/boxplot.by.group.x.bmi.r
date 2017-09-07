@@ -4,40 +4,32 @@
 require(beeswarm)
 require(faraway)
 require(RColorBrewer)
+require(ggsignif)
+require(ggbeeswarm)
 
-# x = +2-level factor, y = continuous value
-# simply runs wilcoxon test, OR manually loops through all possible combinations and corrects p-values for 3+ level group factors
-test.samples <- function(y, x)
+
+multiplot.boxplot.by.group.x.bmi <- function(map00, y.list, ylabs, mains, outputfn, parametric=TRUE)
 {
-    comparisons <- combn(levels(x), 2)
-    
-    pvals <- NULL
-    for(i in 1:ncol(comparisons))
-    {
-
-        this.y <- y[x %in% comparisons[,i]]
-        this.x <- x[x %in% comparisons[,i]]
-        m <- wilcox.test(this.y ~ this.x)
-        pvals <- c(pvals, m$p.value)
-        
-        print(paste0(comparisons[1,i], " VS ", comparisons[2,i], ": ", m$p.value))
-    }
-    return(p.adjust(pvals, method="fdr"))
-
-}
-
-
-multiplot.boxplot.by.group.x.bmi <- function(map00, y.list, ylabs, mains, outputfn)
-{
+    sink(paste0(outputfn, ".txt")) # set text file for writing stats results
+    cat("Non-parametric two-sample test, adjusted for number of comparisons (P-value and Adjusted P-value)\n\n")
     p <- NULL
     for(i in 1:length(ylabs))
     {
-        p[[i]] <- plot.boxplot.by.group.x.bmi(map00, y.list[[i]], ylabs[i], mains[i])
+      cat(mains[i], "\n")
+      p[[i]] <- plot.boxplot.by.group.x.bmi(map00=map00, y=y.list[[i]], ylab=ylabs[i], main=mains[i], parametric=parametric)
+      # save legend (can prob do this just once)
+      legend <- get_legend(p[[i]])
+      # remove legends from all plots
+      p[[i]] <- p[[i]] + theme(legend.position='none')
+      cat("\n\n")
     }
-    multiplot <- plot_grid(plotlist=p, ncol=length(p), nrow=1)
-    save_plot(outputfn, multiplot, ncol = length(p), nrow = 1, base_aspect_ratio = 1.3)
+    sink()
+    
+    multiplot <- plot_grid(plot_grid(plotlist=p, ncol=(length(p)), nrow=1), plot_grid(legend), rel_widths=c(1,.11))
+    save_plot(outputfn, multiplot, ncol = 2, nrow = 1, base_aspect_ratio = 1.3)
 }
 
+# useful for annotations for geom_signif
 get.signif.symbol <- function(pval, use.stars=FALSE)
 {
     if(use.stars)
@@ -58,7 +50,7 @@ get.signif.symbol <- function(pval, use.stars=FALSE)
     return(ret)
 }
 
-plot.boxplot.by.group.x.bmi <- function(map00, y, ylab, main) # vector y = variable on y axis 
+plot.boxplot.by.group.x.bmi <- function(map00, y, ylab, main, add.stats=TRUE, parametric=TRUE) # vector y = variable on y axis 
 {
     map0 <- data.frame(map00, y=y, stringsAsFactors=F)
     
@@ -71,29 +63,28 @@ plot.boxplot.by.group.x.bmi <- function(map00, y, ylab, main) # vector y = varia
     d$Group <- factor(d$Group, levels=c("Thai","1st-Gen","2nd-Gen","Control"))
     d$Group <- factor(d$Group) # remove any levels that aren't present
     d$BMI.Class <- factor(d$BMI.Class) # remove any levels that aren't present
+        
+    bmi.cols <- alpha(c("#31625b","#fcd167","#c45565"),.5)
+    names(bmi.cols) <- c("Lean", "Overweight", "Obese")
     
-    print(d$BMI.Class)
+    p <- ggplot(d, aes(Group, y, color=BMI.Class)) + geom_boxplot(aes(fill = BMI.Class), alpha=0, colour="black") + geom_quasirandom(dodge.width=.75) +  
+      scale_color_manual(name = "BMI Class", values = bmi.cols) + # set color for points from quasirandom
+        ggtitle(main) + 
+        guides(fill=FALSE) + # turns off extra legend we get for boxplots created by BMI.Class
+        ylab(ylab) + xlab("") + theme(axis.text.x = element_text(size=10), legend.title=element_text(size=10, face="bold"), legend.text=element_text(size=10)) + # make legend text smaller
+        guides(colour = guide_legend(override.aes = list(size=3))) # make points in legend larger
     
-    # within sample groups, test for differences in BMI class
-    groups <- levels(d$Group)
-
-    pvals <- NULL
-    for(i in 1:length(groups))
-    {
-        pvals <- c(pvals, test.samples(d[d$Group==groups[i], "y"], d[d$Group==groups[i], "BMI.Class"]))
-    }    
-    pval.labels <- sapply(pvals, get.signif.symbol)
-    print(pval.labels)
-    
-    ymax <- max(d$y)*1.05 # add ymax to make space for pvalues
-    p <- ggplot(d, aes(Group, y)) + geom_boxplot(aes(fill = BMI.Class)) +  geom_point(aes(y=y, fill = BMI.Class), position=position_dodge(width=.75), color=alpha("black",.3), shape=1) +
-        scale_fill_manual(name = "Sample Groups", values = c("#ffffcc","#a1dab4","#41b6c4")) +      
-        ggtitle(main) + coord_cartesian(ylim = c(min(d$y), ymax)) +
-        ylab(ylab) + xlab("BMI Class") + theme(axis.text.x = element_text(size=10))
-
-    # add pval annotations
-    for(i in 0:(length(pval.labels)-1))        
-        p <- p + geom_signif(annotation = pval.labels[i+1], xmin = 0.8+i, xmax = 1.2+i, y_position = ymax, tip_length=0)
-
+    if(add.stats){
+        # within sample groups, test for differences in BMI class
+        groups <- levels(d$Group)
+        pvals <- NULL
+        for(i in 1:length(groups))
+        {
+            this.pvals <- test.groups(d[d$Group==groups[i], "y"], d[d$Group==groups[i], "BMI.Class"], parametric)
+            names(this.pvals) <- paste(groups[i],names(this.pvals),sep=":")
+            pvals <- c(pvals, this.pvals)
+        }
+        p <- ggdraw(p) + draw_figure_label(label=paste(names(pvals), signif(pvals, 2), sep="=", collapse="; "), size=8, position="bottom.right")
+    }
     return(p)
 }

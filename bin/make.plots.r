@@ -1,12 +1,29 @@
 setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")
+use.rare <- FALSE
 
 # load all source files, data, and prep any variables for reuse
 source("bin/load.r")
 
+# load some extra vars here
+# TODO: alpha div should probably just be done with rarefied tables to get rid of biases towards higher depth samples
+    
+    alpha.metrics <- c("PD_whole_tree", "shannon", "simpson")
+    
+    # let's make an extra var for IMP000
+    map.000 <- map[map$Subject.ID == "IMP.000",]
+    map.000$Sample.Day.Since.First.Sample <- as.numeric(as.Date(map.000$Sample.Date, format="%m/%d/%y") - as.Date("08/01/16", format="%m/%d/%y")) # hard code first sample date
+    map.000[,"travel.phase"] <- "Traveling"
+    map.000[map.000$Sample.Day.Since.First.Sample <= 2,"travel.phase"] <- "Pre"
+    map.000[map.000$Sample.Day.Since.First.Sample >= 28,"travel.phase"] <- "Post"
+    map.000$travel.phase <- factor(map.000$travel.phase, levels=c("Pre", "Traveling", "Post")) 
+
+
 ### alpha diversity
-    plot.alphadiv(map[cs,], alphadiv0[cs,], metric = "PD_whole_tree")
-    plot.alphadiv(map[cs,], alphadiv0[cs,], metric = "shannon")
-    plot.alphadiv(map[cs,], alphadiv0[cs,], metric = "simpson")
+    multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+    
+    # plot alpha for longitudinal subjects only
+    multiplot.alphadiv.L(map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], alphadiv0, alpha.metrics, "alphadiv.L.pdf")
+    multiplot.alphadiv.L(map.000, alphadiv0, alpha.metrics, "alphadiv.IMP000.pdf", x.var="Sample.Day.Since.First.Sample")
     
 ### body trends
     plot.body.trends(map[firstgen_cs,])
@@ -23,6 +40,10 @@ source("bin/load.r")
     plot.BMI.barplot(map_all[cs_all,], bins=seq(0,45,5), fn="BMI_barplot_ALL.pdf", freq=F)   
 
 ### taxa summaries
+    # stream plots are useful for longitudinal changes over time
+    plot.taxa.summary.L(taxa0=taxa, map0=map[map$Sub.Study=="L" & map$Subject.ID != "IMP.000", ], outputfn="taxa.summary.L.pdf", grid.ncol=2)
+    plot.taxa.summary.L(taxa0=taxa, map0=map.000, x.var="Sample.Day.Since.First.Sample", outputfn="taxa.summary.IMP000.pdf")
+
     plot.taxa.summary(map0=map[cs,], otu=taxa, fn="taxa.summary.pdf")    
 
     # plot self samples
@@ -34,14 +55,24 @@ source("bin/load.r")
                             x.labels = day.labels)
     
 ### PCOA
-    plot.pcoa.long(map_all, uwuf_dm, "UnWeighted Unifrac - L")
-    plot.pcoa.long(map_all, wuf_dm, "Weighted Unifrac - L")
 
-    plot.pcoa(map[cs,], wuf_dm, "Weighted Unifrac")
-    plot.pcoa(map[cs,], uwuf_dm, "Unweighted Unifrac")
-    plot.pcoa(map[cs,], bc_dm, "Bray Curtis")
+    plot.pcoa.long(map, samples=rownames(map[map$Sub.Study=="L" & map$Subject.ID != "IMP.000",]), dm=uwuf_dm, plot.title="UnWeighted Unifrac - L")
+    plot.pcoa.long(map, samples=rownames(map[map$Sub.Study=="L" & map$Subject.ID != "IMP.000",]), dm=wuf_dm, plot.title="Weighted Unifrac - L")
 
-plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", color.by="Years.in.US", and.by="BMI.Class", label.samples=paste0("TFSCS0", 20:29))
+    plot.pcoa.long(map, samples=rownames(map[map$Sub.Study=="L" & map$Subject.ID != "IMP.000",]), dm=uwuf_dm, plot.title="UnWeighted Unifrac - L.outlined", convex.hull=TRUE)
+    plot.pcoa.long(map, samples=rownames(map[map$Sub.Study=="L" & map$Subject.ID != "IMP.000",]), dm=wuf_dm, plot.title="Weighted Unifrac - L.outlined", convex.hull=TRUE)
+    plot.pcoa.long(map, samples=rownames(map[map$Sub.Study=="L" & map$Subject.ID != "IMP.000",]), dm=bc_dm, plot.title="Bray-Curtis - L.outlined", convex.hull=TRUE)
+
+
+    # plot IMP.000 by pre, traveling, post phases 
+    #plot.pcoa.long(map, rownames(map[map$Subject.ID == "IMP.000",]), bc_dm, "BC - IMP.000")
+
+    plot.pcoa(map[cs,], dm=wuf_dm, plot.title="Weighted Unifrac")
+    plot.pcoa(map[cs,], dm=uwuf_dm, plot.title="Unweighted Unifrac")
+    plot.pcoa(map[cs,], dm=uwuf_dm, plot.title="Unweighted Unifrac", axis1=1, axis2=3) # try pc1 and pc3
+    plot.pcoa(map[cs,], dm=bc_dm, plot.title="Bray Curtis")
+
+    #plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", color.by="Years.in.US", and.by="BMI.Class", label.samples=paste0("TFSCS0", 20:29))
 
 ### Bacteroides-Prevotella
     plot.b.p.barplot(map[c(karenthai,karen_firstgen_cs),], taxa, bins=0:10, fn="b.p.barplot.karen.pdf")
@@ -52,6 +83,10 @@ plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", co
     plot.b.p.ratio(map[hmong_firstgen_cs,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="b.p.ratio.hmong.pdf")
     plot.b.p.ratio(map[karen_firstgen_cs,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="b.p.ratio.karen.pdf")
 
+    # BP ratio over time, but colored by BMI
+    plot.b.p.ratio.x.bmi(map[hmong_firstgen_cs,,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="b.p.ratio.hmong.x.BMI.pdf")
+    plot.b.p.ratio.x.bmi(map[karen_firstgen_cs,,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="b.p.ratio.karen.x.BMI.pdf")
+    
     # ALL samples 
     plot.b.p.ratio.all(map, taxa, bug1=bacteroides, bug2=prevotella, outputfn="b.p.ratio.all.pdf", g1=firstgen_cs, g2=c(hmongthai,karenthai),g3=(hmong_secondgen_cs))
 
@@ -62,12 +97,12 @@ plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", co
     prediction <- predict.years(map[map$Ethnicity=="Karen" & (is.na(map$Sample.Order) | map$Sample.Order==1),], taxa)
 
 ### Intra-inter group variabilities
-    bc_ret <- plot.within.group.distances(map0=map[cs,], bc_dm, fn="within.group.bc.pdf", ylab="Bray-Curtis distance")
-    wuf_ret <- plot.within.group.distances(map0=map[cs,], wuf_dm, fn="within.group.wuf.pdf", ylab="Weighted Unifrac distance")
-    uwuf_ret <- plot.within.group.distances(map0=map[cs,], uwuf_dm, fn="within.group.uwuf.pdf", ylab="Unweighted Unifrac distance")
+    bc_ret <- plot.within.group.distances(map0=map[cs,], dm=bc_dm, fn="within.group.bc.pdf", ylab="Bray-Curtis distance")
+    wuf_ret <- plot.within.group.distances(map0=map[cs,], dm=wuf_dm, fn="within.group.wuf.pdf", ylab="Weighted Unifrac distance")
+    uwuf_ret <- plot.within.group.distances(map0=map[cs,], dm=uwuf_dm, fn="within.group.uwuf.pdf", ylab="Unweighted Unifrac distance")
 
-    plot.between.group.distances(map0=map[cs,], bc_dm, fn="between.group.bc.pdf", ylab="Bray-Curtis distance")
-    plot.between.group.distances(map0=map[cs,], wuf_dm, fn="between.group.wuf.pdf", ylab="Weighted Unifrac distance")
+    plot.between.group.distances(map0=map[cs,], dm=bc_dm, fn="between.group.bc.pdf", ylab="Bray-Curtis distance")
+    plot.between.group.distances(map0=map[cs,], dm=wuf_dm, fn="between.group.wuf.pdf", ylab="Weighted Unifrac distance")
 
 ### Relative Distance - Longitudinal Plots
 
@@ -76,44 +111,36 @@ plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", co
     dms <- list(uwuf_dm,wuf_dm,bc_dm)
     xlab<-"Days Since US Arrival"
     # by days to first sample        
-    multiplot.relative.L(mains=mains, dms=dms, map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Dissimilarity to First Sample", xlab=xlab, x.var="Sample.Day.Since.Arrival",
+    multiplot.relative.L(mains=mains, dms=dms, map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Dissimilarity to First Sample", xlab=xlab, x.var="Sample.Day.Since.Arrival",
                         ref.sample.order=1, outputfn="Karen_L_to_Day0.pdf")
     
     # by days to last sample    
-    multiplot.relative.L(mains=mains, dms=dms, map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Dissimilarity to Last Sample", xlab=xlab, x.var="Sample.Day.Since.Arrival",
+    multiplot.relative.L(mains=mains, dms=dms, map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Dissimilarity to Last Sample", xlab=xlab, x.var="Sample.Day.Since.Arrival",
                         ref.sample.order=6, outputfn="Karen_L_to_Day_M6.pdf")
 
     # days to first sample - day-to-day
-    multiplot.relative.L(mains=mains, dms=dms, map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Dissimilarity to Previous Sample", xlab=xlab, x.var="Sample.Day.Since.Arrival",
+    multiplot.relative.L(mains=mains, dms=dms, map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Dissimilarity to Previous Sample", xlab=xlab, x.var="Sample.Day.Since.Arrival",
                         ref.sample.order=1, outputfn="Karen_L_to_Previous.pdf", to.previous=T)
     
     # L to KarenThai
-    multiplot.relative.L(mains=mains, dms=dms, map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Distance to Karen in Thailand", 
+    multiplot.relative.L(mains=mains, dms=dms, map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Distance to Karen in Thailand", 
                         xlab=xlab, x.var="Sample.Day.Since.Arrival", ref_samples=karenthai, outputfn="Karen_L_to_KarenThai.pdf")
     # L to 2ndGenHmong
-    multiplot.relative.L(mains=mains, dms=dms, map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Distance to 2nd-Generation", 
+    multiplot.relative.L(mains=mains, dms=dms, map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], ylab="Distance to 2nd-Generation", 
                         xlab=xlab, x.var="Sample.Day.Since.Arrival", ref_samples=hmong_secondgen_cs, outputfn="Karen_L_to_USborn.pdf")
 
-    # IMP000 to Day 0
-    # let's make an extra var for IMP000
-    map.000 <- map[map$Subject.ID == "IMP.000",]
-    map.000$Sample.Day.Since.First.Sample <- as.numeric(as.Date(map.000$Sample.Date, format="%m/%d/%y") - as.Date("08/01/16", format="%m/%d/%y")) # hard code first sample date
-    map.000[,"travel.phase"] <- "Traveling"
-    map.000[map.000$Sample.Day.Since.First.Sample <= 2,"travel.phase"] <- "Pre"
-    map.000[map.000$Sample.Day.Since.First.Sample >= 28,"travel.phase"] <- "Post"
-    map.000$travel.phase <- factor(map.000$travel.phase, levels=c("Pre", "Traveling", "Post")) 
-    
+    # IMP000 to Day 0    
     # relative to first day
-    multiplot.relative.L(mains=mains, dms=dms, map=map.000, ylab="Distance to Self at Day 0", 
+    multiplot.relative.L(mains=mains, dms=dms, map0=map.000, ylab="Distance to Self at Day 0", 
                     xlab="Day", x.var="Sample.Day.Since.First.Sample", ref.sample.order = 1, outputfn="IMP000_to_Day0.pdf", override.cols.by = "travel.phase")
     # overall variability -- relative to previous sample
-    multiplot.relative.L(mains=mains, dms=dms, map=map.000, ylab="Distance to Previous Sample", 
+    multiplot.relative.L(mains=mains, dms=dms, map0=map.000, ylab="Distance to Previous Sample", 
                     xlab="Day", x.var="Sample.Day.Since.First.Sample", ref.sample.order = 1, outputfn="IMP000_to_Previous.pdf", to.previous=T, override.cols.by="travel.phase")                
     # relative to Hmong Thai
-    multiplot.relative.L(mains=mains, dms=dms, map=map.000, ylab="Distance to Hmong Thai", 
+    multiplot.relative.L(mains=mains, dms=dms, map0=map.000, ylab="Distance to Hmong Thai", 
                     xlab="Day", x.var="Sample.Day.Since.First.Sample", ref_samples=hmongthai, outputfn="IMP000_to_HmongThai.pdf", override.cols.by="travel.phase")
     # relative to 2nd Gen Hmong
-    multiplot.relative.L(mains=mains, dms=dms, map=map.000, ylab="Distance to 2nd Gen Hmong", 
+    multiplot.relative.L(mains=mains, dms=dms, map0=map.000, ylab="Distance to 2nd Gen Hmong", 
                     xlab="Day", x.var="Sample.Day.Since.First.Sample", ref_samples=hmong_secondgen_cs, outputfn="IMP000_to_Hmong2nd.pdf", override.cols.by="travel.phase")
 
 ### Relative Distance - Cross-Sectional Plots
@@ -151,7 +178,7 @@ plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", co
     for(i in 1:length(query_samples_list))
     {
         map_temp <- map[query_samples_list[[i]],]
-        map_temp <- map_temp[map_temp$BMI.Class %in% c("Normal","Obese"),]
+        map_temp <- map_temp[map_temp$BMI.Class %in% c("Lean","Obese"),]
         new_query_samples <- rownames(map_temp)
         # calculate the relative distances to reference groups as response variable
         rel.dists <- lapply(dms, function(xx) get.relative.distance(new_query_samples, ref_samples_list[[i]], xx))    
@@ -164,31 +191,91 @@ plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", co
     p <- plot.boxplot.by.group.x.bmi(map[cs,], bp[cs], "B-P Ratio", main="") # plot cross sectional only
     save_plot("boxplot-BMI-x-BPRatio.pdf", p, base_aspect_ratio = 1.3)
 
+    p <- plot.boxplot.by.group.x.bmi(map[c(karenthai,karen_firstgen_cs),], bp[c(karenthai,karen_firstgen_cs)], "B-P Ratio", main="") # plot cross sectional only
+    save_plot("boxplot-BMI-x-BPRatio-Karen.pdf", p, base_aspect_ratio = 1.3)
+
+    p <- plot.boxplot.by.group.x.bmi(map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], bp[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs)], "B-P Ratio", main="") # plot cross sectional only
+    save_plot("boxplot-BMI-x-BPRatio-Hmong.pdf", p, base_aspect_ratio = 1.3)
 
 
+### plot differential taxa by BMI classes
 
+    #iterate through all combos of looking at diff taxa in lean vs. obese by subgroup
+    groups <- c("HmongThai","Hmong1st","Hmong2nd","KarenThai","Karen1st")
+    taxatables <- list(taxa, taxa_L2, taxa_L6_rare)
+    names(taxatables) <- c("L6", "L2", "L6_rare")
+    combos <- expand.grid(names(taxatables),groups, stringsAsFactors=F)
+    colnames(combos) <- c("taxa","group")
+    combos[combos$group %in% c("KarenThai","HmongThai", "Hmong2nd"), "controls"] <- "Age"
+    combos[combos$group %in% c("Karen1st","Hmong1st"), "controls"] <- c("Age,Years.in.US")
 
-
-
-
-
-########## ARCHIVED EXPLORATORY STUFF ############
+    sig.level=.25    
+    lean.obese.cs.map <- map[map$BMI.Class %in% c("Lean", "Obese") & (is.na(map$Sample.Order) | map$Sample.Order==1),]
     
-# this doesnt work well
-# heatmap nutrients + microbes
-#    plot.nutrient.mb.heatmap(nutrients=nutrients, taxa=taxa, map0=map[cs,], fn="nutrients_mb_heatmap.all2.pdf")
+    for(i in 1:nrow(combos))
+    {
+        combo.name <- paste("BMI", paste(unlist(combos[i,c("group","taxa")]), collapse="."), sep=".")
+        print(combo.name) # so we know which iteration we are in
+        plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Sample.Group == combos$group[i],], taxatables[[combos$taxa[i]]], x.var="BMI.Class", 
+            control.vars=unlist(strsplit(combos$controls[i],",")), outputfn.prepend=combo.name, sig.level=sig.level)
+    }
 
-# why isnt this working!?
-#plot.nutrient.mb.heatmap(nutrients=nutrients, taxa=taxa, map0=map[hmong_firstgen_cs,], fn="nutrients_mb_heatmap.hmongthai.pdf")
+    # create factor version of years in us so that data isn't omitted for NAs or 0s - to be used only when dealing with the entire dataset
+    Years.in.US.Factor <- lean.obese.cs.map$Years.in.US
+    Years.in.US.Factor[Years.in.US.Factor == 0] <- 50 # 2nd gen are 0, let's set them to something higher like 50??
+    Years.in.US.Factor[is.na(Years.in.US.Factor)] <- 0 # Thai are NA, let's set them to 0
+    
+    Years.in.US.Factor <- factor(cut(Years.in.US.Factor,c(-1, .0001, seq(5,35,5), 41, 50)), ordered=T)
+    
+    lean.obese.cs.map[,"Years.in.US.Factor"] <- Years.in.US.Factor
+    
+    # try all the data, but add ethnicity as a control
+    plot.diff.taxa(lean.obese.cs.map, taxa, x.var="BMI.Class", 
+            control.vars=c("Age","Years.in.US.Factor","Ethnicity"), outputfn.prepend="BMI.all", sig.level=.10)
 
-# color by BMI
-#     plot.pcoa.BMI(map[c(hmong_firstgen_cs, hmong_secondgen_cs),], pc, "Hmong", "pcoa_BMI_Hmong_US.pdf")
-#     plot.pcoa.BMI(map[c(hmong_firstgen_cs),], pc, "Hmong", "pcoa_BMI_Hmong_1st.pdf")
-#     plot.pcoa.by(map[c(hmong_firstgen_cs),], pc, "Hmong", "pcoa_YearsInUS_Hmong_1st.pdf")
-        
-# plot food and taxa summaries, then order samples by each other -- # this isn't very useful
-#     food.sample.ids <- intersect(rownames(food_otu), rownames(taxa[cs,]))
-#     ordered.taxa <- plot.taxa.summary(map0=map[food.sample.ids,], otu=taxa, fn="taxa.summary2.pdf")    
-#     ordered.food <- plot.taxa.summary(map0=map[food.sample.ids,], otu=food_otu, fn="food.summary2.pdf")
-#     temp <- plot.taxa.summary(map0=map[ordered.food,], otu=taxa, fn="taxa.summary.by.food.pdf", sample.order=ordered.food)    
-#     temp <- plot.taxa.summary(map0=map[ordered.taxa,], otu=food_otu, fn="food.summary.by.taxa.pdf", sample.order=ordered.taxa)
+    plot.diff.taxa(lean.obese.cs.map, taxa_L6_rare, x.var="BMI.Class", 
+        control.vars=c("Age","Years.in.US","Ethnicity"), outputfn.prepend="BMI.all.L6_rare", sig.level=.10)
+
+    plot.diff.taxa(lean.obese.cs.map, taxa_L2, x.var="BMI.Class", 
+        control.vars=c("Age","Years.in.US","Ethnicity"), outputfn.prepend="BMI.all.L2", sig.level=1)
+
+### plot differential taxa by WHR
+
+    plot.diff.taxa(lean.obese.cs.map, taxa, x.var="Waist.Height.Ratio", 
+            control.vars=c("Age","Years.in.US.Factor","Ethnicity"), outputfn.prepend="WHR.all", sig.level=.10)
+
+
+### plot differential taxa M1 vs M6 in longitudinal subjects
+    ### nothing significant
+    s1 <- sort(rownames(map[map$Sub.Study=="L" & map$Sample.Order == 1 & map$Subject.ID != "IMP.000",]))
+    s2 <- sort(rownames(map[map$Sub.Study=="L" & map$Sample.Order == 6 & map$Subject.ID != "IMP.000",]))
+    taxa0 <- taxa[c(s1,s2),]
+    prevalences <- apply(taxa0, 2, function(bug.col) mean(bug.col > 0))
+    taxa0 <- taxa0[, prevalences >= .10]
+    ret <- collapse.by.correlation(taxa0, .95)
+    taxa0 <- taxa0[, ret$reps]
+
+    ret <- test.features.nonparametric.paired(taxa0, samples1=s1, samples2=s2, sig.level=.10)
+
+
+### heatmap
+
+    make.heatmap(otu, map[cs,], .25, presence.absence=T, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
+    make.heatmap(otu, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=NULL, outputfn="heatmap.hmong.pdf")   
+    make.heatmap(otu, map[c(karenthai,karen_firstgen_cs),], .25, presence.absence=T, baseline.groups=NULL, outputfn="heatmap.karen.pdf") 
+
+    make.heatmap(otu, map[cs,], .25, presence.absence=T, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.ordernumotus.pdf", order.by.num.otus=TRUE)
+    make.heatmap(otu, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=NULL, outputfn="heatmap.hmong.ordernumotus.pdf", order.by.num.otus=TRUE)   
+    make.heatmap(otu, map[c(karenthai,karen_firstgen_cs),], .25, presence.absence=T, baseline.groups=NULL, outputfn="heatmap.karen.ordernumotus.pdf", order.by.num.otus=TRUE) 
+
+
+    make.heatmap(otu, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=c("HmongThai"), outputfn="heatmap.hmong.thaibaseline.pdf")   
+    make.heatmap(otu, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=c("Hmong2nd"), outputfn="heatmap.hmong.2ndgenbaseline.pdf")   
+    make.heatmap(otu, map[c(karenthai,karen_firstgen_cs),], .25, presence.absence=T, baseline.groups=c("KarenThai"), outputfn="heatmap.karen.thaibaseline.pdf") 
+
+    make.heatmap(taxa, map[cs,], .25, presence.absence=T, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.taxa.all.thaibaseline.pdf")
+    make.heatmap(otu, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=c("HmongThai"), outputfn="heatmap.taxa.hmong.thaibaseline.pdf")   
+    make.heatmap(taxa, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=c("Hmong2nd"), outputfn="heatmap.taxa.hmong.2ndgenbaseline.pdf")   
+    make.heatmap(taxa, map[c(karenthai,karen_firstgen_cs),], .25, presence.absence=T, baseline.groups=c("KarenThai"), outputfn="heatmap.taxa.karen.thaibaseline.pdf") 
+    
+    

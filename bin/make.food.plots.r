@@ -14,7 +14,33 @@
 #L1_Grain_Product;L2_Pastas_cooked_cereals_rice;L3_Cooked_cereals_rice
 
 ### Taxa summaries
-    plot.taxa.summary(map0=map[cs,], otu=food_otu, fn="food.summary.pdf")
+    plot.taxa.summary(map0=map_all[cs_all,], otu=food_otu_L3, fn="food.summary.pdf")
+    
+    # plot only those who have been sequenced
+    sequenced.subjects <- unique(map[map$Sub.Study=="L" & map$Subject.ID != "IMP.000", "Subject.ID"])
+    plot.taxa.summary.L(taxa0=food_otu_L3, map0=map_all[map_all$Subject.ID %in% sequenced.subjects, ], outputfn="food.summary.L.sequenced.pdf", grid.ncol=2)
+    
+    # plot ALL longitudinal food summaries
+    plot.taxa.summary.L(taxa0=food_otu_L3, map0=map_all[map_all$Sub.Study=="L" & map_all$Subject.ID != "IMP.000", ], outputfn="food.summary.L.pdf", grid.ncol=4)
+
+    # look at individual summaries under a specific food category only
+    food_otu <- read.table(paste(datadir,"../food.otu.txt",sep="/"), sep="\t", quote="", row=1, head=T, comment="", strip.white=T)
+    foods <- as.character(food_otu[,ncol(food_otu)])
+    food_otu <- food_otu[,-ncol(food_otu)]
+    t_food_otu <- t(food_otu)
+    food_otu <- sweep(t_food_otu, 1, rowSums(t_food_otu), '/')
+    foods_dm <- strsplit(foods, split=";")
+    foods_dm <- data.frame(matrix(unlist(foods_dm), byrow=T, ncol=6),stringsAsFactors=FALSE, row.names = colnames(food_otu))
+    foods_L1 <- c("L1_Meat_Poultry_Fish_and_Mixtures", "L1_Dry_Beans_Peas_Other_Legumes_Nuts_and_Seeds","L1_Grain_Product","L1_Fruits","L1_Vegetables","L1_Sugars_Sweets_and_Beverages")# doesn't make sense to look at all unique(foods_dm[,1])
+    for(i in 1:length(foods_L1))
+    {
+        plot.taxa.summary.L(taxa0=food_otu[,rownames(foods_dm[foods_dm[,1] == foods_L1[i],])], map0=map_all[map_all$Sub.Study=="L" & map_all$Subject.ID != "IMP.000", ], 
+                            x.var="Diet.Day.Since.Arrival", grid.ncol=4, outputfn=paste0("food.",foods_L1[i],".L.pdf"))
+
+        plot.taxa.summary.L(taxa0=food_otu[,rownames(foods_dm[foods_dm[,1] == foods_L1[i],])], map0=map_all[map_all$Subject.ID %in% sequenced.subjects, ], 
+                            x.var="Diet.Day.Since.Arrival", grid.ncol=2, outputfn=paste0("food.",foods_L1[i],".sequenced.L.pdf"))
+
+    }
 
 ### PCOA
     plot.pcoa(map_all[cs_all,], food_euc_dm, "Food Euclidean")
