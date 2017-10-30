@@ -1,254 +1,0 @@
-a <- (1-eps)^counts    b <- (1 / (3^(counts-1)))    c <- eps^counts    x <- a / (a + b * c)    y <- 1 - x^lengths
-y[1]
-a[1]
-b[1]
-c[1]
-x[1]
-b[1]==0
-x <- (1-eps)^counts / ((1-eps)^counts + (1 / (3^(counts-1)))*eps^counts)
-x[1]
-counts = 11420
-a <- (1-eps)^counts    b <- (1 / (3^(counts-1)))    c <- eps^counts    x <- a / (a + b * c)    y <- 1 - x^lengths
-a[1]
-(1-.05)^15000
-(1-.05)^14000
-min(double)
-double.xmin
-.Machine
-.Machine$double.xmin
-a <- .Machine$double.xmin
-a / (a + a*a)
-print(a)
-1-a^225
-a <- NA
-is.na(a)
-is.null(a)
-is.null(NULL)
-356563*.05
-7/17828.15
-1-7/17828.15
-?scan
-x <- c(3,4,56,3,5,3,3)
-unique(x)
-library(pwr)
-pwr.anova.test(k=2, f=abs(-0.0157416/(2*0.0213438)), power=.8)
-pwr.anova.test(k=2, f=abs(-0.0157416/(2*0.095)), power=.8)
-pwr.anova.test(k=2, f=abs(-0.1557416/(2*0.01)), power=.8)
-pwr.anova.test(k=2, f=abs(0.155/(2*0.0107)), power=.8)
-pwr.anova.test(k=2, f=abs(0.03345/(2*0.00928)), power=.8)
-pwr.anova.test(k=2, f=abs(0.013/(2*.03)), power=.8)
-pwr.anova.test(k=2, f=abs(0.006/(2*.011)), power=.8)
-pwr.anova.test(k=2, f=abs(0.005/(2*.009)), power=.8)
-pwr.anova.test(k=2, f=abs(0.001/(2*.0002)), power=.8)
-x <- (0.7628,0.0147,0.9342,0.1107,0.6797,3.77E-08)
-x <- c(0.7628,0.0147,0.9342,0.1107,0.6797,3.77E-08)
-apply(p.adjust, x, n=118)
-apply(x, 1, p.adjust, n=118)
-lapply(x, p.adjust, n=118)
-unlist(lapply(x, p.adjust, n=118))
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- c(0.99027,0.01113,0.4947,0.00593,0.68112,2.00E-16)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- c(0.762751,0.014663,0.934182,0.110733,0.6797,0.000474)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.99027,0.01113,0.4947,0.00593,0.68112,0.11016)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.0151,0.2543,0.5273,0.1373,0.6461)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.24,0.982,0.711,0.135,0.252)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(00.23701,0.00406,0.5826,0.17664,0.35576)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.7822,0.00425,0.49998,0.00642,0.83877)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.62879,0.24398,0.85792,0.56728,0.17594,0.00197,0.34862)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.595889,0.057916,0.783039,0.699298,0.195882,0.000785,0.905865)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.422,0.103,0.596,0.188,0.281,0.445,0.434)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.859907,0.019876,0.927471,0.210074,0.912991,0.033952,0.000183)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.39105,0.00896,0.56906,0.85463,0.82854,0.00265,0.6415)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.842973,0.191493,0.899186,0.697909,0.624673,0.000883,0.100037)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.6204,0.0262,0.8081,0.2157,0.5274)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.5176,0.0166,0.8463,0.1508,0.3899)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.685,0.0109,0.6065,0.1982,0.3044)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.83045,0.000583,0.629129,0.593527,0.735863)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.93858,0.00515,0.83757,0.49479,0.92551)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- rep(0.0147, 119)
-p.adjust(x, method="fdr")
-x
-x <- cbind(c(1,1,1), c(2,2,2))
-x
-colMeans(x)
-x <- cbind(c(1,1,1), c(2,2,2))
-x
-rownames(x) <- c("a","b","c")
-rownames(x)[which(x[,1] %in% c(1,2))]
-rownames(x)[x[,1] %in% c(1,2)]
-x[,1] %in% c(1,2)
-?rank
-library(beeswarm)
-beeswarm(x=-log10(rep(1:10)), main="Alpha Diversity",#
-			ylab="Effect Size", pwpch=rep(23,length(unlist(cols))), pwcol=unlist(cols), pwbg=unlist(cols))#
-legend("topright", legend = c("Yes", "No"), pch = pch , col = 1:2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity",#
-			ylab="Effect Size", pwpch=rep(23,length(unlist(cols))), pwcol=unlist(cols), pwbg=unlist(cols))#
-legend("topright", legend = c("Yes", "No"), pch = pch , col = 1:2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity")
-line(1)
-abline(h=2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity")
-abline(h=2, lty=2)
-?wilcox.test
-?lm
-test <- cbind(1:2,1:2)
-rownames(test) <- "#S"
-rownames(test) <- c("#S", "1")
-test
-?abline
-x <- 1 > 3
-x
-x <- 5 > 3
-x
-class(x)
-pwr.anova.test()
-library(pwr)
-?pwr.anova.test()
-pwr.anova.test(2, f=-0.0334525, sig.level=0.05, power=.80)
-pwr.anova.test(2, f=0.0334525, sig.level=0.05, power=.80)
-pwr.anova.test(2, f=0.1555, sig.level=0.05, power=.80)
-pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.1554/.0107)
-pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.03345/.00928)
-pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=..03/.001)
-pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=..03/.003)
-pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.03/.003)
-pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.007/.001)
-pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.145/.02)
-pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.001746/.0002)
-.03345/.00928
-?Sys.geten
-?Sys.getenv
-library(optparse)
-install.packages("optparse")
-library(optparse)
-?hclust
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/bin/load.r")
-dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:15])
-use.rare=FALSE
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/bin/load.r")
-dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:15])
-dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:20])
-hmong1
-hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:18])
-hmong1
-o.hmong.1 <- map0[hmong1,c("Age","BMI")]
-o.hmong.1
-sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:18]
-bp2 <- plot.b.p.ratio(map0[hmong1,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="hmong1.b.p.ratio.pdf")
-getwd()
-map0[c("CS.347.0", "CS.164", "CS.228"),c("Age","BMI")]
-d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- c(alpha(wes_palette(n=5, name="Moonrise3"), .8))p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)
-d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- get.group.colors(groups=as.character(levels(d$group)), alpha.val=.8)p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)
-p
-p <- p + geom_text(data = d[hmong1, ], aes(label=hmong1) ,hjust=0, vjust=0, size=3)
-p
-hmongthai <- names(sort(centroid.dist[rownames(map0)[map0$Sample.Group=="HmongThai"]])[1:15])
-hmongthai
-hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 29 & map0$Sample.Group=="Hmong1st"]]))
-hmong1
-sort(map0[hmong1,"Years.in.US"])
-sort(map0[hmong1,"Years.in.US", drop=F])
-x <- map0[hmong1,"Years.in.US", drop=F]
-x[order(x[,1]),]
-x
-x[order(x[,1]),,drop=F]
-rownames(x[order(x[,1]),,drop=F])[1:5]
-maybes <- rownames(x[order(x[,1]),,drop=F])[1:5]
-maybes
-map0[maybes,c("Age","BMI")]
-bp2 <- plot.b.p.ratio(map0[hmong1,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="hmong1.b.p.ratio.pdf")
-d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- get.group.colors(groups=as.character(levels(d$group)), alpha.val=.8)p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)# label points by distances#p <- p + geom_text(data = d[hmong1, ], aes(label=distance) ,hjust=0, vjust=0, size=3)# label points by sample namep <- p + geom_text(data = d[hmong1, ], aes(label=hmong1) ,hjust=0, vjust=0, size=3)
-p
-bp["CS.388",]
-bp <- plot.b.p.ratio(map0[cs,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="temp.b.p.ratio.pdf")
-bp["CS.388",]
-dim(bp)
-class(bp)
-mybp <- get.taxa.ratio(prevotella,bacteroides)
-mybp <- get.taxa.ratio(taxa,prevotella,bacteroides)
-mylogbp <- log10(mybp)
-mylogbp["CS.388"]
-plot(mylogbp[hmong1], map0[hmong1,"Years.in.US"])
-plot(map0[hmong1,"Years.in.US"],mylogbp[hmong1])
-mybp <- get.taxa.ratio(taxa,bacteroides, prevotella)
-mylogbp <- log10(mybp)
-plot(map0[hmong1,"Years.in.US"],mylogbp[hmong1])
-mylogbp["CS.388"]
-mylogbp["CS.135"]
-mylogbp["CS.222"]
-?pam
-sessionInfo()
-setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")use.rare <- FALSE# load all source files, data, and prep any variables for reusesource("bin/load.r")
-alpha.metrics <- c("chao1", "shannon", "simpson") #c("PD_whole_tree", "shannon", "simpson")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-p.test <- plot.boxplot.by.group.x.bmi(map00=map[cs,], y=alphadiv0[cs, "chao1"], ylab="", main="chao1")
-P.TEST
-p.test
-l <- get_legend(p.test)
-p.test <- plot.boxplot.by.group.x.bmi(map00=map[cs,], y=alphadiv0[cs, "chao1"], ylab="", main="chao1")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-p.test <- plot.boxplot.by.group.x.bmi(map00=map[cs,], y=alphadiv0[cs, "chao1"], ylab="", main="chao1")
-l <- get_legend(p.test)
-p.test
-p.test$theme
-sink()
-sink()
-p.test$theme
-ggplot(1:10)
-ggplot(data.frame(x=1:10,y=1:10))
-dev.off()
-ggplot(data.frame(x=1:10,y=1:10))
-ggplot(data.frame(x=1:10,y=1:10)) + geom_point()
-ggplot(data.frame(x=1:10,y=1:10), aes(x=x,y=y)) + geom_point()
-ggplot(data.frame(x=1:10,y=1:10), aes(x=x,y=y)) + geom_point() + legend()
-ggplot(data.frame(x=1:10,y=1:10), aes(x=x,y=y)) + geom_point() + legend(x)
-ggplot(data.frame(x=1:10,y=1:10), aes(x=x,y=y)) + geom_point()
-l <- get_legend(p.test)
-grobs <- ggplotGrob(p.test)$grobs
-legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
-source("bin/load.r")
-head(alphadiv0)
-alpha.metrics <- c("chao1", "shannon", "simpson") #c("PD_whole_tree", "shannon", "simpson")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-sink()
-sink()
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
-multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
