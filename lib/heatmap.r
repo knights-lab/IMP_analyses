@@ -129,10 +129,10 @@ make.heatmap <- function(taxa0, map0, min.prevalence=0.25, presence.absence=FALS
     # note that otu0 test differentiation will relevel factors based on this order (important for 2-group comparisons when looking at coefficients, 
     # and important for ordering the color groupings)
     # names must match columns exactly!
-    color.list[["Sample.Group"]] <- setNames(c('#fcc5c0','#a6bddb','#1c9099','#f768a1','#7a0177'), 
-                            c("HmongThai","KarenThai","Karen1st","Hmong1st","Hmong2nd"))
-    color.list[["Years.in.US"]] <- setNames(c('white','indianred1'), c("new arrival", "long-term"))
 
+    color.list[["Sample.Group"]] <- get.group.colors(alpha.val=.8)
+    
+    color.list[["Years.in.US"]] <- setNames(c('#f3f6fb','#7c736c'), c("new arrival", "long-term"))
 
     color.list[["Sample.Group"]] <- color.list[["Sample.Group"]][names(color.list[["Sample.Group"]]) %in% unique(map0$Sample.Group)]
     
@@ -161,9 +161,9 @@ core.mb.heatmap <- function(otu0, map0, cluster.var, color.list, heatmap.title="
     partial.map <- map0[partial.sample.labels, c("Sample.Group","Years.in.US")] 
     
     # override sample labels for any 1st gen
-
     g <- levels(map0$Sample.Group)
     sample.labels <- NULL
+    group.end.ix <- NULL # useful for marking separation between groups on the heatmap
     for(i in 1:length(g))
     {
         this.map <- partial.map[partial.map$Sample.Group==g[i],]        
@@ -171,23 +171,18 @@ core.mb.heatmap <- function(otu0, map0, cluster.var, color.list, heatmap.title="
         if(order.by.num.otus)
         {
             this.otu <- otu0[rownames(this.map),]
-            sample.labels <- c(sample.labels, rownames(this.otu[order(rowSums(this.otu)),]))
-
+            sample.labels <- c(sample.labels, rownames(this.otu[order(rowSums(this.otu), decreasing=TRUE),]))
         }
         else
         {
             if(g[i] %in% c("HmongThai","KarenThai","Hmong2nd"))
                 sample.labels <- c(sample.labels, rownames(partial.map)[partial.map$Sample.Group==g[i]])
             else
-            {
-
                 sample.labels <- c(sample.labels, rownames(this.map[order(this.map$Years.in.US),]))
-            }
         }
-        
-
+        group.end.ix <- c(group.end.ix, length(sample.labels))
     }  
-	
+	group.end.ix <- group.end.ix[-length(group.end.ix)] # don't need the last index
 	
 	# create each of the colored bars, reorder to previous column clustering
 	col.colors <- create.color.bars(map0[sample.labels,,drop=F], color.var, color.list)
@@ -196,7 +191,9 @@ core.mb.heatmap <- function(otu0, map0, cluster.var, color.list, heatmap.title="
     lwid = c(1.2,.2,9,.5) #col widths
 	lmat = rbind(c(0,0,4,0), c(3,1,2,0), c(0,0,5,0))
 	        # 1 = color bars; 2 = heatmap
-	hm.colors <- colorRampPalette(c("white","plum"))(27)	# for presence absence only
+#	hm.colors <- colorRampPalette(c("white","plum"))(27)	# for presence absence only
+	hm.colors <- colorRampPalette(c("#f2ece3","#764e80"))(2)	  # presence absence only
+#
 #	hm.colors <- colorRampPalette(c("blue","white","red"))(27)
 #	hm.colors <- colorRampPalette(c("#2166ac","white","#b2182b"))(20)
 	main <- heatmap.title
@@ -239,7 +236,8 @@ height=12 #IMP
 	main = main, key=FALSE, keysize=5, 
 	lmat=lmat, lwid=lwid, lhei=lhei, margins=margins,
 	labCol=cnames, labRow=NA, # remove all row and col labels
-	cexCol=.7, scale="none")
+	cexCol=.7, scale="none",
+	rowsep=group.end.ix, sepwidth=c(.1,.1), sepcolor="white") # indices for where to draw row separators and width of line
 
 # super useful for clicking and identifying a location (for legend
 # 		coords <- locator(1)

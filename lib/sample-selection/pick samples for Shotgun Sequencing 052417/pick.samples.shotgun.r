@@ -21,7 +21,7 @@ map0 <- map[cs,]
 bd <- betadisper(ddm, map0$Sample.Group)
 centroid.dist <- bd$distances # distances of all samples to their group centroids!
 
-hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:15])
+hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 29 & map0$Sample.Group=="Hmong1st"]]))
 
 bp <- plot.b.p.ratio(map0[cs,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="temp.b.p.ratio.pdf")
 ### comment out these lines because we don't want to pick high BP ratios anymore (try to be unbiased!)
@@ -35,7 +35,7 @@ hmongthai <- names(sort(centroid.dist[rownames(map0)[map0$Sample.Group=="HmongTh
 d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))
 # set the levels of Sample.Group so that it's the same every time
 d$group <- factor(d$group, levels=sort(as.character(unique(d$group))))
-group.cols <- c(alpha(wes_palette(n=5, name="Moonrise3"), .8))
+group.cols <- get.group.colors(groups=as.character(levels(d$group)), alpha.val=.8)
 p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +
     scale_color_manual(values=group.cols) + #sets the color palette of the fill
     stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)
@@ -76,3 +76,4 @@ umgc <- read.table("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/sequences
 merge(o.hmong.1, umgc, by.x=0, by.y="Sample.ID")
 merge(o.hmong.thai, umgc, by.x=0, by.y="Sample.ID")
 
+## NOTE, that some changes were made to the final list based on low DNA content in QC results -- 10/16/17

@@ -1,3 +1,18 @@
+require(scales)
+get.group.colors <- function(groups=NULL, alpha.val=1)
+{
+    sample.group.names <- c("Hmong1st", "Hmong2nd", "HmongThai", "Karen1st", "KarenThai")
+    sample.group.cols <- c("#e9a3c9", "#fee08b", "#c51b7d", "#80cdc1", "#018571")
+    names(sample.group.cols) <- sample.group.names
+    
+    if(alpha.val != 1) sample.group.cols <- alpha(sample.group.cols, alpha.val)
+
+    if(!is.null(groups))
+        return(sample.group.cols[groups])
+    else
+        return(sample.group.cols)
+}
+
 get.pch <- function(map)
 {    
     lookup <- c(19,17) # point type
@@ -41,7 +56,7 @@ test.features.parametric <- function(otu, x, controls=NULL, sig.level, paired=FA
 	
 	diff.features <- names(adj.pvals)[adj.pvals <= sig.level & !is.na(adj.pvals)]
 
-	list(features=diff.features, pvals=adj.pvals)
+	list(features=diff.features, adj.pvals=adj.pvals, pvals=pvals)
 }
 
 # allows only for group comparisons, therefore x must be a factor
@@ -56,7 +71,7 @@ test.features.nonparametric <- function(otu, x, sig.level)
 	
 	diff.features <- names(adj.pvals)[adj.pvals <= sig.level & !is.na(adj.pvals)]
 
-	list(features=diff.features, pvals=adj.pvals)
+	list(features=diff.features, adj.pvals=adj.pvals, pvals=pvals)
 }
 
 # allows only for two-group comparisons, therefore x must be a factor
@@ -70,7 +85,7 @@ test.features.paired <- function(otu, samples1, samples2, sig.level, parametric=
 	
 	diff.features <- names(adj.pvals)[adj.pvals <= sig.level & !is.na(adj.pvals)]
 
-	list(features=diff.features, pvals=adj.pvals)
+	list(features=diff.features, adj.pvals=adj.pvals, pvals=pvals)
 }
 
 
@@ -100,9 +115,9 @@ test.groups <- function(y, x, parametric=TRUE)
 # depending on what's available (map, otutable, and distance matrix), generates appropriate DM and PCs
 # using samples that are currently in map0
 # add.samples.dm: allows for additional samples to be included in dm that you don't care to keep in the mapping
-prep.dm <- function(map0, otu0=NULL, dm=NULL, method="euclidean", axis1=1, axis2=2, add.samples.dm=NULL)
+prep.dm <- function(map0, otu0=NULL, dm=NULL, method="euclidean", add.samples.dm=NULL)
 {
-    if(!is.null(dm))
+    if(!is.null(dm)) # if dm is passed in, use it
     {    
         valid_samples <- intersect(rownames(dm), rownames(map0))
         map0 <- map0[valid_samples,]
@@ -111,7 +126,7 @@ prep.dm <- function(map0, otu0=NULL, dm=NULL, method="euclidean", axis1=1, axis2
         dm <- dm[valid_samples, valid_samples]
         ddm <- as.dist(dm)
     }
-    else
+    else # if no dm, generate distance from OTU table
     {
         valid_samples <- intersect(rownames(otu0), rownames(map0))
         map0 <- map0[valid_samples,]
@@ -121,8 +136,9 @@ prep.dm <- function(map0, otu0=NULL, dm=NULL, method="euclidean", axis1=1, axis2
         ddm <- vegdist(otu0, method=method)
         dm <- as.matrix(ddm) # for use in stats later
     }
-    pc <- cmdscale(ddm,max(axis1,axis2))
-    return(list(map0=map0, pc=pc, dm=dm))
+# move PC generation outside
+#    pc <- cmdscale(ddm,max(axis1,axis2), eig=TRUE) # return eigenvals for calculating % var explained
+    return(list(map0=map0, ddm=ddm, dm=dm))
 }
 
 

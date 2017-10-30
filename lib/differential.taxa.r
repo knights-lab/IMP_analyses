@@ -2,24 +2,35 @@
 # finds taxa that are differentiated by x.var (can be factor or continuous) then
 # plots only those that are significant
 # control.vars = names of variables to control for
-plot.diff.taxa <- function(map0, taxa0, x.var, control.vars=NULL, sig.level=.05, outputfn.prepend, do.sqrt=TRUE)
+plot.diff.taxa <- function(map0, taxa0, x.var, control.vars=NULL, sig.level=.05, outputfn.prepend, do.sqrt=TRUE, do.filter=TRUE)
 {
     valid.samples <- intersect(rownames(map0), rownames(taxa0))
     map0 <- map0[valid.samples,]
     taxa0 <- taxa0[valid.samples,]
 
     # filter taxa
-    prevalences <- apply(taxa0, 2, function(bug.col) mean(bug.col > 0))
-    taxa0 <- taxa0[, prevalences >= .10]
-
+    if(do.filter){    
+        prevalences <- apply(taxa0, 2, function(bug.col) mean(bug.col > 0))
+        taxa0 <- taxa0[, prevalences >= .10]
+    }
+    
     # additional filtering to allow for parametric tests
     if(do.sqrt) taxa0 <- asin(sqrt(taxa0))
-    ret <- collapse.by.correlation(taxa0, .95)
-    taxa0 <- taxa0[, ret$reps]
-
-    ret <- test.features.parametric(taxa0, map0[, x.var], controls=map0[,control.vars, drop=F], sig.level=sig.level)      
+    if(do.filter) { 
+      ret <- collapse.by.correlation(taxa0, .95)
+      taxa0 <- taxa0[, ret$reps]
+    }
+    
+    controls <- NULL
+    if(!is.null(control.vars)) controls <- map0[,control.vars, drop=F]
+    
+    ret <- test.features.parametric(taxa0, map0[, x.var], controls=controls, sig.level=sig.level)      
     sig.taxa <- ret$features
+
+
    
+    pvals <- NULL
+    adj.pvals <- NULL
     if(length(sig.taxa)==0)
         print("No significant taxa found")        
     else
@@ -44,12 +55,17 @@ plot.diff.taxa <- function(map0, taxa0, x.var, control.vars=NULL, sig.level=.05,
                 p <- p + stat_smooth(aes(group = 1), method = "lm", se = T, size=2)
             }
 
+            # save pvals
+            pvals <- c(pvals, ret$pvals[sig.taxa[i]])
+            adj.pvals <- c(adj.pvals, ret$adj.pvals[sig.taxa[i]])            
+            
             # add stats to bottom right
-            p <- ggdraw(p) + draw_figure_label(label=paste0("FDR-adjusted (number of taxa) q = ", signif(ret$pvals[sig.taxa[i]], 2)), size=8, position="bottom.right")
+            p <- ggdraw(p) + draw_figure_label(label=paste0("p = ", signif(ret$pvals[sig.taxa[i]], 2), "\n",
+                  "FDR-adjusted (number of taxa) q = ", signif(ret$adj.pvals[sig.taxa[i]], 2)), size=8, position="bottom.right")
 
             save_plot(paste(outputfn.prepend, taxa_abbrev, "pdf", sep="."), p, useDingbats=FALSE, base_aspect_ratio = 1.3 )
         
         }
     }
-    
+    invisible(data.frame(pvals=pvals, adj.pvals=adj.pvals, sig.taxa=sig.taxa))
 }

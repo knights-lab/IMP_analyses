@@ -55,6 +55,11 @@ create.mapping <- function()
     # remove NA's in the SampleID column (dropouts)
     map <- map[!is.na(map[,"#SampleID"]),]
 
+    # do some checks on formatting of strings
+    check <- c("Recruitment.Location", "Researcher", "Sub.Study", "Exclude", "Public.Housing", "Medical.Assistance", "Children.Free.Lunch", "Highest.Education", "Religion", "Type.Birth.Location", "Type.location.before.US", "Tobacco.Use", "Alcohol.Use", "Breastfed", "Years.Breastfed")
+    unique.vals <- apply(map[, check], 2, unique)
+    lapply(unique.vals, sort)
+
     write.table(map, "mapping.txt",sep="\t",quote=F,qmethod="double",row.names=F)
     
     print("After running this, always search for special characters: ' \" < > ?")

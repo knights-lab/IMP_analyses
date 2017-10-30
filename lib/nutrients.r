@@ -10,10 +10,13 @@ boxplot.by.subgroup <- function(map0, x.group, x.subgroup=NULL, subgroup.cols, y
     else
         d <- data.frame(Sub.Group=x.subgroup, y=y, Group=x.group)
  
-    p <- ggplot(d, aes(Group, y)) + geom_boxplot(aes(fill = Sub.Group)) +  geom_point(aes(y=y, fill = Sub.Group), position=position_dodge(width=.75), color="black", shape=21) +
+    cols <- c(get.group.colors(alpha.val=.8), alpha("black", .5))
+    
+    p <- ggplot(d, aes(Group, y)) + geom_boxplot(aes(fill = Sub.Group)) +  
+#        geom_point(aes(y=y, fill = Sub.Group), position=position_dodge(width=.75), color="black", shape=21) +
         ggtitle(plot.title) + 
         theme(legend.position="none") +  
-        ylab("log10 + 1") + xlab("") + theme(axis.text.x = element_text(size=9))
+        ylab("log10 + 1") + xlab("") + theme(axis.text.x = element_text(size=9)) + scale_fill_manual(values=cols)
 
     if(!is.null(x.subgroup))
         p <- p + scale_fill_manual(name = "Groups", values = subgroup.cols)

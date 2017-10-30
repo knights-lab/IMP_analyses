@@ -7,7 +7,7 @@ source("bin/load.r")
 # load some extra vars here
 # TODO: alpha div should probably just be done with rarefied tables to get rid of biases towards higher depth samples
     
-    alpha.metrics <- c("PD_whole_tree", "shannon", "simpson")
+    alpha.metrics <- c("observed_otus", "shannon", "simpson") #c("PD_whole_tree", "shannon", "simpson")
     
     # let's make an extra var for IMP000
     map.000 <- map[map$Subject.ID == "IMP.000",]
@@ -72,6 +72,10 @@ source("bin/load.r")
     plot.pcoa(map[cs,], dm=uwuf_dm, plot.title="Unweighted Unifrac", axis1=1, axis2=3) # try pc1 and pc3
     plot.pcoa(map[cs,], dm=bc_dm, plot.title="Bray Curtis")
 
+    # RDA: constrain ordination with selected env variables using Unweighted Unifrac DM
+    plot.constrained.ordination(map[cs,], dm0=uwuf_dm, plot.title="Unweighted Unifrac", env.vars=c("Years.in.US","BMI","Age"))    
+    plot.constrained.ordination(map[cs,], dm0=uwuf_dm, plot.title="Unweighted Unifrac - Full Model")    
+    
     #plot.pcoa.by(map0=map[cs,], wuf_dm, fn="KCK.fmt.pcoa.pdf", ethnicity="Hmong", color.by="Years.in.US", and.by="BMI.Class", label.samples=paste0("TFSCS0", 20:29))
 
 ### Bacteroides-Prevotella
@@ -244,6 +248,30 @@ source("bin/load.r")
     plot.diff.taxa(lean.obese.cs.map, taxa, x.var="Waist.Height.Ratio", 
             control.vars=c("Age","Years.in.US.Factor","Ethnicity"), outputfn.prepend="WHR.all", sig.level=.10)
 
+### plot differential OFUs by BMI class
+    output.table <- NULL
+    for(i in 1:length(oFu_list))
+    {
+        ofu <- oFu_list[[i]]
+        ret <- plot.diff.taxa(lean.obese.cs.map, ofu, x.var="BMI.Class", 
+            control.vars=c("Age","Years.in.US","Ethnicity"), outputfn.prepend=paste0("BMI.all.", names(oFu_list)[i]), sig.level=.25)
+    
+        if(nrow(ret) > 0)    
+            output.table <- rbind(output.table, cbind(ret, similarity=names(oFu_list)[i], group="All Groups"))
+    }
+    # let's look at 1st gen immigrants only
+    submap <- lean.obese.cs.map[lean.obese.cs.map$Sample.Group %in% c("Karen1st", "Hmong1st"),]
+    for(i in 1:length(oFu_list))
+    {
+        ofu <- oFu_list[[i]]
+        ret <- plot.diff.taxa(submap, ofu, x.var="BMI.Class", 
+            control.vars=c("Age","Years.in.US","Ethnicity"), outputfn.prepend=paste0("BMI.1stgen.", names(oFu_list)[i]), sig.level=.25)
+
+        if(nrow(ret) > 0)
+            output.table <- rbind(output.table, cbind(ret, similarity=names(oFu_list)[i], group="1stGen"))
+    }
+    write.table(output.table, file="IMP-OFU-lean-v-obese.txt", quote=F, row.names=F, sep="\t")
+
 
 ### plot differential taxa M1 vs M6 in longitudinal subjects
     ### nothing significant
@@ -274,7 +302,7 @@ source("bin/load.r")
     make.heatmap(otu, map[c(karenthai,karen_firstgen_cs),], .25, presence.absence=T, baseline.groups=c("KarenThai"), outputfn="heatmap.karen.thaibaseline.pdf") 
 
     make.heatmap(taxa, map[cs,], .25, presence.absence=T, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.taxa.all.thaibaseline.pdf")
-    make.heatmap(otu, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=c("HmongThai"), outputfn="heatmap.taxa.hmong.thaibaseline.pdf")   
+    make.heatmap(taxa, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=c("HmongThai"), outputfn="heatmap.taxa.hmong.thaibaseline.pdf")   
     make.heatmap(taxa, map[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], .25, presence.absence=T, baseline.groups=c("Hmong2nd"), outputfn="heatmap.taxa.hmong.2ndgenbaseline.pdf")   
     make.heatmap(taxa, map[c(karenthai,karen_firstgen_cs),], .25, presence.absence=T, baseline.groups=c("KarenThai"), outputfn="heatmap.taxa.karen.thaibaseline.pdf") 
     

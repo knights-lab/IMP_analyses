@@ -41,15 +41,32 @@
                             x.var="Diet.Day.Since.Arrival", grid.ncol=2, outputfn=paste0("food.",foods_L1[i],".sequenced.L.pdf"))
 
     }
+    
+    # let's only look at meat
+#     food_otu <- read.table(paste(datadir,"../food.otu.txt",sep="/"), sep="\t", quote="", row=1, head=T, comment="", strip.white=T)
+#     foods <- as.character(food_otu[,ncol(food_otu)])
+#     food_otu <- food_otu[,-ncol(food_otu)]
+#     food_otu <- t(food_otu)
+#     foods_dm <- strsplit(foods, split=";")
+#     foods_dm <- data.frame(matrix(unlist(foods_dm), byrow=T, ncol=6),stringsAsFactors=FALSE, row.names = colnames(food_otu))
+# 
+#     meatnames <- rownames(foods_dm[foods_dm$X1 == "L1_Meat_Poultry_Fish_and_Mixtures" & foods_dm$X2 != "L2_Meatpoultry_fish_with_nonmeat",])
+#     meat_otu <- food_otu[,meatnames]
+#     valid_samples <- intersect(cs_all, rownames(meat_otu))
+#     temp_map <- map_all[valid_samples,]
+#     plot(map_all[valid_samples, "Years.in.US"], rowSums(meat_otu[valid_samples,]))
+# 
+#     plot(temp_map[temp_map$Years.in.US != 0, "Years.in.US"], rowSums(meat_otu[rownames(temp_map[temp_map$Years.in.US != 0,]),]))
+
 
 ### PCOA
-    plot.pcoa(map_all[cs_all,], food_euc_dm, "Food Euclidean")
-    plot.pcoa(map_all[cs_all,], food_bc_dm, "Food Bray-Curtis")
-    plot.pcoa(map_all[cs_all,], food_wuf_dm, "Food Weighted Unifrac")
-    plot.pcoa(map_all[cs_all,], food_uwuf_dm, "Food UnWeighted Unifrac")
+    plot.pcoa(map_all[cs_all,], dm=food_euc_dm, plot.title="Food Euclidean")
+    plot.pcoa(map_all[cs_all,], dm=food_bc_dm, plot.title="Food Bray-Curtis")
+    plot.pcoa(map_all[cs_all,], dm=food_wuf_dm, plot.title="Food Weighted Unifrac")
+    plot.pcoa(map_all[cs_all,], dm=food_uwuf_dm, plot.title="Food Unweighted Unifrac")
     
-    plot.pcoa.long(map_all, food_uwuf_dm, "Food UnWeighted Unifrac - L")
-    plot.pcoa.long(map_all, food_wuf_dm, "Food Weighted Unifrac - L")
+    plot.pcoa.long(map_all, dm=food_uwuf_dm, plot.title="Food UnWeighted Unifrac - L")
+    plot.pcoa.long(map_all, dm=food_wuf_dm, plot.title="Food Weighted Unifrac - L")
 
 
 ### Intra-inter group variabilities

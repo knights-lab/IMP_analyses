@@ -58,14 +58,15 @@ plot.b.p.ratio <- function(map0, otu, bug1, bug2, outputfn, longitudinal=F)
 
     save_plot(outputfn, p, useDingbats=FALSE, base_aspect_ratio = 1.3 )
     
-    invisible(bp)
+    invisible(p)
 }
 
+# reverse the trend - we shouldn't have to do this anymore!
 get.taxa.ratio <- function(otu, bug1, bug2)
 {
     # add .00001 to any that are 0 abundance
-    otu[otu[,bug1] == 0, bug1] <- .00001
-    otu[otu[,bug2] == 0, bug2] <- .00001
+#     otu[otu[,bug1] == 0, bug1] <- .00001
+#     otu[otu[,bug2] == 0, bug2] <- .00001
     
     bp <- otu[,bug1]/otu[,bug2]
     names(bp) <- rownames(otu)
@@ -75,6 +76,9 @@ get.taxa.ratio <- function(otu, bug1, bug2)
 
 plot.b.p.ratio.all <- function(map0, otu, bug1, bug2, outputfn, g1, g2, g3)
 {
+#     sample.groups <- c("HmongThai","KarenThai","Karen1st","Hmong1st","Hmong2nd")
+#     sample.group.cols <- alpha(c("#e9a3c9", "#fee08b", "#c51b7d", "#80cdc1", "#018571"),.8)
+
     map0 <- map0[c(g1,g2,g3),]
     otu <- otu[rownames(map0),]
     

@@ -6,15 +6,39 @@
 taxa_clr_L7_fn <- paste(datadir,"taxa.clr.L7.txt",sep="/")
 taxa_clr_L6_fn <- paste(datadir,"taxa.clr.L6.txt",sep="/")
 taxa_clr_L2_fn <- paste(datadir,"taxa.clr.L2.txt",sep="/")
+taxa_clr_L3_fn <- paste(datadir,"taxa.clr.L3.txt",sep="/")
+taxa_clr_L5_fn <- paste(datadir,"taxa.clr.L5.txt",sep="/")
 
 taxa_clr_L7 <- load.data(mapfile, otufile=taxa_clr_L7_fn, normalize=F)$otu
 taxa_clr_L6 <- load.data(mapfile, otufile=taxa_clr_L6_fn, normalize=F)$otu
 taxa_clr_L2 <- load.data(mapfile, otufile=taxa_clr_L2_fn, normalize=F)$otu
+taxa_clr_L3 <- load.data(mapfile, otufile=taxa_clr_L3_fn, normalize=F)$otu
+taxa_clr_L5 <- load.data(mapfile, otufile=taxa_clr_L5_fn, normalize=F)$otu
+
+
 
 ### PCOA
-    plot.pcoa(map[cs,], otu0=taxa_clr_L7[cs,], method="euclidean", plot.title="Euclidean - CLR")    
+
     # remove IMP.000 from any dm calcs
     plot.pcoa.long(map[map$Subject.ID != "IMP.000",], samples=rownames(map[map$Sub.Study=="L" & map$Subject.ID != "IMP.000",]), otu0 = taxa_clr_L7, method="euclidean", plot.title="Euclidean - CLR - L.outlined", convex.hull=TRUE)
+
+    # let's flip the axis so that Years in US goes left to right, BMI/Age goes bottom to up
+    plot.pcoa(map[cs,], otu0=taxa_clr_L7[cs,], method="euclidean", plot.title="Euclidean - CLR", flip.axis=2)    
+
+    # this isn't super useful but helps get the point across -- PCOA with Environment Vectors (simply maps the vectors onto an unconstrained ordination)
+    plot.pcoa(map[cs,], otu0=taxa_clr_L7[cs,], method="euclidean", plot.title="Euclidean - CLR - with Vectors", env.vars=c("BMI","Years.in.US","Age"), flip.axis=2)    
+
+    # RDA: constrain ordination with selected env variables
+    # here we want to look at the % relative variation explained by the constrained model VS the unconstrained model
+    plot.constrained.ordination(map[cs,], otu0=taxa_clr_L7[cs,], method="euclidean", plot.title="Euclidean - CLR", env.vars=c("Years.in.US","BMI","Age"))    
+
+    #plot.constrained.ordination(map[cs,], otu0=taxa_clr_L7[cs,], method="euclidean", plot.title="Euclidean - CLR, Fraction.Life", env.vars=c("Fraction.Life.in.US"))    
+
+    plot.constrained.ordination(map[cs,], otu0=taxa_clr_L7[cs,], method="euclidean", plot.title="Euclidean - CLR - Unconstrained")    
+    # RDA: with 1st gen only
+    plot.constrained.ordination(map[firstgen_cs,], otu0=taxa_clr_L7[firstgen_cs,], method="euclidean", plot.title="Euclidean - CLR - 1stgen", env.vars=c("Years.in.US","BMI","Age"))    
+    plot.constrained.ordination(map[firstgen_cs,], otu0=taxa_clr_L7[firstgen_cs,], method="euclidean", plot.title="Euclidean - CLR - 1stgen - Unconstrained")    
+
 
 ### Intra-inter group variabilities
     plot.within.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="within.group.euc.pdf", ylab="Euclidean distance")
@@ -104,6 +128,49 @@ taxa_clr_L2 <- load.data(mapfile, otufile=taxa_clr_L2_fn, normalize=F)$otu
     plot.diff.taxa(lean.obese.cs.map, taxa_clr_L6, x.var="Waist.Height.Ratio", 
             control.vars=c("Age","Years.in.US.Factor","Ethnicity"), outputfn.prepend="WHR.all.L6_clr", sig.level=.10, do.sqrt=FALSE)
 
+
+    # look for inflammatory bugs over time in US (within ethnicity) (for R01)    
+    inflam_taxa <- cbind(taxa_clr_L3[,"k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria"],
+    taxa_clr_L5[,"k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae"],
+    taxa_clr_L6[,c("k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales;f__Desulfovibrionaceae;g__Mailhella",
+    "k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales;f__Desulfovibrionaceae;g__Desulfovibrio",
+    "k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales")])
+    colnames(inflam_taxa)[1:2] <- c("k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria", "k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae")
+
+    map_inf <-  map
+Years.in.US.Factor <- map$Years.in.US
+Years.in.US.Factor[Years.in.US.Factor == 0] <- 50 # 2nd gen are 0, let's set them to something higher like 50??
+Years.in.US.Factor[is.na(Years.in.US.Factor)] <- 0 # Thai are NA, let's set them to 0
+Years.in.US.Factor <- factor(cut(Years.in.US.Factor,c(-1, .0001, seq(5,35,5), 41, 50)), ordered=T)
+map_inf[,"Years.in.US.Factor"] <- Years.in.US.Factor
+
+    plot.diff.taxa(map_inf[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], inflam_taxa, x.var="BMI.Class", 
+            control.vars=c("Age","Years.in.US.Factor"), outputfn.prepend="inflamed_hmong", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+    plot.diff.taxa(map_inf[c(karenthai,karen_firstgen_cs),], inflam_taxa, x.var="BMI.Class", 
+               control.vars=c("Age","Years.in.US.Factor"), outputfn.prepend="inflamed_karen", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+    plot.diff.taxa(map_inf[c(hmong_firstgen_cs),], inflam_taxa, x.var="Years.in.US", 
+               control.vars="Age", outputfn.prepend="inflamed_hmong1st", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+    plot.diff.taxa(map_inf[c(karen_firstgen_cs),], inflam_taxa, x.var="Years.in.US", 
+               control.vars=c("Age"), outputfn.prepend="inflamed_karen1st", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+
+    # lean obese only
+    plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Ethnicity=="Hmong",], inflam_taxa, x.var="BMI.Class", 
+            control.vars=c("Age","Years.in.US.Factor"), outputfn.prepend="inflamed_hmong", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+    plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Ethnicity=="Karen",], inflam_taxa, x.var="BMI.Class", 
+               control.vars=c("Age","Years.in.US.Factor"), outputfn.prepend="inflamed_karen", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+    plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Sample.Group=="Hmong1st",], inflam_taxa, x.var="Years.in.US", 
+               control.vars="Age", outputfn.prepend="inflamed_hmong1st", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+    plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Sample.Group=="Karen1st",], inflam_taxa, x.var="Years.in.US", 
+               control.vars=c("Age"), outputfn.prepend="inflamed_karen1st", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+
 ### MB americanization (relative distance to reference group) - Lean vs. Obese only
     query_samples_list <- list(c(hmong_secondgen_cs, hmong_firstgen_cs), c(hmong_secondgen_cs,hmong_firstgen_cs, karen_firstgen_cs), karen_firstgen_cs)
     ref_samples_list <- list(hmongthai, c(hmongthai, karenthai), karenthai)
@@ -133,7 +200,8 @@ taxa_clr_L2 <- load.data(mapfile, otufile=taxa_clr_L2_fn, normalize=F)$otu
     ret <- test.features.paired(taxa0, samples1=s1, samples2=s2, sig.level=.10, parametric=TRUE)    
     #                             k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Micrococcales;f__Micrococcaceae;g__Rothia 
     #                                                                                                               0.04085939 
-    #plot(c(rep(1,length(s1)), rep(2,length(s2))), taxa0[,"k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Micrococcales;f__Micrococcaceae;g__Rothia"])
+
+    boxplot(c(rep(1,length(s1)), rep(2,length(s2))), taxa0[,"k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Micrococcales;f__Micrococcaceae;g__Rothia"])
     
 ### heatmap
 

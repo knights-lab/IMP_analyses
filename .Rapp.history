@@ -1,3 +1,7 @@
+a <- (1-eps)^counts    b <- (1 / (3^(counts-1)))    c <- eps^counts    x <- a / (a + b * c)    y <- 1 - x^lengths
+y[1]
+a[1]
+b[1]
 c[1]
 x[1]
 b[1]==0
@@ -137,120 +141,114 @@ library(optparse)
 install.packages("optparse")
 library(optparse)
 ?hclust
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/bin/load.r")
+dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:15])
+use.rare=FALSE
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/bin/load.r")
+dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:15])
+dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:20])
+hmong1
+hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:18])
+hmong1
+o.hmong.1 <- map0[hmong1,c("Age","BMI")]
+o.hmong.1
+sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:18]
+bp2 <- plot.b.p.ratio(map0[hmong1,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="hmong1.b.p.ratio.pdf")
+getwd()
+map0[c("CS.347.0", "CS.164", "CS.228"),c("Age","BMI")]
+d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- c(alpha(wes_palette(n=5, name="Moonrise3"), .8))p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)
+d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- get.group.colors(groups=as.character(levels(d$group)), alpha.val=.8)p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)
+p
+p <- p + geom_text(data = d[hmong1, ], aes(label=hmong1) ,hjust=0, vjust=0, size=3)
+p
+hmongthai <- names(sort(centroid.dist[rownames(map0)[map0$Sample.Group=="HmongThai"]])[1:15])
+hmongthai
+hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 29 & map0$Sample.Group=="Hmong1st"]]))
+hmong1
+sort(map0[hmong1,"Years.in.US"])
+sort(map0[hmong1,"Years.in.US", drop=F])
+x <- map0[hmong1,"Years.in.US", drop=F]
+x[order(x[,1]),]
+x
+x[order(x[,1]),,drop=F]
+rownames(x[order(x[,1]),,drop=F])[1:5]
+maybes <- rownames(x[order(x[,1]),,drop=F])[1:5]
+maybes
+map0[maybes,c("Age","BMI")]
+bp2 <- plot.b.p.ratio(map0[hmong1,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="hmong1.b.p.ratio.pdf")
+d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- get.group.colors(groups=as.character(levels(d$group)), alpha.val=.8)p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)# label points by distances#p <- p + geom_text(data = d[hmong1, ], aes(label=distance) ,hjust=0, vjust=0, size=3)# label points by sample namep <- p + geom_text(data = d[hmong1, ], aes(label=hmong1) ,hjust=0, vjust=0, size=3)
+p
+bp["CS.388",]
+bp <- plot.b.p.ratio(map0[cs,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="temp.b.p.ratio.pdf")
+bp["CS.388",]
+dim(bp)
+class(bp)
+mybp <- get.taxa.ratio(prevotella,bacteroides)
+mybp <- get.taxa.ratio(taxa,prevotella,bacteroides)
+mylogbp <- log10(mybp)
+mylogbp["CS.388"]
+plot(mylogbp[hmong1], map0[hmong1,"Years.in.US"])
+plot(map0[hmong1,"Years.in.US"],mylogbp[hmong1])
+mybp <- get.taxa.ratio(taxa,bacteroides, prevotella)
+mylogbp <- log10(mybp)
+plot(map0[hmong1,"Years.in.US"],mylogbp[hmong1])
+mylogbp["CS.388"]
+mylogbp["CS.135"]
+mylogbp["CS.222"]
+?pam
+sessionInfo()
 setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")use.rare <- FALSE# load all source files, data, and prep any variables for reusesource("bin/load.r")
-taxa_clr_L7_fn <- paste(datadir,"taxa.clr.L7.txt",sep="/")taxa_clr_L6_fn <- paste(datadir,"taxa.clr.L6.txt",sep="/")taxa_clr_L2_fn <- paste(datadir,"taxa.clr.L2.txt",sep="/")taxa_clr_L7 <- load.data(mapfile, otufile=taxa_clr_L7_fn, normalize=F)$otutaxa_clr_L6 <- load.data(mapfile, otufile=taxa_clr_L6_fn, normalize=F)$otutaxa_clr_L2 <- load.data(mapfile, otufile=taxa_clr_L2_fn, normalize=F)$otu
-euc_ret <- plot.within.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="within.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-euc_ret <- plot.within.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="within.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/group.distances.r")
-plot.between.group.distances(map0=map[cs,], otu0=taxa_clr_L7[cs,], fn="between.group.euc.pdf", ylab="Euclidean distance")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-plot.relative.L(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
-?vegdist
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-plot.relative.L(map = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
-plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")
-p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, xlab="Days Since US Arrival",                     ylab="Dissimilarity to First Sample", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_Day0.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=6, xlab="Days Since US Arrival",                     ylab="Dissimilarity to Last Sample", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_DayM6.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref.sample.order=1, to.previous=T, xlab="Days Since US Arrival",                     ylab="Dissimilarity to Previous Sample", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_Previous.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
-# L to KarenThai    p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_KarenThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # L to 2ndGenHmong    p <- plot.relative.L(map0 = map[map$Sub.Study == "L" & map$Subject.ID != "IMP.000",], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_USborn.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)#
-    # IMP000 to Day 0        # relative to first day    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Day0.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # overall variability -- relative to previous sample    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase", to.previous=T)    save_plot("IMP000_to_Previous.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # relative to Hmong Thai    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmongthai, xlab="Day",                     ylab="Distance to Hmong Thai", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_HmongThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)#
-    # relative to 2nd Gen Hmong    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Day",                     ylab="Distance to 2nd Gen Hmong", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Hmong2nd.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-p <- plot.relative.L(map0 = map[rownames(map) %in% hmong_secondgen_cs | (map$Sub.Study == "L" & map$Subject.ID != "IMP.000"),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")
-map[rownames(map) %in% hmong_secondgen_cs | (map$Sub.Study == "L" & map$Subject.ID != "IMP.000"),]
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-p <- plot.relative.L(map0 = map[rownames(map) %in% hmong_secondgen_cs | (map$Sub.Study == "L" & map$Subject.ID != "IMP.000"),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-l.samples <- rownames(map)[map$Sub.Study == "L" & map$Subject.ID != "IMP.000"]    p <- plot.relative.L(map0 = map[c(l.samples, karenthai),], otu0=taxa_clr_L7, main="Euclidean", query.samples=l.samples, ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-l.samples <- rownames(map)[map$Sub.Study == "L" & map$Subject.ID != "IMP.000"]    p <- plot.relative.L(map0 = map[c(l.samples, karenthai),], otu0=taxa_clr_L7, main="Euclidean", query.samples=l.samples, ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")
-l.samples <- rownames(map)[map$Sub.Study == "L" & map$Subject.ID != "IMP.000"]    p <- plot.relative.L(map0 = map[c(l.samples, karenthai),], otu0=taxa_clr_L7, main="Euclidean", query.samples=l.samples, ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_KarenThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # L to 2ndGenHmong    p <- plot.relative.L(map0 = map[c(l.samples, hmong_secondgen_cs),], otu0=taxa_clr_L7, main="Euclidean", query.samples=l.samples, ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_USborn.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
-map.000 <- map[map$Subject.ID == "IMP.000",]    map.000$Sample.Day.Since.First.Sample <- as.numeric(as.Date(map.000$Sample.Date, format="%m/%d/%y") - as.Date("08/01/16", format="%m/%d/%y")) # hard code first sample date    map.000[,"travel.phase"] <- "Traveling"    map.000[map.000$Sample.Day.Since.First.Sample <= 2,"travel.phase"] <- "Pre"    map.000[map.000$Sample.Day.Since.First.Sample >= 28,"travel.phase"] <- "Post"    map.000$travel.phase <- factor(map.000$travel.phase, levels=c("Pre", "Traveling", "Post"))
-p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Day0.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # overall variability -- relative to previous sample    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase", to.previous=T)    save_plot("IMP000_to_Previous.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmongthai, xlab="Day",                     ylab="Distance to Hmong Thai", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_HmongThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
-p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Day",                     ylab="Distance to 2nd Gen Hmong", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Hmong2nd.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
-p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase")    save_plot("IMP000_to_Day0.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # overall variability -- relative to previous sample    p <- plot.relative.L(map0 = map.000, otu0=taxa_clr_L7, main="Euclidean", ref.sample.order = 1, xlab="Day",                     ylab="Distance to Self at Day 0", x.var="Sample.Day.Since.First.Sample", override.cols.by = "travel.phase", to.previous=T)    save_plot("IMP000_to_Previous.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
-l.samples <- rownames(map)[map$Sub.Study == "L" & map$Subject.ID != "IMP.000"]    p <- plot.relative.L(map0 = map[l.samples,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=karenthai, xlab="Days Since US Arrival",                     ylab="Distance to Karen in Thailand", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_KarenThai.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)    # L to 2ndGenHmong    p <- plot.relative.L(map0 = map[l.samples,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab="Days Since US Arrival",                     ylab="Distance to 2nd-Gen", x.var="Sample.Day.Since.Arrival")    save_plot("Karen_L_to_USborn.pdf", p, ncol = 1, nrow = 1, base_aspect_ratio = 1.3)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/utils.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/relative.distance.r")
-xlab="Years in US"    x.var="Years.in.US"
-plot.relative.CS(map0=map[c(hmong_firstgen_cs, karen_firstgen_cs),], otu0=taxa_clr_L7, main="Euclidean", ref_samples=c(karenthai,hmongthai), xlab=xlab, x.var=x.var, ylab="Distance to all Thai", outputfn="allfirstgen_to_Thai.pdf")
-plot.relative.CS(map0=map[karen_firstgen_cs,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=karenthai, xlab=xlab, x.var=x.var, ylab="Distance to Karen Thai", outputfn="Karen_CS_to_Thai.pdf")    # 1stKaren to 2ndGenHmong    plot.relative.CS(map0=map[karen_firstgen_cs,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab=xlab, x.var=x.var, ylab="Distance to 2nd-gen", outputfn="Karen_CS_to_USborn.pdf")    # 1stHmong to HmongThai    plot.relative.CS(map0=map[hmong_firstgen_cs,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmongthai, xlab=xlab, x.var=x.var, ylab="Distance to Hmong Thai", outputfn="Hmong_CS_to_Thai.pdf")    # 1stHmong to 2ndHmong    plot.relative.CS(map0=map[hmong_firstgen_cs,], otu0=taxa_clr_L7, main="Euclidean", ref_samples=hmong_secondgen_cs, xlab=xlab, x.var=x.var, ylab="Distance to US born Hmong", outputfn="Hmong_CS_to_USbornHmong.pdf")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=T, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", order.by.num.otus=TRUE)
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=FALSE)
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=FALSE)
-range(taxa_clr_L6)
-colSums(taxa_clr_L6)
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=FALSE)
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=FALSE)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
-make.heatmap(taxa_clr_L6, map[cs,], .25, presence.absence=F, baseline.groups=c("HmongThai","KarenThai"), outputfn="heatmap.all.thaibaseline.pdf", override.rescale=TRUE)
+alpha.metrics <- c("chao1", "shannon", "simpson") #c("PD_whole_tree", "shannon", "simpson")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+p.test <- plot.boxplot.by.group.x.bmi(map00=map[cs,], y=alphadiv0[cs, "chao1"], ylab="", main="chao1")
+P.TEST
+p.test
+l <- get_legend(p.test)
+p.test <- plot.boxplot.by.group.x.bmi(map00=map[cs,], y=alphadiv0[cs, "chao1"], ylab="", main="chao1")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+p.test <- plot.boxplot.by.group.x.bmi(map00=map[cs,], y=alphadiv0[cs, "chao1"], ylab="", main="chao1")
+l <- get_legend(p.test)
+p.test
+p.test$theme
+sink()
+sink()
+p.test$theme
+ggplot(1:10)
+ggplot(data.frame(x=1:10,y=1:10))
+dev.off()
+ggplot(data.frame(x=1:10,y=1:10))
+ggplot(data.frame(x=1:10,y=1:10)) + geom_point()
+ggplot(data.frame(x=1:10,y=1:10), aes(x=x,y=y)) + geom_point()
+ggplot(data.frame(x=1:10,y=1:10), aes(x=x,y=y)) + geom_point() + legend()
+ggplot(data.frame(x=1:10,y=1:10), aes(x=x,y=y)) + geom_point() + legend(x)
+ggplot(data.frame(x=1:10,y=1:10), aes(x=x,y=y)) + geom_point()
+l <- get_legend(p.test)
+grobs <- ggplotGrob(p.test)$grobs
+legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
+source("bin/load.r")
+head(alphadiv0)
+alpha.metrics <- c("chao1", "shannon", "simpson") #c("PD_whole_tree", "shannon", "simpson")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+sink()
+sink()
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/boxplot.by.group.x.bmi.r")
+multiplot.boxplot.by.group.x.bmi(map00=map[cs,], y.list = as.list(alphadiv0[cs, alpha.metrics]), ylabs=rep("",3), mains=alpha.metrics, outputfn="boxplot.alphadiv.bmi.pdf")
