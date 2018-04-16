@@ -1,4 +1,5 @@
 datadirname <- "datadir_denovo"
+LIBDIR="/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/"
 is.phylo <- TRUE # data supports phylogenetic measures
 
 setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")

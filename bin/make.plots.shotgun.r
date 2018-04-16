@@ -1,4 +1,5 @@
 datadirname <- "shotgun"
+LIBDIR="/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/"
 setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")
 source("bin/load.r")
 

@@ -8,7 +8,9 @@ library(scales)
 library(ggsignif)
 library(reshape)
 
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/mouse.villus.crypt.r")
+LIBDIR="/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/"
+
+source(paste0("mouse.villus.crypt.r"))
 
 setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")
 
