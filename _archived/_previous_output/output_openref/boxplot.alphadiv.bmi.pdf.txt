@@ -1,0 +1,7 @@
+
+observed_otus
+Thai:Lean-Overweight=0.053; Thai:Lean-Obese=0.24; Thai:Overweight-Obese=0.89; 1st-Gen:Lean-Overweight=0.58; 1st-Gen:Lean-Obese=0.29; 1st-Gen:Overweight-Obese=0.18; 2nd-Gen:Lean-Overweight=0.5; 2nd-Gen:Lean-Obese=0.23; 2nd-Gen:Overweight-Obese=0.022
+shannon
+Thai:Lean-Overweight=0.082; Thai:Lean-Obese=0.12; Thai:Overweight-Obese=0.9; 1st-Gen:Lean-Overweight=0.79; 1st-Gen:Lean-Obese=0.018; 1st-Gen:Overweight-Obese=0.015; 2nd-Gen:Lean-Overweight=0.04; 2nd-Gen:Lean-Obese=0.45; 2nd-Gen:Overweight-Obese=0.0012
+simpson
+Thai:Lean-Overweight=0.057; Thai:Lean-Obese=0.25; Thai:Overweight-Obese=0.68; 1st-Gen:Lean-Overweight=0.54; 1st-Gen:Lean-Obese=0.098; 1st-Gen:Overweight-Obese=0.038; 2nd-Gen:Lean-Overweight=0.05; 2nd-Gen:Lean-Obese=0.98; 2nd-Gen:Overweight-Obese=0.027

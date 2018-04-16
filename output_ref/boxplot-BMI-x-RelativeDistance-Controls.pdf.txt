@@ -1,0 +1,7 @@
+
+Unweighted Unifrac
+Thai:Lean-Obese=0.045; 1st-Gen:Lean-Obese=0.35; 2nd-Gen:Lean-Obese=0.96
+Weighted Unifrac
+Thai:Lean-Obese=0.03; 1st-Gen:Lean-Obese=0.024; 2nd-Gen:Lean-Obese=0.26
+Bray-Curtis
+Thai:Lean-Obese=0.029; 1st-Gen:Lean-Obese=0.17; 2nd-Gen:Lean-Obese=0.47

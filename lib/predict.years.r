@@ -1,7 +1,7 @@
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/rf.cross.validation.r")
-source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/balanced.folds.r")
+source(paste0(LIBDIR,"rf.cross.validation.r"))
+source(paste0(LIBDIR,"balanced.folds.r"))
 
-predict.years <- function(map, otu)
+predict.years.old <- function(map, otu)
 {
      map[map$Sample.Group %in% c("KarenThai","HmongThai"),"Years.in.US"] <- 0
 
@@ -66,4 +66,24 @@ predict.years <- function(map, otu)
     return(res)
 #     print(paste0("RMSE: ", mean(rmse)))
 #     print(paste0("R-Squared: ", mean(rsq)))
+}
+
+# df.list = list of data.frames containing all covariates as columns to include in each model to compare
+compare.rf.vars <- function(response, varsdf, n)
+{
+    #prediction <- list()
+    #for(i in 1:length(df.list))
+    #{
+        predictions.df <- NULL
+        for(j in 1:n) # repeat and average accuracies
+        {
+            ddata <- varsdf # df.list[[i]]
+            res <- rf.cross.validation(x=ddata, y=response, nfolds=-1, regression=T)  
+            predictions.df <- cbind(predictions.df, res$predicted)
+        }
+        # average predictions?
+        # prediction[[i]] <- rowMeans(predictions.df)
+    #}
+    #return(prediction)
+    return(predictions.df)
 }

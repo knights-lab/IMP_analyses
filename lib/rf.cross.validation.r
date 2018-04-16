@@ -31,9 +31,9 @@ require(randomForest)
     for(fold in sort(unique(folds))){
         if(verbose) cat(sprintf('Fold %d...\n',fold))
         foldix <- which(folds==fold)
-        model <- randomForest(x[-foldix,], result$y[-foldix], importance=TRUE, do.trace=verbose, ...)
+        model <- randomForest(x=x[-foldix,], y=result$y[-foldix], importance=TRUE, do.trace=verbose, ...)
         newx <- x[foldix,]
-        if(length(foldix)==1) newx <- matrix(newx,nrow=1)
+        if(length(foldix)==1) newx <- x[foldix,,drop=F] # if one row only, let's keep it a data.frame # previously matrix(newx,nrow=1) #data.matrix(newx) for SVM
         result$predicted[foldix] <- predict(model, newx)
     }
 

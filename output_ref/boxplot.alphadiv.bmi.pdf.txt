@@ -1,0 +1,7 @@
+
+PD_whole_tree
+Thai:Lean-Overweight=0.0058; Thai:Lean-Obese=0.098; Thai:Overweight-Obese=0.91; 1st-Gen:Lean-Overweight=0.77; 1st-Gen:Lean-Obese=0.22; 1st-Gen:Overweight-Obese=0.33; 2nd-Gen:Lean-Overweight=0.066; 2nd-Gen:Lean-Obese=1; 2nd-Gen:Overweight-Obese=0.084; Control:Lean-Overweight=0.99; Control:Lean-Obese=0.3; Control:Overweight-Obese=0.63
+observed_otus
+Thai:Lean-Overweight=0.1; Thai:Lean-Obese=0.15; Thai:Overweight-Obese=0.69; 1st-Gen:Lean-Overweight=0.45; 1st-Gen:Lean-Obese=0.51; 1st-Gen:Overweight-Obese=0.26; 2nd-Gen:Lean-Overweight=0.11; 2nd-Gen:Lean-Obese=0.74; 2nd-Gen:Overweight-Obese=0.05; Control:Lean-Overweight=0.57; Control:Lean-Obese=0.37; Control:Overweight-Obese=0.34
+shannon
+Thai:Lean-Overweight=0.0046; Thai:Lean-Obese=0.042; Thai:Overweight-Obese=0.94; 1st-Gen:Lean-Overweight=0.38; 1st-Gen:Lean-Obese=0.22; 1st-Gen:Overweight-Obese=0.075; 2nd-Gen:Lean-Overweight=0.1; 2nd-Gen:Lean-Obese=0.81; 2nd-Gen:Overweight-Obese=0.065; Control:Lean-Overweight=0.86; Control:Lean-Obese=0.64; Control:Overweight-Obese=0.71

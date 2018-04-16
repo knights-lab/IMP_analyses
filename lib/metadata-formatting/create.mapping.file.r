@@ -36,7 +36,7 @@ create.mapping <- function()
     imp000.dates <- imp000.dates[order(as.Date(imp000.dates[,"Sample.Date"], format="%m/%d/%Y")),,drop=F]
     imp000.dates <- cbind(imp000.dates, Sample.Order=1:nrow(imp000.dates))
     map[rownames(imp000.dates),"Sample.Order"] <- as.numeric(imp000.dates$Sample.Order)
-
+    
     # let's interpret Karenni as Karen - they are essentially the same (n=2)
     map$Ethnicity[map$Ethnicity=="Karenni"] <- "Karen"
 

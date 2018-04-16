@@ -9,19 +9,12 @@
 load.data<-function(mapfile, otufile, minOTUInSamples=NA, minPrevalence = .10, normalize=TRUE)
 {	
 	map <- read.table(mapfile,sep='\t',head=T,row=1,comment='')
-#	rownames(map) <- make.names(rownames(map)) # this is automatically done for otu table, so do this here to make sure sample ids are exactly the same 
 
 	fnlength <- nchar(otufile)
-	if(substr(otufile, fnlength-4, fnlength) == ".biom") {
-		otu0 <- as.matrix(biom_data(read_biom(otufile)))
-	} else {
-		line1 <-readLines(otufile,n=1)
-		if(line1=="# Constructed from biom file") {
-			otu0 <-read.table(otufile,sep='\t',head=T,row=1,comment='',quote="",skip=1)
-		} else {
-			otu0 <-read.table(otufile,sep='\t',head=T,row=1,comment='',quote="")
-		}
-	}
+    line1 <- readLines(otufile,n=1)
+    if(line1=="# Constructed from biom file")  otu0 <-read.table(otufile,sep='\t',head=T,row=1,comment='',quote="",skip=1)
+    else  otu0 <-read.table(otufile,sep='\t',head=T,row=1,comment='',quote="")
+    
 
 	# pathway files from picrust usually have an additional last column with descriptions, just drop this for now
 	KEGG <- NULL

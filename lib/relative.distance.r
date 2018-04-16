@@ -25,15 +25,17 @@ multiplot.relative.L <- function(mains, dms, map0, ylab, xlab, x.var, ref_sample
 # ref_samples should NOT be included in the map
 plot.relative.L <- function(map0, otu0=NULL, main, ref.sample.order, ref_samples=NULL, xlab, ylab, x.var, to.previous=F, override.cols.by=NULL, dm=NULL, outputfn=NULL)
 {    
-    ret <- prep.dm(map0=map0, otu0=otu0, dm=dm, add.samples.dm=ref_samples)
+    ret <- prep.dm(map0, otu0, dm, method)
+    ddm <- ret$ddm
     dm <- ret$dm
-    map0 <- ret$map0    
-        
+    map0 <- ret$map0
+            
     r <- range(map0$Sample.Order)
     timepoints <- r[1]:r[2]
     
     all.rel.distance <- NULL
-    subjects <- sort(as.character(unique(map0[map0$Sample.Order==max(map0$Sample.Order), "Subject.ID"])))
+#    subjects <- sort(as.character(unique(map0[map0$Sample.Order==max(map0$Sample.Order), "Subject.ID"])))
+   subjects <- sort(unique(map0$Subject.ID))
 
     cols <- alpha(colorRampPalette(brewer.pal(9, "Set1"))(length(subjects)),.3)    
    
@@ -75,9 +77,8 @@ plot.relative.L <- function(map0, otu0=NULL, main, ref.sample.order, ref_samples
     
         all.rel.distance <- c(all.rel.distance, rel.distance)        
     }
-        
+
     ggdata <- data.frame(y=all.rel.distance, group=map0[names(all.rel.distance),"Subject.ID"], x=map0[names(all.rel.distance),x.var], row.names=names(all.rel.distance))
-    
     if(is.null(override.cols.by))
     {    
         p <- ggplot(data=ggdata, aes(x=x, y=y, group=group, colour=group)) + geom_line() + scale_color_manual(values=cols) + 
@@ -128,16 +129,26 @@ plot.relative.distance.with.food <- function(dm, food_dm, query_samples, food_re
     print(cor.test(rel.distance, food.rel.distance))
 }
 
+
+plot.relative.distance.with.food.pc <- function(dm, food_pc, query_samples, mb_ref_samples, outputfn)
+{
+    rel.distance <- get.relative.distance(query_samples, mb_ref_samples, dm)
+
+    plot( food_pc[query_samples, 1], rel.distance, ylab="microbiome distance", xlab="Food PC1")
+
+    print(cor.test(rel.distance, food_pc[query_samples, 1]))
+}
+
 # creates a combined plot of relative CS plots
 # dms = list of distance matrices
 # mains = vector of titles for plots
 # all other are single values
-multiplot.relative.CS <- function(mains, dms, map, ylab, xlab, x.var, query_samples, ref_samples, outputfn)
+multiplot.relative.CS <- function(mains, dms, map, ylab, xlab, x.var, ref_samples, outputfn)
 {
     p <- list()
     for(i in 1:length(mains))
     {
-        p[[i]] <- plot.relative.CS(map, dm=dms[[i]], main=mains[i], query_samples=query_samples, ref_samples=ref_samples, xlab=xlab, ylab=ylab, x.var=x.var)
+        p[[i]] <- plot.relative.CS(map, dm=dms[[i]], main=mains[i], ref_samples=ref_samples, xlab=xlab, ylab=ylab, x.var=x.var)
     }
     multiplot <- plot_grid(plotlist=p, ncol=length(p), nrow=1)
     save_plot(outputfn, multiplot, ncol = length(p), nrow = 1, base_aspect_ratio = 1.3)

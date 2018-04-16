@@ -22,7 +22,7 @@ transform.clr.folder <- function(inputfolder)
     {
         taxa.clr.list[[i]] <- transform.clr(datafn = paste0(inputfolder, "/impute.L", i+1 ,".rdata"), 
                                 samplenamesfn = paste0(inputfolder, "/sample.names.txt"))
-        outputfn <- paste0(inputfolder, "/taxa.clr.L", i+1 ,".txt")
+        outputfn <- paste0(inputfolder, "/taxatable_L", i+1 ,".txt")
         sink(outputfn); 
         cat("#Taxonomy\t");
         write.table(t(taxa.clr.list[[i]]),file=outputfn,quote=F,sep="\t",append = T);

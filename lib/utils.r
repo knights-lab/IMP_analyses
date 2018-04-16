@@ -1,16 +1,52 @@
 require(scales)
+
+sample.group.names <- c("KarenThai", "HmongThai", "Karen1st",  "Hmong1st",  "Hmong2nd",  "Control" )
+
+sample.group.cols <- c("#018571", "#c51b7d", "#018571", "#c51b7d", "#c51b7d",  "black")
+sample.group.shapes <- c(16, 16, 16, 16, 21, 17)    
+names(sample.group.shapes) <- sample.group.names
+sample.group.sizes <- c(2, 2, 2, 2, 1.5, 2)    
+names(sample.group.sizes) <- sample.group.names
+sample.group.alphas <- c(1, 1, .3, .3, 1, .6)    
+names(sample.group.alphas) <- sample.group.names
+
 get.group.colors <- function(groups=NULL, alpha.val=1)
 {
-    sample.group.names <- c("Hmong1st", "Hmong2nd", "HmongThai", "Karen1st", "KarenThai")
-    sample.group.cols <- c("#e9a3c9", "#fee08b", "#c51b7d", "#80cdc1", "#018571")
-    names(sample.group.cols) <- sample.group.names
+#    sample.group.names <- c("Hmong1st", "Hmong2nd", "HmongThai", "Karen1st", "KarenThai", "Control")
+#    sample.group.cols <- c("#e9a3c9", "#fee08b", "#c51b7d", "#80cdc1", "#018571", "black")
     
     if(alpha.val != 1) sample.group.cols <- alpha(sample.group.cols, alpha.val)
+
+    names(sample.group.cols) <- sample.group.names
 
     if(!is.null(groups))
         return(sample.group.cols[groups])
     else
         return(sample.group.cols)
+}
+
+get.group.alphas <- function(groups=NULL)
+{
+    if(!is.null(groups))
+        return(sample.group.alphas[groups])
+    else
+        return(sample.group.alphas)
+}
+
+get.group.sizes <- function(groups=NULL)
+{
+    if(!is.null(groups))
+        return(sample.group.sizes[groups])
+    else
+        return(sample.group.sizes)
+}
+ 
+get.group.shapes <- function(groups=NULL)
+{
+    if(!is.null(groups))
+        return(sample.group.shapes[groups])
+    else
+        return(sample.group.shapes)
 }
 
 get.pch <- function(map)
@@ -19,6 +55,46 @@ get.pch <- function(map)
     names(lookup) <- sort(unique(map$Ethnicity)) # let's Hmong to solid filled circle, Karen to filled triangle
     pch <- lookup[as.character(map$Ethnicity)] 
     return(pch)
+}
+
+check.normality <- function(x)
+{
+    qqnorm(x)
+    qqline(x)
+    print(ks.test(x,"pnorm",mean(x),sqrt(var(x))))
+    print(shapiro.test(x))
+}
+
+# plots first column of d by second column (x, y), with pval
+plot.XY <- function(d)
+{
+    orig_cols <- colnames(d)
+    if(ncol(d) == 2)
+    {
+        colnames(d) <- c("x","y")
+        names(orig_cols) <- colnames(d)
+
+        cortest <- cor.test(d$x, d$y, method="spear")
+        pval <- signif(cortest$p.value, 2)
+        rho <- signif(cortest$estimate,2)
+        p <- ggplot(d, aes(x, y)) + geom_point() + ylab(orig_cols["y"]) + xlab(orig_cols["x"])
+        p <- ggdraw(p) +  draw_figure_label(label=paste0("rho=", rho, "\np=",pval), size=8, position="bottom.right")                
+    } 
+    else # with interaction term
+    {
+
+        colnames(d) <- c("a","b","z")
+        names(orig_cols) <- colnames(d)
+        
+        s <- summary(lm(z ~ a * b, data=d))
+        pvals <- signif(s$coefficients[c("a","b"),"Pr(>|t|)"],2)
+        pval <- paste(orig_cols[names(pvals)], ", P=", pvals, collapse="\n", sep="")
+        p <- ggplot(d, aes(x=a, y=b)) + geom_point(aes(fill=z), shape=21, color=alpha("black",.2), size=2) + scale_fill_gradient2(low="#00441B", mid="white", high="#40004B") +
+             ylab(orig_cols["b"]) + xlab(orig_cols["a"])
+        p <- ggdraw(p) +  draw_figure_label(label=pval, size=8, position="bottom.right")                
+        print(s)        
+    }
+    return(p)        
 }
 
 

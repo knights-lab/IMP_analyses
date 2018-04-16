@@ -44,7 +44,7 @@ plot.diff.taxa <- function(map0, taxa0, x.var, control.vars=NULL, sig.level=.05,
             if(is.factor(map0[,x.var]))
             {
                 # don't add stats, we'll add our own since we're only plotting sig taxa anyway
-                p <- plot.boxplot.by.group.x.bmi(map0=map0, y=ggdata$y, ylab="", main=taxa_abbrev, add.stats=FALSE)
+                p <- plot.boxplot.by.group.x.bmi(map0=map0, y=ggdata$y, ylab="", main=taxa_abbrev)$p
             }
             else
             {

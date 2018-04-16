@@ -1,5 +1,46 @@
 # R01 stuff only
 
+    # look for inflammatory bugs over time in US (within ethnicity) (for R01)    
+        inflam_taxa <- cbind(taxa_clr_L3[,"k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria"],
+        taxa_clr_L5[,"k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae"],
+        taxa_clr_L6[,c("k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales;f__Desulfovibrionaceae;g__Mailhella",
+        "k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales;f__Desulfovibrionaceae;g__Desulfovibrio",
+        "k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales")])
+        colnames(inflam_taxa)[1:2] <- c("k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria", "k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae")
+
+        map_inf <-  map
+        Years.in.US.Factor <- map$Years.in.US
+        Years.in.US.Factor[Years.in.US.Factor == 0] <- 50 # 2nd gen are 0, let's set them to something higher like 50??
+        Years.in.US.Factor[is.na(Years.in.US.Factor)] <- 0 # Thai are NA, let's set them to 0
+        Years.in.US.Factor <- factor(cut(Years.in.US.Factor,c(-1, .0001, seq(5,35,5), 41, 50)), ordered=T)
+        map_inf[,"Years.in.US.Factor"] <- Years.in.US.Factor
+
+        plot.diff.taxa(map_inf[c(hmongthai,hmong_firstgen_cs, hmong_secondgen_cs),], inflam_taxa, x.var="BMI.Class", 
+                control.vars=c("Age","Years.in.US.Factor"), outputfn.prepend="inflamed_hmong", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+        plot.diff.taxa(map_inf[c(karenthai,karen_firstgen_cs),], inflam_taxa, x.var="BMI.Class", 
+                   control.vars=c("Age","Years.in.US.Factor"), outputfn.prepend="inflamed_karen", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+        plot.diff.taxa(map_inf[c(hmong_firstgen_cs),], inflam_taxa, x.var="Years.in.US", 
+                   control.vars="Age", outputfn.prepend="inflamed_hmong1st", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+        plot.diff.taxa(map_inf[c(karen_firstgen_cs),], inflam_taxa, x.var="Years.in.US", 
+                   control.vars=c("Age"), outputfn.prepend="inflamed_karen1st", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+
+        # lean obese only
+        plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Ethnicity=="Hmong",], inflam_taxa, x.var="BMI.Class", 
+                control.vars=c("Age","Years.in.US.Factor"), outputfn.prepend="inflamed_hmong", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+        plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Ethnicity=="Karen",], inflam_taxa, x.var="BMI.Class", 
+                   control.vars=c("Age","Years.in.US.Factor"), outputfn.prepend="inflamed_karen", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+        plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Sample.Group=="Hmong1st",], inflam_taxa, x.var="Years.in.US", 
+                   control.vars="Age", outputfn.prepend="inflamed_hmong1st", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
+        plot.diff.taxa(lean.obese.cs.map[lean.obese.cs.map$Sample.Group=="Karen1st",], inflam_taxa, x.var="Years.in.US", 
+                   control.vars=c("Age"), outputfn.prepend="inflamed_karen1st", sig.level=1, do.sqrt=FALSE, do.filter=FALSE)
+
 # figure 1
     p1a <- plot.pcoa(map[cs,], otu0=taxa_clr_L7[cs,], method="euclidean", plot.title="Microbiome Westernization", env.vars=c("Years.in.US"), flip.axis=2, show.stats=FALSE)    
 

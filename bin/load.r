@@ -17,205 +17,103 @@ source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/taxa.sum
 source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/differential.taxa.r")
 source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/heatmap.r")
 
-# set data locations
-    datadir_gg97 <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/gg97"
-    datadir_dada2 <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/dada2"
-    datadir_refseq <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/refseq"
-    datadir_openref <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/openref" ##### openref currently uses placeholders for unifrac dms!!! ignore those for now
+## set file locations
+    datadirs <- list()
+    #     datadirs[["datadir_gg97"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/gg97"
+    #     datadirs[["datadir_dada2"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/dada2"
+    #     datadirs[["datadir_refseq"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/refseq"
+    #     datadirs[["datadir_openref"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/openref"
+    #     datadirs[["datadir_akronymer"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/akronymer" 
+    datadirs[["ref"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/refseq_allruns"
+    datadirs[["denovo"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/denovo"
+    datadirs[["shotgun"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/shotgun"
+    datadirs[["denovo.clr"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/denovo/clr"
+    datadirs[["shotgun.clr"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/shotgun/clr"
+    datadirs[["food"]] <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/food"
 
-    datadir <- datadir_refseq #datadir_openref
+    config <- data.frame(datadir=matrix(unlist(datadirs), nrow=length(datadirs), byrow=T),stringsAsFactors=FALSE, row.names=names(datadirs))
+    config$is.phylo <- FALSE
+    config[c("denovo","ref"), "is.phylo"] <- TRUE # these are the only two with phylogenetic metrics
+    config$is.clr <- FALSE
+    config$is.clr[grep("clr$", rownames(config))] <- TRUE
 
-    otu_fn <- paste(datadir,"final_otu.txt",sep="/") # embalmer generated OTU file does not have taxonomy included
+    is.phylo <- config[datadirname, "is.phylo"]
+    is.clr <- config[datadirname, "is.clr"]
+    datadir <- config[datadirname, "datadir"]
+
+    food_datadir <- datadirs[["food"]]
+
+    taxa_L7_fn <- paste(datadir,"taxatable_L7.txt",sep="/")
     taxa_L6_fn <- paste(datadir,"taxatable_L6.txt",sep="/")
     taxa_L2_fn <- paste(datadir,"taxatable_L2.txt",sep="/")
-    taxafile_L6_rare_fn <- paste(datadir,"taxatable_rare_L6.txt",sep="/")
-    taxafile <- taxa_L6_fn 
 
-    oFu_fns <- c("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/OFU/ofuprofile_species_40.txt",
-    "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/OFU/ofuprofile_species_80.txt",
-    "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/OFU/ofuprofile_species_90.txt",
-    "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/OFU/ofuprofile_species_95.txt")
+    otu_fn <- paste(datadir,"final_otu.txt",sep="/")
 
-    wuf_dm_fn <- "weighted_unifrac_dm.txt"
-    uwuf_dm_fn <- "unweighted_unifrac_dm.txt"
-    bc_dm_fn <- "bray_curtis_dm.txt"
-    alpha_fn <- "alpha.txt"
+    wuf_dm_fn <- paste(datadir,"weighted_unifrac_dm.txt",sep="/")
+    uwuf_dm_fn <- paste(datadir,"unweighted_unifrac_dm.txt",sep="/")
+    bc_dm_fn <- paste(datadir,"bray_curtis_dm.txt",sep="/")
 
-    if(use.rare){ # consider just loading everything
-        wuf_dm_fn <- "weighted_unifrac_dm_rare.txt"
-        uwuf_dm_fn <- "unweighted_unifrac_dm_rare.txt"
-        bc_dm_fn <- "bray_curtis_dm_rare.txt"
-        alpha_fn <- "alpha_rare.txt"
-    }
+    alpha_fn <- paste(datadir,"alpha.txt",sep="/")
 
-    #mapfile <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt"
-    # TEMPORARILY use the mapping file with TFSCS for sample names for KCK
-    # (these samples were chipped off for sequencing for FMT only and renamed by UMGC - they'll be resequenced later with the correct names)
-    orig_mapfile <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt"
-    mapfile <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping_with_KCKFMT_renamed.txt"
-    nutrientsfn <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/nutrients.txt"
-    foodgroupfn <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/foodgroups.txt"
+    nutrientsfn <- paste(food_datadir,"nutrients.txt",sep="/")
+    foodgroupfn <- paste(food_datadir,"foodgroups.txt",sep="/")
+    dietmap_fn <- paste(food_datadir,"sampleid-to-dietid.txt",sep="/")
+    
+    mapfile <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt"
 
+## set constants
     bacteroides <- "k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides"
     prevotella <- "k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Prevotellaceae;g__Prevotella"
+    alpha.phylo <- c("PD_whole_tree", "observed_otus", "shannon") 
+    alpha.nonphylo <- c("chao1", "observed_otus",  "shannon")
+    if(is.phylo) alpha.metrics <- alpha.phylo else alpha.metrics <- alpha.nonphylo
 
 # load data
-    wuf_dm <- read.table(paste(datadir, wuf_dm_fn,sep="/"), sep="\t", quote="", row=1, head=T)
-    uwuf_dm <- read.table(paste(datadir, uwuf_dm_fn,sep="/"), sep="\t", quote="", row=1, head=T)
-    bc_dm <- read.table(paste(datadir, bc_dm_fn,sep="/"), sep="\t", quote="", row=1, head=T)
-
-    alphadiv0 <- read.table(paste(datadir, alpha_fn, sep="/"), sep="\t", quote="", row=1, head=T, comment.char="")
-
-    # load food data files
-    food_wuf_dm <- read.table(paste(datadir, "../wuf_food_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)
-    food_uwuf_dm <- read.table(paste(datadir,"../uwuf_food_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)
-    food_euc_dm <- read.table(paste(datadir,"../euc_food_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)
-    food_bc_dm <- read.table(paste(datadir,"../bc_food_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)
-    food_otu_L3 <- read.table(paste(datadir,"../food.otu_L3.txt",sep="/"), sep="\t", quote="", row=1, head=T, comment="", skip=1)
-    t_food_otu <- t(food_otu_L3)
-    food_otu_L3 <- sweep(t_food_otu, 1, rowSums(t_food_otu), '/')
-    #food_alpha <- read.table(paste(datadir,"../food.alpha.txt",sep="/"), sep="\t", quote="", row=1, head=T, comment.char="")
-
-    # ************* remove this next cluster lines after KCK samples have been properly sequenced!!!
-        rename.dm <- function(dm, oldnames, newnames)
-        {
-            colnames(dm)[which(colnames(dm) %in% oldnames)] <- newnames
-            rownames(dm)[which(rownames(dm) %in% oldnames)] <- newnames
-            return(dm)
+    # only load these files if this is not a CLR dataset
+    if(!is.clr){
+        alphadiv <- read.table(alpha_fn, sep="\t", quote="", row=1, head=T, comment.char="")
+        bc_dm <- read.table(bc_dm_fn, sep="\t", quote="", row=1, head=T)
+        otu <- load.data(mapfile, otufile=otu_fn, normalize=F)$otu
+        if(is.phylo){
+            wuf_dm <- read.table(wuf_dm_fn, sep="\t", quote="", row=1, head=T)
+            uwuf_dm <- read.table(uwuf_dm_fn, sep="\t", quote="", row=1, head=T)
         }
-        renamed_IDs <- paste0("TFS.0", 20:29)
-        new_IDs <- paste0("TFSCS0", 20:29)
-        food_wuf_dm <- rename.dm(food_wuf_dm, renamed_IDs, new_IDs)
-        food_uwuf_dm <- rename.dm(food_uwuf_dm, renamed_IDs, new_IDs)
-        food_euc_dm <- rename.dm(food_euc_dm, renamed_IDs, new_IDs)
-        food_bc_dm <- rename.dm(food_bc_dm, renamed_IDs, new_IDs)
-        rownames(food_otu_L3)[which(rownames(food_otu_L3) %in% renamed_IDs)] <- new_IDs
-    #    rownames(food_alpha)[which(rownames(food_alpha) %in% renamed_IDs)] <- new_IDs
-
-
-    # let's turn off normalization efforts. The taxa file should already be in relative abundance
-    ret <- load.data(mapfile, otufile=taxafile, normalize=F)
-    map <- ret$map
-    taxa <- ret$otu
-
-    # whatever needs these can load these directly
-    #taxa_L2 <- load.data(mapfile, otufile=taxa_L2_fn, normalize=F)$otu
-    #taxa_L6_rare <- load.data(mapfile, otufile=taxafile_L6_rare_fn, normalize=F)$otu
-
-    # load OFU tables raw, make sure to normalize because counts here are wonky
-    oFu_list <- NULL
-    for(i in 1:length(oFu_fns))
-    {
-        oFu_list[[i]] <- load.data(mapfile, otufile=oFu_fns[i], normalize=F)$otu
-        oFu_list[[i]] <- sweep(oFu_list[[i]], 1, rowSums(oFu_list[[i]]), '/')
     }
-    names(oFu_list) <- gsub('^.*/OFU/\\s*|\\s*\\.txt$', '', oFu_fns)
-
-    otu <- read.table(otu_fn, sep="\t", quote="", row=1, head=T, comment="")
-    otu <- as.data.frame(t(otu))
-
-# fix mapping variables
+    # for all taxa and otu, always skip normalizing, filtering, or collapsing - do these only when needed
+    # taxa and otus have already had singletons removed (taxa/otus present in only 1 sample, i.e. chimeras)
+    taxa_L7 <- load.data(mapfile, otufile=taxa_L7_fn, normalize=F)$otu
+    taxa_L2 <- load.data(mapfile, otufile=taxa_L2_fn, normalize=F)$otu
+    ret <- load.data(mapfile, otufile=taxa_L6_fn, normalize=F)
+    map_all <- ret$map
+    taxa_L6 <- ret$otu
+    taxa <- taxa_L6 # save main taxa and map files based on L6
+        
+# reformat mapping variables
     # only work with samples that are in both the mapping AND the dm/alpha files
-    valid_samples <- intersect(rownames(bc_dm), rownames(map))
-    map <- map[valid_samples,]
+    # turns out that 1 sample that has been sequenced should be excluded (abx)
+    map <- map_all[map_all$Exclude != "Y",]
 
-    # format important variables factor levels and/or remove levels (change to char)
-    map$BMI.Class <- as.character(map$BMI.Class)
-    map$BMI.Class[map$BMI.Class == "Normal"] <- "Lean" # replace "Normal" with "Lean"
-    map$BMI.Class <- factor(map$BMI.Class, levels=c("Lean", "Overweight", "Obese")) 
-    map$Subject.ID <- as.character(map$Subject.ID)
-    map$Sample.Group <- factor(map$Sample.Group, levels=c("KarenThai","HmongThai","Karen1st","Hmong1st","Hmong2nd","Control"))
-
-    # all single-timepoint samples across both countries
-    cs <- rownames(map)[is.na(map$Sample.Order) | map$Sample.Order==1]
-    # 1st generation single-timepoint only
-    firstgen_cs <- rownames(map)[map$Sample.Group %in% c("Hmong1st","Karen1st") & (is.na(map$Sample.Order) | map$Sample.Order==1)]
-
-    hmong_secondgen_cs <- rownames(map)[map$Sample.Group == "Hmong2nd"]
-    hmong_firstgen_cs <- rownames(map)[map$Sample.Group == "Hmong1st" & map$Subject.ID != "IMP.000"]
-    karen_firstgen_cs <- rownames(map)[map$Sample.Group == "Karen1st" & (is.na(map$Sample.Order) | map$Sample.Order==1)]
-    karenthai <- rownames(map)[map$Sample.Group=="KarenThai"]
-    hmongthai <- rownames(map)[map$Sample.Group=="HmongThai"]
-
-    # calculate % of life spent in the US column
-    map[,"Fraction.Life.in.US"] <- map$Years.in.US/map$Age
-    map[hmong_secondgen_cs,"Fraction.Life.in.US"] <- 1.0
-    map[c(karenthai,hmongthai),"Fraction.Life.in.US"] <- 0
-
-    # let's reset Years.in.US so that 2ndGen == 50 and Thai == 0
-    map[map$Years.in.US==0 & !is.na(map$Years.in.US),"Years.in.US"] <- 50
-    map[is.na(map$Years.in.US),"Years.in.US"] <- 0
-
-    # calculate a socioeconomics factor columns
-    map[,"Socioeconomic.Index"] <- mean(map[,c("Children.Free.Lunch","Medical.Assistance","Public.Housing")] == "N", na.rm=T)
-
-
-# dm <- bc_dm[cs,cs]
-# ddm <- as.dist(dm)
-# pc <- cmdscale(ddm,2)
-# ** important here that subsetting needs to be done after PCs are generated
-
-# fix mapping all variables
-    # lets reload mapping file containing ALL participants (even those not sequenced yet)
-    # note that all food-related data has already been indexed by SAMPLE ID
-    map_all <- read.table(mapfile, sep="\t", header=T, row=1, check.names=F, comment.char="", as.is=T)
-    # always remove excluded participants
-    map_all <- map_all[map_all$Exclude!="Y",]
-    # remove any FMT samples (no need to analyze them)
-    map_all <- map_all[map_all$Sub.Study!="FMT",]
-    # remove IMP000 samples from food (non exist)
-    map_all <- map_all[map_all$Subject.ID != "IMP.000",]
-    cs_all <- rownames(map_all)[is.na(map_all$Sample.Order) | map_all$Sample.Order==1]
-    map_all$BMI.Class <- as.character(map_all$BMI.Class)
-    map_all$BMI.Class[map_all$BMI.Class == "Normal"] <- "Lean"
-    map_all$BMI.Class <- factor(map_all$BMI.Class, levels=c("Lean", "Overweight", "Obese")) 
-    map_all$Subject.ID <- as.character(map_all$Subject.ID)
-    map_all$Sample.Group <- factor(map_all$Sample.Group, levels=c("KarenThai","HmongThai","Karen1st","Hmong1st","Hmong2nd","Control"))
-
-    # _all includes all participants, including those that have NOT been sequenced. important for metadata correlations.
-    hmong_secondgen_cs_all <- rownames(map_all)[map_all$Sample.Group == "Hmong2nd"]
-    hmong_firstgen_cs_all <- rownames(map_all)[map_all$Sample.Group == "Hmong1st" & map_all$Subject.ID != "IMP.000"]
-    karen_firstgen_cs_all <- rownames(map_all)[map_all$Sample.Group == "Karen1st" & (is.na(map_all$Sample.Order) | map_all$Sample.Order==1)]
-    karenthai_all <- rownames(map_all)[map_all$Sample.Group=="KarenThai"]
-    hmongthai_all <- rownames(map_all)[map_all$Sample.Group=="HmongThai"]
-    controls_all <- rownames(map_all)[map_all$Sample.Group=="Control"]
-
-    map_all[map_all$Years.in.US==0 & !is.na(map_all$Years.in.US),"Years.in.US"] <- 50
-    map_all[is.na(map_all$Years.in.US),"Years.in.US"] <- 0
-
-    map_all[,"Fraction.Life.in.US"] <- map_all$Years.in.US/map_all$Age
-    map_all[c(hmong_secondgen_cs_all, controls_all),"Fraction.Life.in.US"] <- 1.0
-    map_all[c(karenthai_all,hmongthai_all),"Fraction.Life.in.US"] <- 0
-
-# load nutrient information
-    # nutrient file should already be mapped to sample ids
-    nutrients <- read.table(nutrientsfn, sep="\t", header=T, check.names=F, as.is=T,row=1)
-    nutrients[,"% of Calories from Total Sugars"] <- nutrients[,"Total Sugars in Grams"] * 4 / nutrients[,"Total Calories"]
-    nutrients[,"g Fiber per 1000 Calories"] <- (nutrients[,"Dietary Fiber in Grams",] / nutrients[,"Total Calories"]) * 1000
-    ######### remove these 2 lines once we have the TFS samples that are properly renamed back in our dataset
-    # currently all diet data still uses original sample IDs
-        ix <- which(rownames(nutrients) %in% renamed_IDs) # revert to original name because diets don't like this
-        rownames(nutrients)[ix] <- new_IDs
-
+    source("bin/format.map.r")
+    
+# add food metadata to mapping 
     # let's add some diet metadata into the mapping file 
-    x <- merge(map_all, nutrients[,c("SuperTracker.DATE", "Diet.Month", "Diet.ID", "Diet.Date"), drop=F], by=0)
-    rownames(x) <- x[,1]
-    x <- x[,-1]
-    map_all <- x
- 
-    foodgroups <- read.table(foodgroupfn, sep="\t", header=T, check.names=F, as.is=T)
-    fgroup <- paste0(foodgroups$FoodType, " in ", foodgroups$PortionUnit)
-    foodgroups <- data.frame(foodgroups[, c("Sample.ID","Amount")],fgroup)
-    foodgroups <- reshape(foodgroups,direction="wide", idvar="Sample.ID", timevar="fgroup")
-
-    rownames(foodgroups) <- foodgroups$Sample.ID
-    foodgroups <- foodgroups[,-which(colnames(foodgroups)=="Sample.ID")]
+    diet_map <- read.table(dietmap_fn, sep="\t", header=T, check.names=F, as.is=T,row=1)
+    merged <- merge(map, diet_map[,c("SuperTracker.DATE", "Diet.Month", "Diet.ID", "Diet.Date")], by=0)
+    # check on rows
+    #cat("map: ", nrow(map), " diet_map: ", nrow(diet_map), " merged: ", nrow(merged), "\n")
+    
+    map <- data.frame(merged[,-1], row.names=merged[,1])
 
     # calculate Days since arrival for sample and diet dates
-    map_all$Sample.Day.Since.Arrival <- as.numeric(as.Date(map_all$Sample.Date, format="%m/%d/%y") - as.Date(map_all$Arrival.in.US, format="%m/%d/%y"))
-    map_all$Diet.Day.Since.Arrival <- as.numeric(as.Date(map_all$Diet.Date, format="%m/%d/%y") - as.Date(map_all$Arrival.in.US, format="%m/%d/%y") )
     map$Sample.Day.Since.Arrival <- as.numeric(as.Date(map$Sample.Date, format="%m/%d/%y") - as.Date(map$Arrival.in.US, format="%m/%d/%y"))
-
-
-
-
+    map$Diet.Day.Since.Arrival <- as.numeric(as.Date(map$Diet.Date, format="%m/%d/%y") - as.Date(map$Arrival.in.US, format="%m/%d/%y") )
+    map$Sample.Day.Since.Arrival <- as.numeric(as.Date(map$Sample.Date, format="%m/%d/%y") - as.Date(map$Arrival.in.US, format="%m/%d/%y"))
+ 
+    # note that we expect n=4 samples filtered out of regular taxa/otu files (too low of depth)
+    # check map_all for the original unfiltered mapping file 
+    # these contain sample ids found in diet but not in mapping -- note that most of these were samples that were not sequenced for whatever reason
+    # check <- data.frame(Sample.ID=setdiff(rownames(diet_map), rownames(map)), Status=NA)
+    # check[grep("^[IL].*", check$Sample.ID), "Status"] <- "No Diet or No Sample"
+    # check[grep("^TFS.*", check$Sample.ID), "Status"] <- "Low Depth"
+    # check[check$Sample.ID=="T.CS.060", "Status"] <- "Low Depth"
+    # check[check$Sample.ID=="T.CS.046", "Status"] <- "Excluded"

@@ -6,36 +6,32 @@ require(cowplot)
 
 # label.samples = vector of samples to label by name
 # used for plotting samples for selecting Hmong Mouse Donors
-plot.pcoa.by <- function(map0, dm, ethnicity, fn, color.by="Years.in.US", and.by="BMI.Class", label.samples=NULL)
+plot.pcoa.by <- function(map0, otu0, dm=NULL, fill.by="Years.in.US", shape.by=NULL, label.samples=NULL, flip.axis=NULL, fill.color="#40004B")
 {
-    map0 <- map0[map0$Ethnicity %in% ethnicity,]
-
-    valid_samples <- intersect(rownames(dm), rownames(map0))
-    map0 <- map0[valid_samples,]
-    dm <- dm[valid_samples, valid_samples]
+    ret <- prep.dm(map0, otu0, dm, method="euclidean")
+    ddm <- ret$ddm
+    dm <- ret$dm
+    map0 <- ret$map0
+    ppc <- cmdscale(ddm,2, eig=TRUE) # return eigenvals for calculating % var explained
+    pc <- ppc$points
     
-    ddm <- as.dist(dm)
-    # plot clusters
-    # get PCoA scores first
-    pc0 <- cmdscale(ddm,2)
-
-    pch <- rep(19,nrow(map0))
-    pch[map0$BMI.Class=="Obese"] <- 17 #mark obese as triangles
-    pch[map0$BMI.Class=="Lean"] <- 15 #mark lean as squares
+    if(!is.null(flip.axis))  pc[,flip.axis] <- -1*pc[,flip.axis] # sometimes we'll want to flip certain axes so orientations are the same
     
-    d <- data.frame(x = pc0[,1], y = pc0[,2], 
-                    color.by=map0[,color.by], group=map0$Sample.Group, label=rownames(map0))
-    p <- ggplot(data=d, aes(x, y)) + geom_point(aes(color=color.by), size=2, pch=pch) + xlab("PC1") + ylab("PC2") +
-                scale_color_gradient(low="yellow",high="red")
+    d <- data.frame(x = pc[,1], y = pc[,2], 
+                    fill.by=map0[,fill.by], shape.by=map0[,shape.by], group=map0$Sample.Group, label=rownames(map0))
+
+    p <- ggplot(data=d, aes(x, y)) + xlab("PC1") + ylab("PC2")
+
+    if(!is.null(shape.by))
+        p <- p + geom_point(aes(fill=fill.by, shape=shape.by), color=alpha("black",.2), size=2) + scale_shape_manual(name=shape.by, values=c(21,24)) + scale_fill_gradient(name=fill.by, low="white", high=fill.color)
+    else
+        p <- p + geom_point(aes(fill=fill.by), shape=21, size=2, color=alpha("black", .2)) + scale_fill_gradient(name=fill.by, low="white", high=fill.color)
+
 
     if(!is.null(label.samples))
         p <- p + geom_text(aes(label=ifelse(label %in% label.samples, as.character(label), '')), hjust=0, vjust=0)
-        
-#        (pc0[label.samples,1], pc0[label.samples,2],labels=label.samples, cex=.5)
-    
-    save_plot(fn, p,
-        base_aspect_ratio = 1.3
-    )
+
+    return(p)
 }
 
 # dm is optional and only for things that have been generated outside of R (unifrac)
@@ -48,15 +44,15 @@ plot.constrained.ordination <- function(map0, otu0, method="euclidean", plot.tit
     dm <- ret$dm
     map0 <- ret$map0
 
-    # RDA: distance is euclidean (CLR transformed) and relationship with env.vars is expected to be linear
+    # RDA: distance is euclidean (CLR transformed) and relationship with env.vars is expected to be linear (otherwise, consider CCA)
     if(is.null(dm0) & !is.null(env.vars))
-        rrda <- rda(as.formula(paste("otu0 ~ ", paste(env.vars, collapse=" + "))), map0) # basic RDA with euc distance 
+        rrda <- rda(as.formula(paste("otu0 ~ ", paste(env.vars, collapse=" + "))), map0)    # basic RDA with euc distance 
     else if(is.null(dm0) & is.null(env.vars))
-        rrda <- rda(otu0) # basic RDA with euc distance - full model
+        rrda <- rda(otu0)                                                                   # basic RDA with euc distance - full model
     else if(!is.null(dm0) & !is.null(env.vars))
-        rrda <- dbrda(as.formula(paste("ddm ~ ", paste(env.vars, collapse=" + "))), map0) # distance based RDA
+        rrda <- dbrda(as.formula(paste("ddm ~ ", paste(env.vars, collapse=" + "))), map0)   # distance based RDA (e.g. constrained unifrac)
     else if(!is.null(dm0) & is.null(env.vars))
-        rrda <- dbrda(ddm) # distance based RDA - full model
+        rrda <- dbrda(ddm)                                                                  # distance based RDA - full model (e.g. unifrac)
     
     rrda.plot <- plot(rrda)
     
@@ -69,21 +65,23 @@ plot.constrained.ordination <- function(map0, otu0, method="euclidean", plot.tit
     if(length(unique(d$group)) > 5)
         group.cols <- c(alpha("black", .5), group.cols)
 
+    # calculate % variation explained by each PC
     percent_var <- signif(eigenvals(rrda)/sum(eigenvals(rrda)), 4)*100
+    
     p <- ggplot(data=d, aes(x, y)) + geom_point(aes(colour=group), size=2) +
         xlab(paste0("Axis 1 [",percent_var[1],"%]")) +
         ylab(paste0("Axis 2 [",percent_var[2],"%]")) + 
         scale_color_manual(values=group.cols) + #sets the color palette of the fill
         stat_ellipse(data=d, aes(colour=group), show.legend=F, type="t", level=.6)
 
-    if(!is.null(env.vars))
+    if(!is.null(env.vars)) # if environment variables were passed in
     {
         print(anova(rrda, by="terms")) # significant terms here contribute most to constrained model
     
-        # total variation explained by environment vars
+        # total variation explained by environment vars (sum 1st and 2nd axes only)
         label <- paste0("Variation explained: ", signif(rrda$CCA$tot.chi/rrda$tot.chi, 4)*100, "%")
     
-        vector.multiplier <- attributes(rrda.plot$biplot)$arrow.mul
+        vector.multiplier <- attributes(rrda.plot$biplot)$arrow.mul # for redrawing length of arrow
 
         fit_env_df <- as.data.frame(rrda.plot$biplot*vector.multiplier)
         fit_env_df <- cbind(fit_env_df, Variable = rownames(rrda.plot$biplot))
@@ -92,7 +90,7 @@ plot.constrained.ordination <- function(map0, otu0, method="euclidean", plot.tit
         text_fit_env_df <- fit_env_df
         text_fit_env_df[,2] <- text_fit_env_df[,2]*1.2 # let's shift the text out a little
     
-        p <- p + coord_fixed() + ## need aspect ratio of 1!
+        p <- p + coord_fixed() + ## need aspect ratio of 1 in order to redraw vectors!
         geom_segment(data = fit_env_df,
                    aes(x = 0, xend = Dim1, y = 0, yend = Dim2),
                    arrow = arrow(length = unit(0.25, "cm")), colour = alpha("black",.5)) +
@@ -108,7 +106,7 @@ plot.constrained.ordination <- function(map0, otu0, method="euclidean", plot.tit
 
 # dm is optional and only for things that have been generated outside of R (unifrac)
 # env.vars = specify continuous vars to plot additional environment variables 
-plot.pcoa <- function(map0, otu0, method="euclidean", plot.title, axis1 = 1, axis2 = 2, dm=NULL, env.vars=NULL, flip.axis=NULL, show.stats=TRUE)
+plot.pcoa <- function(map0, otu0, method="euclidean", plot.title, axis1 = 1, axis2 = 2, dm=NULL, env.vars=NULL, flip.axis=NULL, show.stats=TRUE, save.pc=FALSE)
 {   
     ret <- prep.dm(map0, otu0, dm, method)
     ddm <- ret$ddm
@@ -141,13 +139,8 @@ plot.pcoa <- function(map0, otu0, method="euclidean", plot.title, axis1 = 1, axi
     adonis.years.pval <- adonis.years$aov.tab[1,"Pr(>F)"]     
     adonis.years.R2 <- adonis.years$aov.tab[1,"R2"]
 
-    # see how PC1 is correlated with years in US for everyone but 2nd generation
-#     minus2nd <- rownames(map0)[map0$Sample.Group != "Hmong2nd"]
-#     x <- pc[minus2nd,axis1]
-#     y <- map0[minus2nd,"Years.in.US"]
      cortest <- cor.test(pc[,axis1],map0[,"Years.in.US"], method="spear")
      print(cortest)
-     #cor.label <- paste0("PC1 x Yrs.in.US Rho = ", signif(cortest$estimate, 2), ", P = ", signif(cortest$p.value, 2))
                      
     # let's draw 95% standard error ellipses around Thai and 2nd gen samples
 #    mod <- betadisper(ddm, map0$Sample.Group, type="centroid")
@@ -155,19 +148,26 @@ plot.pcoa <- function(map0, otu0, method="euclidean", plot.title, axis1 = 1, axi
         
     # calculate variability explained
     percent_var <- signif(eigenvals(ppc)/sum(eigenvals(ppc)), 4)*100
+        
+    d <- data.frame(x = pc[,axis1], y = pc[,axis2], map0)
     
+    groupnames <- as.character(unique(map0$Sample.Group))
     
-    d <- data.frame(x = pc[,axis1], y = pc[,axis2], group=map0$Sample.Group)
-    # set the levels of Sample.Group so that it's the same every time
-    d$group <- factor(d$group, levels=sort(as.character(unique(d$group))))
+    cols <- get.group.colors(groups=groupnames, alpha.val=1) 
+    alphas <- get.group.alphas(groups=groupnames) 
+    shapes <- get.group.shapes(groups=groupnames) 
+    sizes <- get.group.sizes(groups=groupnames) 
+    
 
-    group.cols <- alpha(c("#e9a3c9", "#fee08b", "#c51b7d", "#80cdc1", "#018571"),.8)
-    if(length(unique(d$group)) > 5)
-        group.cols <- c(alpha("black", .5), group.cols)
+    p <- ggplot(data=d, aes(x, y)) + geom_point(aes(colour=Sample.Group, shape=Sample.Group, size=Sample.Group, alpha=Sample.Group), stroke=1, fill=NA) + 
+        xlab(paste0("PC",axis1, " [",percent_var[axis1],"%]")) + ylab(paste0("PC",axis2, " [",percent_var[axis2],"%]")) + ggtitle(plot.title) +
+        scale_color_manual(name="Groups", values=cols) + #sets the color palette of the fill
+        scale_alpha_manual(name="Groups", values=alphas) +
+        scale_shape_manual(name="Groups", values=shapes) +
+        scale_size_manual(name="Groups", values=sizes) + 
+        stat_ellipse(data=d[d$Group %in% c("Pre","2nd"),], aes(colour=Sample.Group, linetype=Group), show.legend=F, type="t", level=.6) + 
+        scale_linetype_manual(values=c("solid","dashed"), guide=F) 
 
-    p <- ggplot(data=d, aes(x, y)) + geom_point(aes(colour=group), size=2) + xlab(paste0("PC",axis1, " [",percent_var[axis1],"%]")) + ylab(paste0("PC",axis2, " [",percent_var[axis2],"%]")) + ggtitle(plot.title) +
-        scale_color_manual(values=group.cols) + #sets the color palette of the fill
-        stat_ellipse(data=d, aes(colour=group), show.legend=F, type="t", level=.6)
 
 
     label<-NULL
@@ -191,26 +191,13 @@ plot.pcoa <- function(map0, otu0, method="euclidean", plot.title, axis1 = 1, axi
         text_fit_env_df <- fit_env_df
         text_fit_env_df[,1] <- text_fit_env_df[,1]*.7 # let's shift the text out a little
         text_fit_env_df[,2] <- text_fit_env_df[,2]*1.3
-        
-# manually place text
-#         text_fit_env_df[1,1] <- text_fit_env_df[1,1]*.3 # BMI
-#         text_fit_env_df[2,1] <- text_fit_env_df[2,1]*.7 # Years X
-#         text_fit_env_df[2,2] <- text_fit_env_df[2,2]*1.3 # Years Y
-#         text_fit_env_df[3,2] <- text_fit_env_df[3,2]*1.2 # Age
-        
+                
         p <- p + coord_fixed() + ## need aspect ratio of 1!
         geom_segment(data = fit_env_df,
                    aes(x = 0, xend = Dim1, y = 0, yend = Dim2),
                    arrow = arrow(length = unit(0.25, "cm")), colour = "black") +
         geom_text(data = text_fit_env_df, aes(x = Dim1, y = Dim2, label = Variable),
                 size = 4, fontface = "bold")
-        
-        # let's print all of the environmental variable correlations 
-        #        print(fit_env$vectors)
-        # let's not include these stats on the figure itself
-        #         stats_df <- cbind(variable=rownames(fit_env_df), R2=fit_env$vectors$r, P=fit_env$vectors$pvals)
-        #         label <- paste(apply(stats_df, 1, function(xx) paste0(xx[1], " R2=", signif(as.numeric(xx[2]),2), " P=", signif(as.numeric(xx[3]),2))), collapse="\n")
-        #         label <- paste0(label, "\n")
     }
     if(show.stats)
     {
@@ -218,7 +205,10 @@ plot.pcoa <- function(map0, otu0, method="euclidean", plot.title, axis1 = 1, axi
                                 "\nGroup R2 = ", signif(adonis.sample.group.R2, 2), ", P = ", signif(adonis.sample.group.pval, 2))
         p <- ggdraw(p) + draw_figure_label(paste0(adonis.label), size=8, position="bottom.right")
     }
-    
+    if(save.pc)
+    {
+        write.table(pc, paste0(plot.title, "-PC.txt"), sep="\t", quote=F)
+    }
     
     save_plot(paste0("pcoa - ", plot.title, ".pdf"), p, useDingbats=FALSE, base_aspect_ratio = 1.3 )
 
@@ -228,25 +218,45 @@ plot.pcoa <- function(map0, otu0, method="euclidean", plot.title, axis1 = 1, axi
 
 
 # convex.hulls are shaded backgrounds around subject sample points
-plot.pcoa.long <- function(map0, samples, otu0, method="euclidean", plot.title, dm=NULL, convex.hull=FALSE)
+plot.pcoa.long <- function(map0, samples, otu0, method="euclidean", plot.title, dm=NULL, convex.hull=FALSE, flip.axis=NULL)
 {
     ret <- prep.dm(map0, otu0, dm, method)
     ddm <- ret$ddm
     dm <- ret$dm
     map0 <- ret$map0
-    pc <- cmdscale(ddm,2)
-                
+    ppc <- cmdscale(ddm,2, eig=TRUE) # return eigenvals for calculating % var explained
+    pc <- ppc$points
+
+    if(!is.null(flip.axis))  pc[,flip.axis] <- -1*pc[,flip.axis] # sometimes we'll want to flip certain axes so orientations are the same
+                    
     group <- rep("NA", nrow(pc))
     names(group) <- rownames(pc)
     group[samples] <- map0[samples,"Subject.ID"]
-    d <- data.frame(x = pc[,1], y = pc[,2], group=group, row.names=rownames(pc))
+    d <- data.frame(x = pc[,1], y = pc[,2], group=group, row.names=rownames(pc), Sample.Order=map0[rownames(pc),"Sample.Order"], Subject.ID=map0[rownames(pc),"Subject.ID"])
 
-    cols <- alpha(colorRampPalette(brewer.pal(9, "Set1"))(length(unique(map0[samples,"Subject.ID"]))),.8)    
+    cols <- alpha(colorRampPalette(brewer.pal(8, "Set1"))(length(unique(map0[samples,"Subject.ID"]))),.8)    
 
     first.samples <- rownames(map0[which(rownames(map0) %in% samples & map0[,"Sample.Order"] == min(map0[samples,"Sample.Order"])),])
     last.samples <- rownames(map0[which(rownames(map0) %in% samples & map0[,"Sample.Order"] == max(map0[samples,"Sample.Order"])),])
     
-    
+            this.d <- d[samples,]
+            mins1 <- aggregate(this.d$Sample.Order, list(this.d$Subject.ID), FUN=function(xx) min(xx))
+            mins2 <- aggregate(this.d$Sample.Order, list(this.d$Subject.ID), FUN=function(xx) min(xx)+1)
+            mins <- rbind(mins1,mins2)
+            colnames(mins) <- c("Subject.ID","Sample.Order")
+            dd <- merge(mins, this.d, by=c("Subject.ID","Sample.Order"))
+            xy.1 <- cbind(aggregate(dd[,c("x","y")], list(dd$Subject.ID), FUN=mean), month="start")
+
+            maxs1 <- aggregate(this.d$Sample.Order, list(this.d$Subject.ID), FUN=function(xx) max(xx))
+            maxs2 <- aggregate(this.d$Sample.Order, list(this.d$Subject.ID), FUN=function(xx) max(xx)+1)
+            maxs <- rbind(maxs1,maxs2)
+            colnames(maxs) <- c("Subject.ID","Sample.Order")
+            dd <- merge(maxs, this.d, by=c("Subject.ID","Sample.Order"))
+            xy.2 <- cbind(aggregate(dd[,c("x","y")], list(dd$Subject.ID), FUN=mean), month="end")
+
+            xy <- rbind(xy.1, xy.2)
+            colnames(xy) <- c("Subject.ID", "x", "y", "month")
+
     background.df <- d[!(rownames(d) %in% samples),] # all other CS samples
     if(length(cols) == 1) # single subject
     {    
@@ -267,17 +277,21 @@ plot.pcoa.long <- function(map0, samples, otu0, method="euclidean", plot.title, 
 
     }
     else{
-        p <- ggplot(data=d, aes(x, y)) +
-            geom_point(data = background.df, colour=alpha('gray',.2), shape=1, size=2) +
-            geom_point(data = d[samples,], aes(colour=group, shape=20), size=2) +
-            geom_point(data = d[last.samples,], mapping=aes(colour=group, shape=17), size=3) + # ends in triangle
-            geom_point(data = d[first.samples,], mapping=aes(colour=group, shape=16), size=3) + # starts in large circle
-            scale_shape_identity() +
-            xlab("PC1") + ylab("PC2") +
-            ggtitle(plot.title) + scale_color_manual(values=cols)
+        override.size <- c(background=2,intermediate=2,end=3,start=3)
+        override.shape <- c(background=1,intermediate=20,end=17,start=16)
+        
+        d[rownames(background.df), "Type"] <- "background"
+        d[, "groupcolor"] <- as.character(d$group)
+        d[d$group=="NA", "groupcolor"] <- "CS"
+        d[samples,"Type"] <- "intermediate"
+        d[last.samples, "Type"] <- "end"
+        d[first.samples,"Type"] <- "start"
+        
+        p <- ggplot(data=d, aes(x, y)) + geom_point(color=alpha("gray",.5)) +
+            xlab("PC1") + ylab("PC2")
 
-        if(convex.hull)
-            p <- p + stat_chull(data=d[samples,], mapping=aes(colour=group), alpha = 0.1, geom = "polygon")
+        p <- p + geom_line(data=xy, aes(x, y, group=Subject.ID), color="black") + geom_point(data=xy, aes(x,y,color=month), size=3) + 
+                scale_color_manual(values=c(start="black",end="blue")) 
     }
 
     save_plot(paste0("pcoa - ", plot.title, ".pdf"), p, useDingbats=FALSE, base_aspect_ratio = 1.3 )
