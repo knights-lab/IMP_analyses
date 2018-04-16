@@ -104,16 +104,16 @@ get.color.list<-function(map0)
 # This heatmap converts OTUs to presence/absence, and plots OTUs from left to right (highest to lowest prevalence) and samples from top to bottom (non-western to western)
 #   sorts OTUs by prevalence in baseline groups (min prevalence cut off also only applied at baseline)
 #   sorts samples by richness
-make.heatmap.binary <- function(otu0, map0, min.prevalence=0.25, baseline.groups, show.colnames=FALSE, outputfn)
+make.heatmap.binary <- function(otu0, map0, group.var="Sample.Group", min.prevalence=0.25, baseline.groups, show.colnames=FALSE, outputfn)
 {
     valid.samples <- intersect(rownames(map0), rownames(otu0))
     map0 <- map0[valid.samples,]
     otu0 <- otu0[valid.samples,]
 
-    map0$Sample.Group <- factor(map0$Sample.Group) # remove levels not present after filtering
+    map0[,group.var] <- factor(map0[,group.var]) # remove levels not present after filtering
 
     # sort columns (otus) by prevalence of baseline group only
-    this.taxa <- otu0[map0$Sample.Group %in% baseline.groups,]
+    this.taxa <- otu0[map0[,group.var] %in% baseline.groups,]
     prevalences <- apply(this.taxa, 2, function(bug.col) mean(bug.col > 0))
     # filter prevalence within the baseline sample group
     prevalences <- prevalences[prevalences >= min.prevalence]
@@ -125,9 +125,9 @@ make.heatmap.binary <- function(otu0, map0, min.prevalence=0.25, baseline.groups
 
     # sort rows by richness (number of otus in sample)
     final.otu <- NULL
-    for(this.group in levels(map0$Sample.Group))
+    for(this.group in levels(map0[,group.var]))
     {
-        this.otu <- otu0[map0$Sample.Group==this.group,,drop=F]
+        this.otu <- otu0[map0[,group.var]==this.group,,drop=F]
 
         if(nrow(this.otu) > 1) # only reorder if we have more than 1 sample!
             this.otu <- this.otu[order(rowSums(this.otu)),]
@@ -157,7 +157,7 @@ make.heatmap.binary <- function(otu0, map0, min.prevalence=0.25, baseline.groups
         row.labels <- rownames(otu0)
             
         # draw line between groups in order to see separation better
-        last.groups <- aggregate(1:length(row.labels), list(map0[row.labels,"Sample.Group"]), max)
+        last.groups <- aggregate(1:length(row.labels), list(map0[row.labels,group.var]), max)
         last.group.ix <- as.numeric(as.character(last.groups[,2]))
         last.group.ix <- last.group.ix[-which.max(last.group.ix)]
     
@@ -232,16 +232,16 @@ prep.otu.trad.heatmap<-function(otu0, groups, min.prevalence=0.25, sig.level=.25
 
 # This makes a traditional heatmap (samples as columns, non-western to western and OTUs as rows)
 # min.prevalence applied globally 
-make.heatmap.traditional <- function(otu0, map0, outputfn, filter.mode="standard", save.pvals=FALSE, min.prev=0.1, sig.level=.10, show.rownames=FALSE)
+make.heatmap.traditional <- function(otu0, map0, group.var="Sample.Group", outputfn, filter.mode="standard", save.pvals=FALSE, min.prev=0.1, sig.level=.10, show.rownames=FALSE)
 {
     valid.samples <- intersect(rownames(map0), rownames(otu0))
     map0 <- map0[valid.samples,]
     otu0 <- otu0[valid.samples,]
 
-    map0$Sample.Group <- factor(map0$Sample.Group) # remove levels not present
+    map0[,group.var] <- factor(map0[,group.var]) # remove levels not present
     
     # useful to see distribution of samples
-    print(table(map0$Sample.Group))
+    print(table(map0[,group.var]))
     
     color.list <- get.color.list(map0)
     
