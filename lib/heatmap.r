@@ -83,6 +83,7 @@ create.new.treatments<-function(map0, cluster.var, color.list)
 }
 
 # gets list of colors based on cluster.var
+# override this function to generate other colors and variables
 get.color.list<-function(map0)
 {
     color.list <- list()
@@ -98,7 +99,6 @@ get.color.list<-function(map0)
     color.list[["Years.in.US"]] <- setNames(c('white','#005073'), as.character(signif(range(map0$Years.in.US),2)))
     return(color.list)
 }
-
 
 
 # This heatmap converts OTUs to presence/absence, and plots OTUs from left to right (highest to lowest prevalence) and samples from top to bottom (non-western to western)
@@ -136,16 +136,16 @@ make.heatmap.binary <- function(otu0, map0, group.var="Sample.Group", min.preval
     }
     otu0 <- final.otu
 
-    ok.to.draw=FALSE
+    ok.to.draw=TRUE
     if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0)
     {   
         print("Found infinites or NAs in your OTU table")
-        ok.to.draw <- TRUE
+        ok.to.draw <- FALSE
     }
     if(ncol(otu0) < 2 | nrow(otu0) < 2)
     {
         print("Only one differential feature found. Cannot generate heatmap.")
-        ok.to.draw <- TRUE
+        ok.to.draw <- FALSE
     }
 
     if(ok.to.draw)
@@ -232,7 +232,7 @@ prep.otu.trad.heatmap<-function(otu0, groups, min.prevalence=0.25, sig.level=.25
 
 # This makes a traditional heatmap (samples as columns, non-western to western and OTUs as rows)
 # min.prevalence applied globally 
-make.heatmap.traditional <- function(otu0, map0, group.var="Sample.Group", outputfn, filter.mode="standard", save.pvals=FALSE, min.prev=0.1, sig.level=.10, show.rownames=FALSE)
+make.heatmap.traditional <- function(otu0, map0, outputfn, group.var="Sample.Group", filter.mode="standard", save.pvals=FALSE, min.prev=0.1, sig.level=.10, show.rownames=FALSE)
 {
     valid.samples <- intersect(rownames(map0), rownames(otu0))
     map0 <- map0[valid.samples,]
@@ -244,8 +244,9 @@ make.heatmap.traditional <- function(otu0, map0, group.var="Sample.Group", outpu
     print(table(map0[,group.var]))
     
     color.list <- get.color.list(map0)
+    print(color.list)
     
-	new.treatments <- create.new.treatments(map0, cluster.var=c("Sample.Group"), color.list)
+	new.treatments <- create.new.treatments(map0, cluster.var=group.var, color.list)
 
     # transforms and filters otu using standard methods
     if(filter.mode!="none")
@@ -268,16 +269,16 @@ make.heatmap.traditional <- function(otu0, map0, group.var="Sample.Group", outpu
         }
     }
 
-    ok.to.draw=FALSE
+    ok.to.draw=TRUE
     if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0)
     {   
         print("Found infinites or NAs in your OTU table")
-        ok.to.draw <- TRUE
+        ok.to.draw <- FALSE
     }
     if(ncol(otu0) < 2 | nrow(otu0) < 2)
     {
         print("Only one differential feature found. Cannot generate heatmap.")
-        ok.to.draw <- TRUE
+        ok.to.draw <- FALSE
     }
 
     if(ok.to.draw)
@@ -297,7 +298,7 @@ make.heatmap.traditional <- function(otu0, map0, group.var="Sample.Group", outpu
         row.dendrogram <- ret$ddr 
 
         # draw line between groups in order to see separation better
-        last.groups <- aggregate(1:length(col.labels), list(map0[col.labels,"Sample.Group"]), max)
+        last.groups <- aggregate(1:length(col.labels), list(map0[col.labels,group.var]), max)
         last.group.ix <- as.numeric(as.character(last.groups[,2]))
         last.group.ix <- last.group.ix[-which.max(last.group.ix)]
     
