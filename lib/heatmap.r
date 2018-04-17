@@ -136,20 +136,11 @@ make.heatmap.binary <- function(otu0, map0, group.var="Sample.Group", min.preval
     }
     otu0 <- final.otu
 
-    ok.to.draw=TRUE
-    if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0)
-    {   
-        print("Found infinites or NAs in your OTU table")
-        ok.to.draw <- FALSE
-    }
-    if(ncol(otu0) < 2 | nrow(otu0) < 2)
+    if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0 | ncol(otu0) < 2 | nrow(otu0) < 2)
+        print("Your OTU table is too small or contains NAs. Not generating heatmap.")
+    else
     {
-        print("Only one differential feature found. Cannot generate heatmap.")
-        ok.to.draw <- FALSE
-    }
 
-    if(ok.to.draw)
-    {
         color.list <- get.color.list(map0)
     
         # don't cluster OTUs - should already be ordered by prevalence
@@ -209,7 +200,7 @@ draw.prevalence.heatmap <- function(otu.hm, color.list, row.colors, row.sep.ix, 
 
 
 # keeps prevalent OTUs, collapse correlated OTUs, transforms rel abundances if parametric testing, keeps only significant OTUs
-prep.otu.trad.heatmap<-function(otu0, groups, min.prevalence=0.25, sig.level=.25, parametric=TRUE, normalize=TRUE)
+prep.otu.trad.heatmap<-function(otu0, groups, min.prevalence=0.25, sig.level=.25, test="parametric", normalize=TRUE)
 {
     # if not normalizing (e.g. clr), do not convert to relative abundance, filter low prevalence, or sqrt transform
     if(normalize){ 
@@ -222,10 +213,14 @@ prep.otu.trad.heatmap<-function(otu0, groups, min.prevalence=0.25, sig.level=.25
     otu0 <- otu0[, ret$reps]
 
     # select features that are statistically different between groups (parametric)
-    if(parametric) ret <- test.features.parametric(otu0, groups, sig.level=sig.level)
-    else ret <- test.features.nonparametric(otu0, groups, sig.level=sig.level)
+    if(test=="parametric") {
+        ret <- test.features.parametric(otu0, groups, sig.level=sig.level)
+        otu0 <- otu0[,ret$features,drop=F]	
+    } else if(test=="nonparametric") {
+        ret <- test.features.nonparametric(otu0, groups, sig.level=sig.level)
+	    otu0 <- otu0[,ret$features,drop=F]	
+	}
 
-	otu0 <- otu0[,ret$features,drop=F]	
     return(list(otu=otu0, ret=ret))
 }
 
@@ -239,15 +234,14 @@ make.heatmap.traditional <- function(otu0, map0, outputfn, group.var="Sample.Gro
     otu0 <- otu0[valid.samples,]
 
     map0[,group.var] <- factor(map0[,group.var]) # remove levels not present
-    
+
     # useful to see distribution of samples
     print(table(map0[,group.var]))
-    
-    color.list <- get.color.list(map0)
-    print(color.list)
-    
-	new.treatments <- create.new.treatments(map0, cluster.var=group.var, color.list)
 
+    color.list <- get.color.list(map0)
+
+    new.treatments <- create.new.treatments(map0, cluster.var=group.var, color.list)
+    
     # transforms and filters otu using standard methods
     if(filter.mode!="none")
     {
@@ -269,20 +263,11 @@ make.heatmap.traditional <- function(otu0, map0, outputfn, group.var="Sample.Gro
         }
     }
 
-    ok.to.draw=TRUE
-    if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0)
-    {   
-        print("Found infinites or NAs in your OTU table")
-        ok.to.draw <- FALSE
-    }
-    if(ncol(otu0) < 2 | nrow(otu0) < 2)
+    if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0 | ncol(otu0) < 2 | nrow(otu0) < 2)
+        print("Your OTU table is too small or contains NAs. Not generating heatmap.")
+    else
     {
-        print("Only one differential feature found. Cannot generate heatmap.")
-        ok.to.draw <- FALSE
-    }
 
-    if(ok.to.draw)
-    {
         distfun <- function(x) as.dist((1-cor(t(x)))/2)
 
         # standardize each feature (taxa) so it stands out more (important so that color scheme magnifies properly)
@@ -297,11 +282,11 @@ make.heatmap.traditional <- function(otu0, map0, outputfn, group.var="Sample.Gro
         ret <- cluster.rows(otu=as.matrix(t(otu0))[,col.labels], distfun=distfun)
         row.dendrogram <- ret$ddr 
 
+        last.group.ix <- NULL
         # draw line between groups in order to see separation better
         last.groups <- aggregate(1:length(col.labels), list(map0[col.labels,group.var]), max)
         last.group.ix <- as.numeric(as.character(last.groups[,2]))
         last.group.ix <- last.group.ix[-which.max(last.group.ix)]
-    
         col.colors <- create.color.bars(map0[col.labels,,drop=F], color.var=names(color.list), color.list)
         # flip this
         otu.hm <- as.matrix(t(otu0))
@@ -348,6 +333,51 @@ draw.trad.heatmap <- function(otu.hm, rowv, color.list, col.colors, col.sep.ix, 
     fill=unlist(color.list), border=FALSE, bty="n", cex=.9, ncol=2, text.width=strwidth("1,000,000"))
 	
 	dev.off()
+}
+
+# This makes a traditional heatmap (samples as columns, non-western to western and OTUs as rows)
+# plots everything as-is, no testing for diff features, no filtering, nuthin'!
+make.heatmap.traditional.nogroups <- function(otu0, map0, outputfn, show.rownames=FALSE, min.prevalence=.1)
+{
+    valid.samples <- intersect(rownames(map0), rownames(otu0))
+    map0 <- map0[valid.samples,]
+    otu0 <- otu0[valid.samples,]
+
+    otu0 <- sweep(otu0, 1, rowSums(otu0), '/')	
+    prevalences <- apply(otu0, 2, function(bug.col) mean(bug.col > 0))
+    otu0 <- otu0[, prevalences >= min.prevalence]
+
+    color.list <- get.color.list(map0)
+    
+    if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0 | ncol(otu0) < 2 | nrow(otu0) < 2)
+        print("Your OTU table is too small or contains NAs. Not generating heatmap.")
+    else
+    {
+        distfun <- function(x) as.dist((1-cor(t(x)))/2)
+
+        # standardize each feature (taxa) so it stands out more (important so that color scheme magnifies properly)
+        # rescale for better color gradient - makes the mean = 0 and sd = 1
+        #apply(otu0, 2, function(x) print(sd(x)))
+        
+        otu0 <- apply(otu0, 2, function(x) (x-mean(x))/sd(x))	
+        
+        #cluster the samples
+        ret <- cluster.rows(otu=otu0, distfun=distfun)
+        col.labels <- ret$row.labels
+
+        #then cluster the OTUs
+        ret <- cluster.rows(otu=as.matrix(t(otu0))[,col.labels], distfun=distfun)
+        row.dendrogram <- ret$ddr 
+
+        last.group.ix <- NULL
+
+        col.colors <- create.color.bars(map0[col.labels,,drop=F], color.var=names(color.list), color.list)
+        # flip this
+        otu.hm <- as.matrix(t(otu0))
+
+       draw.trad.heatmap(otu.hm=otu.hm[,col.labels], rowv = row.dendrogram, color.list=color.list, col.colors=col.colors, 
+                        col.sep.ix=last.group.ix, outputfile=outputfn, show.rownames=show.rownames)
+    }
 }
 
 
