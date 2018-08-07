@@ -3,7 +3,7 @@ require(plyr)
 require(ggplot2)
 require(cowplot)
 
-plot.b.p.ratio.x.bmi <- function(map0, otu, bug1, bug2, outputfn)
+plot.b.p.ratio.x.bmi <- function(map0, otu, bug1, bug2, outputfn=NULL)
 {        
     otu <- otu[rownames(map0),]
 
@@ -23,81 +23,21 @@ plot.b.p.ratio.x.bmi <- function(map0, otu, bug1, bug2, outputfn)
         ggtitle("Bacteroides-Prevotella Ratio over US residency") + 
         ylab("log10(Bacteroides-Prevotella Ratio)") + theme(legend.position='none') # remove legend
 
-    save_plot(outputfn, p, useDingbats=FALSE, base_aspect_ratio = 1.3 )
+    if(is.null(outputfn))
+        return(p)
+    else
+        save_plot(outputfn, p, useDingbats=FALSE, base_aspect_ratio = 1.3 )
 }
 
 # num.clip.months = number of months to clip and average at the start and end
-plot.b.p.ratio.L <- function(map0, otu0, bug1, bug2, outputfn, num.clip.months=NULL)
+plot.b.p.ratio.L <- function(map0, otu0, bug1, bug2, outputfn, num.clip.months=NULL, show.stats)
 {        
     otu0 <- otu0[rownames(map0),]
     
     bp <- get.log.taxa.ratio(otu0, bug1, bug2)
-        
-    p <- NULL
-    d <- data.frame(month = map0$Sample.Order, bp = bp, subject = map0$Subject.ID)
-    if(!is.null(num.clip.months)) # take mean of arbitrary num of start and last months
-    {
-        d$subject <- as.character(d$subject)
 
-        # find first x months, and average their BP
-        mins <- NULL
-        for(m in 0:(num.clip.months-1))
-            mins <- rbind(mins, aggregate(d$month, list(d$subject), FUN=function(xx) min(xx)+m))
-        colnames(mins) <- c("subject","month")            
-        mins.d <- merge(mins, d, by=c("subject","month"))
-        mean.bp1 <- cbind(aggregate(mins.d$bp, list(mins.d$subject), FUN=mean), month="start")
-
-        # find last x months, and average their BP
-        maxs <- NULL
-        for(m in 0:(num.clip.months-1))
-            maxs <- rbind(maxs, aggregate(d$month, list(d$subject), FUN=function(xx) max(xx)-m))
-        colnames(maxs) <- c("subject","month")
-        maxs.d <- merge(maxs, d, by=c("subject","month"))
-        mean.bp2 <- cbind(aggregate(maxs.d$bp, list(maxs.d$subject), FUN=mean), month="end")
-
-        mean.d <- rbind(mean.bp1, mean.bp2)
-        colnames(mean.d) <- c("subject", "bp", "month")
-        d <- rbind(d, mean.d[,c("month", "bp", "subject")]) # add this to the full dataframe so we can add mean as a layer
-
-        this.data <- d[d$month %in% c("start","end"),]
-        direction <- as.factor(ifelse(this.data[this.data$month == "end", "bp"] - this.data[this.data$month == "start", "bp"] > 0, "increased", "decreased"))
-        this.data <- cbind(this.data, direction=rep(direction, times=2))
-
-        # add stats           
-        d.bp <- this.data[this.data$month == "end", "bp"] - this.data[this.data$month == "start", "bp"] 
-        print(shapiro.test(d.bp))
-        pval <- signif(t.test(d.bp)$p.value,2) # one sample t.test with diffs
-      
-        this.data$month <- factor(this.data$month, levels=c("start","end"))
-        this.data$subject <- as.factor(this.data$subject)
-        cols <- alpha(c("#63C9D5","#AA6884"),.7)
-        shapes <- c(21,16)
-        names(cols) <- c("increased","decreased")
-        names(shapes) <- c("start","end")
-        
-        p <- ggplot(data=this.data, aes(x=month, y=bp, group=subject, color = direction, shape=month)) + xlab("") +
-            scale_color_manual(name="Bacteroides", values=cols) + scale_shape_manual(values=shapes, guide = 'none') +
-            geom_line() + geom_point(size=4, fill="white") + 
-            theme(legend.title = element_text(size=10, face="italic"), legend.text = element_text(size=8))
-    } 
-    else # if no clipping of months, plot all months
-    {    
-        cols <- alpha(colorRampPalette(brewer.pal(9, "Set1"))(length(unique(d$subject))),.3)    
-        p <- ggplot(data=d[d$month %in% 1:6,], aes(x=month, y=bp, color = subject)) + xlab("Month in the US") + scale_color_manual(values=cols) +
-        geom_point(size=4) + theme(legend.position='none') + geom_line() + scale_x_continuous(breaks=c(1:6), labels=c(1:6))
-        
-        # use Robin's spline code to calculate p-value
-        pval <- trendyspliner(data=d[d$month %in% 1:6,], xvar="month", yvar="bp", cases="subject", perm=99, quiet=T)$pval
-        
-    }
-    p <- p + ggtitle("Bacteroides-Prevotella Ratio") + 
-        ylab("log10(B/P)") +
-        theme(legend.key = element_blank()) # removes borders from legend    
-    p <- ggdraw(p) + draw_figure_label(label=paste0("p=",pval,"\n"), size=8, position="bottom.right")                
-
-    save_plot(outputfn, p, useDingbats=FALSE, base_aspect_ratio = 1.3 )
-    
-    invisible(p)
+    p <- plot.response.L(map0=map0, y=bp, ggtitle="Bacteroides/Prevotella", ylab="log10(B/P)", num.clip.months=num.clip.months, show.stats=show.stats)
+    return(p)
 }
 
 get.log.taxa.ratio <- function(otu, bug1, bug2)
@@ -120,17 +60,34 @@ get.log.taxa.ratio <- function(otu, bug1, bug2)
 #     bp <- -1*log10(bp)
 }
 
-plot.b.p.ratio.all <- function(map0, otu, bug1, bug2, outputfn, g1, g2, g3)
+plot.bp.main <- function(ggdata, hide.y=TRUE)
+{
+    main <- ggplot(data=ggdata, aes(x=Years.in.US,y)) + geom_point(aes(colour=Sample.Group, shape=Sample.Group, alpha=Sample.Group), size=1.5, stroke=.75, fill=NA) +
+        geom_smooth(data=ggdata, aes(x=Years.in.US,y=y), color="black", size=.5) +
+        scale_color_manual(name="Groups", values=cols) + 
+        scale_alpha_manual(name="Groups", values=alphas) +
+        scale_shape_manual(name="Groups", values=shapes) +
+        ylim(ylim)  +
+        theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) +
+        ylab("log10(B/P)") + xlab("Years in the US") + theme(legend.position='none') + 
+        
+    if(hide.y)# remove all y axis
+        main <- main + theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.title.x = element_text(size=10), axis.text.x = element_text(size=10))
+
+    return(main)
+}
+
+plot.b.p.ratio.all <- function(map0, otu0, bug1, bug2, outputfn, do.insets=FALSE)
 {
     # don't include any samples that have completely zero of any because it screws up the log10 transform
-    otu <- otu[otu[,bug1]!=0,]
-    otu <- otu[otu[,bug2]!=0,]
+    otu0 <- otu0[otu0[,bug1]!=0,]
+    otu0 <- otu0[otu0[,bug2]!=0,]
     
-    validsamples <- intersect(rownames(map0),rownames(otu))
-    otu <- otu[validsamples,]
+    validsamples <- intersect(rownames(map0),rownames(otu0))
+    otu0 <- otu0[validsamples,]
     map0 <- map0[validsamples,]
     
-    bp <- get.log.taxa.ratio(otu, bug1, bug2)
+    bp <- get.log.taxa.ratio(otu0, bug1, bug2)
 
     d <- data.frame(map0, y = bp)
     ylim <- range(d$y)
@@ -142,48 +99,227 @@ plot.b.p.ratio.all <- function(map0, otu, bug1, bug2, outputfn, g1, g2, g3)
     
     groupnames <- as.character(unique(d$Sample.Group))
 
-    cols <- get.group.colors(groups=groupnames, alpha.val=1) 
+    cols <- get.group.colors(groups=groupnames) 
     alphas <- get.group.alphas(groups=groupnames) 
     shapes <- get.group.shapes(groups=groupnames) 
     sizes <- get.group.sizes(groups=groupnames) 
 
-    main <- ggplot(data=d.1st, aes(x=Years.in.US,y)) + geom_point(aes(colour=Sample.Group, shape=Sample.Group, size=Sample.Group, alpha=Sample.Group), stroke=1, fill=NA) +
-        geom_smooth(data=d.1st, aes(x=Years.in.US,y=y), color="black", size=.5) +
+    main <- ggplot(data=d.1st, aes(x=Years.in.US,y)) + geom_point(aes(colour=Sample.Group, shape=Sample.Group, alpha=Sample.Group), size=1.5, stroke=.75, fill=NA) +
+        geom_smooth(data=d.1st, aes(x=Years.in.US,y=y), color="black", size=.5, method="lm") +
         scale_color_manual(name="Groups", values=cols) + 
         scale_alpha_manual(name="Groups", values=alphas) +
         scale_shape_manual(name="Groups", values=shapes) +
-        scale_size_manual(name="Groups", values=sizes) + 
         ylim(ylim)  +
         theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) +
         ylab("") + xlab("Years in the US") + theme(legend.position='none') + 
         # remove all y axis
-        theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.title.x = element_text(size=10), axis.text.x = element_text(size=8))
+        theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.title.x = element_text(size=10), axis.text.x = element_text(size=10))
+    print(cor.test(d.1st$Years.in.US, d.1st$y, method="spear", exact=F))
 
-    left <- ggplot(d.thai, aes(Sample.Group, y, color=Sample.Group)) + geom_quasirandom(dodge.width=.75) + geom_boxplot(alpha=0, colour="black") +  
+    if(do.insets)
+    {
+        dh <- d.1st[d.1st$Ethnicity=="Hmong",]
+        print(cor.test(dh$Years.in.US, dh$y, method="spear", exact=F))
+        main.h <- ggplot(data=dh, aes(x=Years.in.US,y)) + geom_point(aes(colour=Sample.Group, shape=Sample.Group, alpha=Sample.Group), size=1.5, stroke=.75, fill=NA) +
+            geom_smooth(aes(x=Years.in.US,y=y), color="black", size=.5, method="lm") + ggtitle("Hmong") +
+            scale_color_manual(name="Groups", values=cols) + 
+            scale_alpha_manual(name="Groups", values=alphas) +
+            scale_shape_manual(name="Groups", values=shapes) +
+            ylab("log10(B/P)") + xlab("Years in the US") + theme(legend.position='none')
+
+        dk <- d.1st[d.1st$Ethnicity=="Karen",]
+        print(cor.test(dk$Years.in.US, dk$y, method="spear", exact=F))
+        main.k <- ggplot(data=dk, aes(x=Years.in.US,y)) + geom_point(aes(colour=Sample.Group, shape=Sample.Group, alpha=Sample.Group), size=1.5, stroke=.75, fill=NA) +
+            geom_smooth(aes(x=Years.in.US,y=y), color="black", size=.5, method="lm") + ggtitle("Karen") +
+            scale_color_manual(name="Groups", values=cols) + 
+            scale_alpha_manual(name="Groups", values=alphas) +
+            scale_shape_manual(name="Groups", values=shapes) +
+            ylab("log10(B/P)") + xlab("Years in the US") + theme(legend.position='none')
+    
+        # generate these as insets
+        save_plot("bp.hmong1st.pdf", main.h, base_aspect_ratio=1)
+        save_plot("bp.karen1st.pdf", main.k, base_aspect_ratio=1)
+    }
+    left <- ggplot(d.thai, aes(Sample.Group, y, color=Sample.Group, alpha=Sample.Group)) + geom_quasirandom(dodge.width=.75) + geom_boxplot(alpha=0, colour="black") +  
             scale_color_manual(name = "Groups", values = cols) + # set color for points from quasirandom
+            scale_alpha_manual(name="Groups", values=alphas) +
             guides(fill=FALSE) + theme(legend.position='none') + ylim(ylim) +
-            ylab("log10(Bacteroides-Prevotella Ratio)") + xlab("") +
-            theme(plot.margin = unit(c(0, 0, 0, 0), "cm"),axis.text.x = element_text(size=8)) + scale_x_discrete(labels=c("HmongThai" = "Hmong\nThai", "KarenThai" = "Karen\nThai"))
+            ylab("log10(B/P)") + xlab("") +
+            theme(plot.margin = unit(c(0, 0, 0, 0), "cm"),axis.text = element_text(size=10), axis.title.y = element_text(size=12)) + scale_x_discrete(labels=SAMPLE.GROUP.NAMES.SHORT)
     
     right <- ggplot(d.2nd.control, aes(Sample.Group, y, color=Sample.Group)) + 
-            geom_quasirandom(dodge.width=.75, aes(color=Sample.Group, shape=Sample.Group, size=Sample.Group, alpha=Sample.Group)) +
+            geom_quasirandom(dodge.width=.75, aes(color=Sample.Group, shape=Sample.Group, alpha=Sample.Group), size=1.5) +
             geom_boxplot(alpha=0, colour="black") +  
             scale_color_manual(name = "Groups", values = cols) + # set color for points from quasirandom
             scale_shape_manual(name="Groups", values=shapes) +
-            scale_size_manual(name="Groups", values=sizes) + 
             scale_alpha_manual(name="Groups", values=alphas) +
             guides(fill=FALSE) + theme(legend.position='none') + ylim(ylim) +
             ylab("") + xlab("")  +
-            theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) +
+            theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) + scale_x_discrete(labels=SAMPLE.GROUP.NAMES.SHORT) +
             # remove all y axis
-            theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.text.x = element_text(size=8))
+            theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.text.x = element_text(size=10))
 
-    plots <- plot_grid(left, main, right, nrow=1, rel_widths=c(1.3,2,1), align="h") 
-    title <- ggdraw() + draw_label("Bacteroides-Prevotella Ratio", fontface='bold')
-    final <- plot_grid(title, plots, ncol=1, rel_heights=c(0.1, 1))
-    save_plot(outputfn, final, useDingbats=FALSE, base_aspect_ratio = 1.5)
+    plots <- plot_grid(left, main, right, nrow=1, rel_widths=c(1.5,2,1), align="h") 
+    save_plot(outputfn, plots, useDingbats=FALSE, base_aspect_ratio = 1)
 }
 
+plot.b.p.ratio.all.nocolor <- function(map0, otu0, bug1, bug2, outputfn)
+{
+    # don't include any samples that have completely zero of any because it screws up the log10 transform
+    otu0 <- otu0[otu0[,bug1]!=0,]
+    otu0 <- otu0[otu0[,bug2]!=0,]
+    
+    validsamples <- intersect(rownames(map0),rownames(otu0))
+    otu0 <- otu0[validsamples,]
+    map0 <- map0[validsamples,]
+    
+    bp <- get.log.taxa.ratio(otu0, bug1, bug2)
+
+    d <- data.frame(map0, y = bp)
+    ylim <- range(d$y)
+    d.1st <- d[d$Years.in.US > 0 & d$Years.in.US < 50,]
+    d.2nd.control <- d[d$Years.in.US %in% c(50,60),]
+    d.2nd.control$Sample.Group <- factor(d.2nd.control$Sample.Group)
+    d.thai <-  d[d$Years.in.US == 0,]
+    d.thai$Sample.Group <- factor(rep(d.thai$Sample.Group[1],nrow(d.thai)))
+    
+    groupnames <- as.character(unique(d$Sample.Group))
+
+    alphas <- get.group.alphas(groups=groupnames) 
+    shapes <- get.group.shapes(groups=groupnames) 
+    sizes <- get.group.sizes(groups=groupnames) 
+
+    alphaval=.3
+
+    main <- ggplot(data=d.1st, aes(x=Years.in.US,y)) + geom_point(alpha=alphaval, fill="black") +
+        geom_smooth(data=d.1st, aes(x=Years.in.US,y=y), color="black", size=.5, method="lm") +
+        ylim(ylim)  +
+        theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) +
+        ylab("") + xlab("Years in the US") + theme(legend.position='none') + 
+        # remove all y axis
+        theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.title.x = element_text(size=10), axis.text.x = element_text(size=10))
+    print(cor.test(d.1st$Years.in.US, d.1st$y, method="spear", exact=F))
+
+    left <- ggplot(d.thai, aes(x=Sample.Group, y)) + geom_quasirandom(dodge.width=.75, alpha=alphaval, color="black") + geom_boxplot(alpha=0, colour="black") +  
+            guides(fill=FALSE) + theme(legend.position='none') + ylim(ylim) +
+            ylab("log10(B/P)") + xlab("") +
+            theme(plot.margin = unit(c(0, 0, 0, 0), "cm"), axis.text = element_text(size=10), axis.title.y = element_text(size=12)) + scale_x_discrete(labels="Thai")
+    
+    right <- ggplot(d.2nd.control, aes(Sample.Group, y)) + 
+            geom_quasirandom(dodge.width=.75, color="black", alpha=alphaval) +
+            geom_boxplot(alpha=0, colour="black") +  
+            guides(fill=FALSE) + theme(legend.position='none') + ylim(ylim) +
+            ylab("") + xlab("")  +
+            theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) + scale_x_discrete(labels=SAMPLE.GROUP.NAMES.SHORT) +
+            # remove all y axis
+            theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.text.x = element_text(size=10))
+
+    plots <- plot_grid(left, main, right, nrow=1, rel_widths=c(1.5,2,1), align="h") 
+    save_plot(outputfn, plots, useDingbats=FALSE, base_aspect_ratio = 1)
+}
+
+plot.b.p.ratio.all.onethai <- function(map0, otu0, bug1, bug2, outputfn)
+{
+    # don't include any samples that have completely zero of any because it screws up the log10 transform
+    otu0 <- otu0[otu0[,bug1]!=0,]
+    otu0 <- otu0[otu0[,bug2]!=0,]
+    
+    validsamples <- intersect(rownames(map0),rownames(otu0))
+    otu0 <- otu0[validsamples,]
+    map0 <- map0[validsamples,]
+    
+    bp <- get.log.taxa.ratio(otu0, bug1, bug2)
+
+    d <- data.frame(map0, y = bp)
+    ylim <- range(d$y)
+    d.1st <- d[d$Years.in.US > 0 & d$Years.in.US < 50,]
+    d.2nd.control <- d[d$Years.in.US %in% c(50,60),]
+    d.2nd.control$Sample.Group <- factor(d.2nd.control$Sample.Group)
+    d.thai <-  d[d$Years.in.US == 0,]
+    d.thai$One.Sample.Group <- factor(rep(d.thai$Sample.Group[1],nrow(d.thai)))
+    
+    groupnames <- as.character(unique(d$Sample.Group))
+
+    cols <- get.group.colors(groups=groupnames) 
+    alphas <- get.group.alphas(groups=groupnames) 
+    shapes <- get.group.shapes(groups=groupnames) 
+    sizes <- get.group.sizes(groups=groupnames) 
+
+    main <- ggplot(data=d.1st, aes(x=Years.in.US,y)) + geom_point(aes(colour=Sample.Group, shape=Sample.Group, alpha=Sample.Group), size=1.5, stroke=.75, fill=NA) +
+        geom_smooth(data=d.1st, aes(x=Years.in.US,y=y), color="black", size=.5, method="lm") +
+        scale_color_manual(name="Groups", values=cols) + 
+        scale_alpha_manual(name="Groups", values=alphas) +
+        scale_shape_manual(name="Groups", values=shapes) +
+        ylim(ylim)  +
+        theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) +
+        ylab("") + xlab("Years in the US") + theme(legend.position='none') + 
+        # remove all y axis
+        theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.title.x = element_text(size=10), axis.text.x = element_text(size=10))
+
+    print(cor.test(d.1st$Years.in.US, d.1st$y, method="spear", exact=F))
+
+    left <- ggplot(d.thai, aes(x=One.Sample.Group, y, color=Sample.Group, alpha=Sample.Group, group=One.Sample.Group)) + geom_quasirandom(dodge.width=.75) + geom_boxplot(alpha=0, colour="black") +  
+            scale_color_manual(name = "Groups", values = cols) + # set color for points from quasirandom
+            scale_alpha_manual(name="Groups", values=alphas) +
+            guides(fill=FALSE) + theme(legend.position='none') + ylim(ylim) +
+            ylab("log10(B/P)") + xlab("") +
+            theme(plot.margin = unit(c(0, 0, 0, 0), "cm"),axis.text = element_text(size=10), axis.title.y = element_text(size=12)) + scale_x_discrete(labels="HT-KT")
+
+    
+    right <- ggplot(d.2nd.control, aes(Sample.Group, y, color=Sample.Group)) + 
+            geom_quasirandom(dodge.width=.75, aes(color=Sample.Group, shape=Sample.Group, alpha=Sample.Group), size=1.5) +
+            geom_boxplot(alpha=0, colour="black") +  
+            scale_color_manual(name = "Groups", values = cols) + # set color for points from quasirandom
+            scale_shape_manual(name="Groups", values=shapes) +
+            scale_alpha_manual(name="Groups", values=alphas) +
+            guides(fill=FALSE) + theme(legend.position='none') + ylim(ylim) +
+            ylab("") + xlab("")  +
+            theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) + scale_x_discrete(labels=SAMPLE.GROUP.NAMES.SHORT) +
+            # remove all y axis
+            theme(axis.line.y=element_blank(), axis.title.y=element_blank(), axis.text.y=element_blank(),axis.ticks.y=element_blank(), axis.text.x = element_text(size=10))
+
+    plots <- plot_grid(left, main, right, nrow=1, rel_widths=c(1.5,2,1), align="h") 
+    save_plot(outputfn, plots, useDingbats=FALSE, base_aspect_ratio = 1)
+}
+
+
+plot.b.p.ratio.all.boxplots <- function(map0, otu0, bug1, bug2, outputfn)
+{
+    # don't include any samples that have completely zero of any because it screws up the log10 transform
+    otu0 <- otu0[otu0[,bug1]!=0,]
+    otu0 <- otu0[otu0[,bug2]!=0,]
+    
+    validsamples <- intersect(rownames(map0),rownames(otu0))
+    otu0 <- otu0[validsamples,]
+    map0 <- map0[validsamples,]
+    
+    bp <- get.log.taxa.ratio(otu0, bug1, bug2)
+
+    d <- data.frame(map0, y = bp)
+    
+    groupnames <- as.character(unique(d$Sample.Group))
+
+    cols <- get.group.colors(groups=groupnames) 
+    alphas <- get.group.alphas(groups=groupnames) 
+    shapes <- get.group.shapes(groups=groupnames) 
+    sizes <- get.group.sizes(groups=groupnames) 
+
+#     p <- ggplot(d, aes(Sample.Group, y, color=Sample.Group, shape=Sample.Group, size=Sample.Group, alpha=Sample.Group, group=Sample.Group)) + geom_quasirandom(dodge.width=.75) + 
+#             geom_boxplot(alpha=0, colour="black", size=.5) +  
+#             scale_color_manual(name = "Groups", values = cols) + # set color for points from quasirandom
+#             scale_alpha_manual(name="Groups", values=alphas) +
+#             scale_shape_manual(name="Groups", values=shapes) +
+#             scale_size_manual(name="Groups", values=sizes) +
+#             guides(fill=FALSE) + theme(legend.position='none') +
+#             ylab("log10(B/P)") + xlab("") +
+#             theme(plot.margin = unit(c(0, 0, 0, 0), "cm"), axis.text = element_text(size=10), axis.title.y = element_text(size=12)) + scale_x_discrete(labels=SAMPLE.GROUP.NAMES.SHORT)
+    
+    p <- map.boxplot(y=d$y, Group=d$Sample.Group, main="", facet.var=NULL, alpha=.1, add.pval=TRUE, plot.legend.only=FALSE, ylab="log10(B/P)", strip.text.size=5, y.size=10, 
+                            x.size=9, show.x=TRUE, group.vars.df=d[,c("Resident.Continent","Birth.Continent","Ethnicity")])
+
+    
+    save_plot(outputfn, p, useDingbats=FALSE, base_aspect_ratio = 1)
+}
 
 
 # plots taxa bar plots of B and P by blocks of time in US

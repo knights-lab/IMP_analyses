@@ -143,27 +143,6 @@ permute.t.test <- function(group1, group2, n=9999)
     return(ret)
 }
 
-get.within.dist<-function(dm, samples)
-{
-    within <- numeric(length(samples))
-    for(i in 1:length(samples))
-    {
-        within[i] <- mean(as.numeric(dm[samples[i], samples[-i]]))
-    }
-    names(within) <- samples
-    return(within)
-}
-
-get.between.dist<-function(dm, samples, ref_samples)
-{
-    between <- numeric(length(samples))
-    for(i in 1:length(samples))
-    {
-        between[i] <- mean(as.numeric(dm[samples[i], ref_samples]))
-    }
-    names(between) <- samples
-    return(between)
-}
 
 
 		

@@ -271,7 +271,7 @@ heatmap.3 <- function(x,
         } else {
             par(mar = c(margins[1], 0, 0, 0.5))
             rsc = t(RowSideColors[,rowInd, drop=F])
-            rsc.colors = matrix()
+            rsc.colors = matrix()            
             rsc.names = names(table(rsc))
             rsc.i = 1
             for (rsc.name in rsc.names) {

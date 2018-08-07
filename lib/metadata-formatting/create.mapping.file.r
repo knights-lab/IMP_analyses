@@ -98,6 +98,11 @@ map.supertrackerdates.to.samples <- function()
     l.participants.date <- l.participants.date[-which(l.participants.date$Diet.ID == "L.011.M1"),] # drop L.011.M1 because it's considered CS now
     # create copy of Sample.Month to preserve it after merge 
     l.samples.temp <- samples[samples$Sub.Study == "L",]
+
+    # manually override the T.FS.CS. with L. because these initial samples were recruited as FullStool samples and not L samples
+    camp.ix <- grep("T\\.FS\\.CS", l.samples.temp$Old.Participant.ID)
+    l.samples.temp[camp.ix,"Old.Participant.ID"] <- gsub("\\.M.*", "", l.samples.temp[camp.ix, "Sample.ID"])
+
     l.samples.temp$Sample.Month.Copy <- l.samples.temp$Sample.Month
     l.samples <- merge(l.participants.date, l.samples.temp, by.x=c("Old.Participant.ID", "Diet.Month"), all.x=T, by.y=c("Old.Participant.ID", "Sample.Month"))     
     # rename copy of Sample.Month back 
@@ -172,6 +177,11 @@ map.nutrient.data <- function()
     nutrients.date <- read.table(nutrients.date.fn, sep="\t", header=T, check.names=F, strip.white=T, as.is=T)
     meals.date <- read.table(meals.date.fn, sep="\t", header=T, check.names=F, strip.white=T, as.is=T)
     foodgroups.date <- read.table(foodgroups.date.fn, sep="\t", header=T, check.names=F, strip.white=T, as.is=T)
+    
+    # remove any excluded samples from map to avoid duplicates!
+    metadata <- read.table("mapping.txt", sep="\t", header=T, check.names=F, as.is=T, comment="",row=1)
+    metadata <- metadata[metadata$Exclude != "Y",]
+    map <- map[map$Sample.ID %in% rownames(metadata),]
     
     # now process all nutrients, meals, foodgroups 
     ix <- which(colnames(nutrients.date) == "Total Fat (% Calories Eaten )")

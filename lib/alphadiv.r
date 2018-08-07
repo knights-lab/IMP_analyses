@@ -1,17 +1,18 @@
-multiplot.alphadiv.L <- function(map0, alpha_df, metrics, outputfn,x.var="Sample.Day.Since.Arrival", xlab="Days since arrival")
+multiplot.alphadiv.L <- function(map0, alpha_df, metrics, outputfn, num.clip.months=NULL)
 {
-    p <- NULL
+    plist <- NULL
     for(i in 1:length(metrics))
     {
-        p[[i]] <- plot.alphadiv.L(map0, alpha_df[rownames(map0), metrics[i]], metrics[i], x.var=x.var, xlab=xlab)
+        valid_names <- intersect(rownames(map0), rownames(alpha_df))
+        p <- plot.response.L(map0[valid_names,], y=alpha_df[valid_names, metrics[i]], outputfn=NULL, ylab="", ggtitle=metrics[i], num.clip.months=num.clip.months)
+        plist[[i]] <- p
     }
-    multiplot <- plot_grid(plotlist=p, ncol=(length(p)), nrow=1)
-    save_plot(outputfn, multiplot, ncol = length(p), nrow = 1, base_aspect_ratio = 1.3)
-
+    multiplot <- plot_grid(plotlist=plist, ncol=(length(plist)), nrow=1)
+    save_plot(outputfn, multiplot, ncol = length(plist), nrow = 1, base_aspect_ratio = 1)
 }
 
 # x.var = Sample.Day or Sample.Order
-plot.alphadiv.L <- function(map0, alpha, main, x.var="Sample.Day.Since.Arrival", xlab="Days since arrival")
+plot.alphadiv.L.old <- function(map0, alpha, main, x.var="Sample.Day.Since.Arrival", xlab="Days since arrival",  num.clip.months=NULL)
 {
     d <- data.frame(x = map0[,x.var], y = alpha, id = map0[,"Subject.ID"])
     cols <- alpha(colorRampPalette(brewer.pal(9, "Set1"))(length(unique(d$id))),.3)    
