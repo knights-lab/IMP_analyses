@@ -1,4 +1,9 @@
+require(reshape2)
+require(cowplot)
+require(ggplot2)
+
 source(paste0(LIBDIR,"alphadiv.r"))
+source(paste0(LIBDIR,"core.functions.r"))
 source(paste0(LIBDIR,"boxplot.by.group.x.bmi.r"))
 source(paste0(LIBDIR,"relative.distance.r"))
 source(paste0(LIBDIR,"fraction.hits.r"))
@@ -16,6 +21,8 @@ source(paste0(LIBDIR,"nutrient.mb.heatmap.r"))
 source(paste0(LIBDIR,"taxa.summary.r"))
 source(paste0(LIBDIR,"differential.taxa.r"))
 source(paste0(LIBDIR,"heatmap.r"))
+source(paste0(LIBDIR,"procrustes.r"))
+source(paste0(LIBDIR,"b.p.heatmap.r"))
 
 ## set file locations
     datadirs <- list()
@@ -93,7 +100,7 @@ source(paste0(LIBDIR,"heatmap.r"))
     # turns out that 1 sample that has been sequenced should be excluded (abx)
     map <- map_all[map_all$Exclude != "Y",]
 
-    source("bin/format.map.r")
+    source(paste0(LIBDIR,"../bin/format.map.r"))
     
 # add food metadata to mapping 
     # let's add some diet metadata into the mapping file 

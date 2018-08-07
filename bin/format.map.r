@@ -37,4 +37,14 @@
         map[c(karenthai,hmongthai), "Group"] <- "Pre"
         map[hmong_secondgen_cs, "Group"] <- "2nd"    
         map[controls, "Group"] <- "Control"    
-        map$Group <- factor(map$Group, levels=c("Pre","1st","2nd"))
+        map$Group <- factor(map$Group, levels=c("Pre","1st","2nd", "Control"))
+        
+        # come up with grouping variables to do 3-way anova with
+        # Ethnicity, Continent of birth, Continent of Residence
+        map[, "Birth.Continent"] <- "Asia"
+        map[c(hmong_secondgen_cs, controls), "Birth.Continent"] <- "Americas"
+        map[, "Resident.Continent"] <- "Americas"
+        map[c(hmongthai, karenthai), "Resident.Continent"] <- "Asia"
+        map$Birth.Continent <- as.factor(map$Birth.Continent)
+        map$Resident.Continent <- as.factor(map$Resident.Continent)
+print(head(map))
