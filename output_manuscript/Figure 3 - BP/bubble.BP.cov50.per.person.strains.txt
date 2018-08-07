@@ -1,0 +1,14 @@
+Legend.ID	Genome.ID	Coverage
+P1	Prevotella_stercorea_DSM_18206_Scfld0	0.117694545454545
+P2	Prevotella_copri_strain_Indica_contig00001	0.241049090909091
+P3	Prevotella_copri_DSM_18205_Scfld26	0.258447272727273
+P4	Prevotellamassilia_timonensis_strain_Marseille-P2831	0.0830454545454545
+B1	Bacteroides_vulgatus.1cell.HGAP3_contig1	0.233507272727273
+B2	Bacteroides_stercoris_ATCC_43183_Scfld_02_16	0.114121818181818
+B3	Bacteroides_finegoldii_DSM_17565_Scfld32	0.0864381818181818
+B4	Bacteroides_uniformis_str._3978_T3_i_gbf3978T3i.contig.0	0.228129090909091
+B5	Bacteroides_massiliensis_B84634_=_Timone_84634_=_DSM_17679_=_JCM_13223_strain_DSM_17679_aczJl-supercont1.1	0.0811618181818182
+B6	Bacteroides_dorei_CL02T12C06_supercont1.1	0.181809090909091
+B7	Bacteroides_caccae_CL03T12C61_supercont1.1	0.0684072727272727
+B8	Bacteroides_caccae_strain_2789STDY5834946	0.08832
+B9	Bacteroides_intestinalis_DSM_17393_B_intestinalis-2.0.1_Cont607	0.0220981818181818
