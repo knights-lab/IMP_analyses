@@ -300,11 +300,7 @@ prep.otu.binary.heatmap <- function(otu0, map0, group.var, baseline.groups, min.
 }
 
 # keeps prevalent OTUs, collapse correlated OTUs, transforms rel abundances if parametric testing, keeps only significant OTUs
-<<<<<<< HEAD
 prep.otu.trad.heatmap<-function(otu0, groups, min.prevalence=0.25, sig.level=.25, test="parametric", normalize=TRUE, paired=FALSE)
-=======
-prep.otu.trad.heatmap<-function(otu0, groups, min.prevalence=0.25, sig.level=.25, test="parametric", normalize=TRUE)
->>>>>>> d870284bddbbb62205128d8e65887970bb65e795
 {
     # if not normalizing (e.g. clr), do not convert to relative abundance, filter low prevalence, or sqrt transform
     if(normalize){ 
@@ -317,19 +313,12 @@ prep.otu.trad.heatmap<-function(otu0, groups, min.prevalence=0.25, sig.level=.25
 
     # select features that are statistically different between groups (parametric)
     if(test=="parametric") {
-<<<<<<< HEAD
         otu0 <- asin(sqrt(otu0))
         ret <- test.features.parametric(otu0, groups, sig.level=sig.level, paired=paired)
         otu0 <- otu0[,ret$features,drop=F]	
     } else if(test=="nonparametric") {
         ret <- test.features.nonparametric(otu0, groups, sig.level=sig.level, paired=paired)
-=======
-        ret <- test.features.parametric(otu0, groups, sig.level=sig.level)
         otu0 <- otu0[,ret$features,drop=F]	
-    } else if(test=="nonparametric") {
-        ret <- test.features.nonparametric(otu0, groups, sig.level=sig.level)
->>>>>>> d870284bddbbb62205128d8e65887970bb65e795
-	    otu0 <- otu0[,ret$features,drop=F]	
 	}
 
     return(list(otu=otu0, ret=ret))
@@ -371,6 +360,7 @@ make.heatmap.traditional <- function(otu0, map0, outputfn, group.var="Sample.Gro
 
     color.list <- get.color.list(map0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     new.treatments <- create.new.treatments(map0, cluster.var=group.var, color.list)
 
@@ -378,6 +368,9 @@ print(new.treatments)
 =======
 >>>>>>> d870284bddbbb62205128d8e65887970bb65e795
 
+=======
+
+>>>>>>> added drawing without feature diff test
     new.treatments <- create.new.treatments(map0, cluster.var=group.var, color.list)
     
     # transforms and filters otu using standard methods
@@ -405,10 +398,14 @@ print(new.treatments)
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     if(sum(is.infinite(as.matrix(otu0))) != 0 | sum(is.na(otu0)) != 0 | ncol(otu0) < 2 | nrow(otu0) < 2)
 =======
     if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0 | ncol(otu0) < 2 | nrow(otu0) < 2)
 >>>>>>> d870284bddbbb62205128d8e65887970bb65e795
+=======
+    if(sum(is.infinite(otu0)) != 0 | sum(is.na(otu0)) != 0 | ncol(otu0) < 2 | nrow(otu0) < 2)
+>>>>>>> added drawing without feature diff test
         print("Your OTU table is too small or contains NAs. Not generating heatmap.")
     else
     {
@@ -437,6 +434,7 @@ print(new.treatments)
         last.groups <- aggregate(1:length(sample.labels), list(map0[sample.labels,group.var]), max)
         last.group.ix <- as.numeric(as.character(last.groups[,2]))
         last.group.ix <- last.group.ix[-which.max(last.group.ix)]
+<<<<<<< HEAD
         col.colors <- create.color.bars(map0[sample.labels,,drop=F], color.var=names(color.list), color.list)
 
         # flip: in a traditional heatmap, let's have samples as columns and features as rows
@@ -501,6 +499,8 @@ make.heatmap.traditional.nogroups <- function(otu0, map0, outputfn, show.rowname
         last.groups <- aggregate(1:length(col.labels), list(map0[col.labels,group.var]), max)
         last.group.ix <- as.numeric(as.character(last.groups[,2]))
         last.group.ix <- last.group.ix[-which.max(last.group.ix)]
+=======
+>>>>>>> added drawing without feature diff test
         col.colors <- create.color.bars(map0[col.labels,,drop=F], color.var=names(color.list), color.list)
 >>>>>>> d870284bddbbb62205128d8e65887970bb65e795
         # flip this
@@ -575,6 +575,7 @@ draw.trad.heatmap <- function(otu.hm, rowv, color.list, col.colors, col.sep.ix, 
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # cov.df = same as OTU in samples and features, but instead shows coverage
 # cols = colors with names as sample id
 draw.bubble.heatmap <- function(otu.hm, cols=NULL, outputfile, cov.df, show.samplenames, baseheight=4, basewidth=15)
@@ -591,6 +592,8 @@ draw.bubble.heatmap <- function(otu.hm, cols=NULL, outputfile, cov.df, show.samp
     otu.long$otu.id <- as.character(otu.long$otu.id)
     otu.long$sample.id <- as.character(otu.long$sample.id)
 =======
+=======
+>>>>>>> added drawing without feature diff test
 # This makes a traditional heatmap (samples as columns, non-western to western and OTUs as rows)
 # plots everything as-is, no testing for diff features, no filtering, nuthin'!
 make.heatmap.traditional.nogroups <- function(otu0, map0, outputfn, show.rownames=FALSE, min.prevalence=.1)
@@ -636,6 +639,7 @@ make.heatmap.traditional.nogroups <- function(otu0, map0, outputfn, show.rowname
     }
 }
 
+<<<<<<< HEAD
 >>>>>>> d870284bddbbb62205128d8e65887970bb65e795
 
     # otu is otus as rows and samples as cols - flip covdf to match
@@ -661,6 +665,8 @@ make.heatmap.traditional.nogroups <- function(otu0, map0, outputfn, show.rowname
     ggdata$sample.id <- factor(ggdata$sample.id, levels=sample.levels)
 
 #write.table(ggdata, file="ggdata.txt", sep="\t", quote=F)
+=======
+>>>>>>> added drawing without feature diff test
 
     # anything that is covered at less than 1%, consider this to not be there
     ggdata$coverage[ggdata$coverage < 0.01] <- NA # setting to 0 still plots the point, need to set as NA
