@@ -1,0 +1,188 @@
+	Mouse.ID	Date	Left.Ear.Punch	Right.Ear.Punch	Body.Weight..g.	Fasting.Glucose	Donor	Donor.Type	Cohoused	Cage.ID	Diet	Diet.Type	Food.Weight.Out..g.	Food.Weight.In..g.	Notes	Additional.Notes	X	timepoint	Week	Group.Start	Group.End
+M1.7.11.17	M1	2017-07-11	0	0	20.3	124	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	NA	227.4	8 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M1.7.25.17	M1	2017-07-25	0	0	20.7	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	14.3	228.8				middle	2	Thai.LowFiber	Thai.LowFiber
+M1.8.8.17	M1	2017-08-08	0	0	21.4	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	29.9	206				middle	4	Thai.LowFiber	Thai.LowFiber
+M1.8.22.17	M1	2017-08-22	0	0	21.8	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	7.4	229				middle	6	Thai.LowFiber	Thai.LowFiber
+M1.9.5.17	M1	2017-09-05	0	0	22.1	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	34.9	197.1	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		middle	8	Thai.LowFiber	Thai.LowFiber
+M1.9.19.17	M1	2017-09-19	0	0	23.2	324	TFSCS023	Thai	TRUE	C1-2	TD.86489	LowFiber	6.5	NA	Cohoused	Weights are after fasting		endpoint	10	Thai.LowFiber	Thai.LowFiber.Cohoused
+M10.7.11.17	M10	2017-07-11	0	2	19.4	148	IMP.263	US	FALSE	2	TD.86489	LowFiber	NA	226.8	5-6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M10.7.25.17	M10	2017-07-25	0	2	20.3	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	7.1	227.9				middle	2	US.LowFiber	US.LowFiber
+M10.8.8.17	M10	2017-08-08	0	2	21.3	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	37.1	214.7				middle	4	US.LowFiber	US.LowFiber
+M10.8.22.17	M10	2017-08-22	0	2	21.6	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	2	403.4				middle	6	US.LowFiber	US.LowFiber
+M10.9.5.17	M10	2017-09-05	0	2	22.9	382	IMP.263	US	FALSE	2	TD.86489	LowFiber	162.2	NA	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		endpoint	8	US.LowFiber	US.LowFiber
+M11.10.3.17	M11	2017-10-03	1	0	14.5	183	TFSCS023	Thai	FALSE	5	LabDiet 5061	HighFiber	NA	93.2	"Dropped on ground while gavaging, keep isolated. Measured food weight in was lost on 10/3, supplement with weight recorded on 10/5."			baseline	0	Thai.HighFiber	Thai.HighFiber
+M11.10.17.17	M11	2017-10-17	1	0	17.1	NA	TFSCS023	Thai	FALSE	5	LabDiet 5061	HighFiber	44.8	168.9				middle	2	Thai.HighFiber	Thai.HighFiber
+M11.10.31.17	M11	2017-10-31	1	0	19.8	NA	TFSCS023	Thai	FALSE	5	LabDiet 5061	HighFiber	113.9	113.9				middle	4	Thai.HighFiber	Thai.HighFiber
+M11.11.14.17	M11	2017-11-14	1	0	23.2	NA	TFSCS023	Thai	FALSE	5	LabDiet 5061	HighFiber	62.2	238.8				middle	6	Thai.HighFiber	Thai.HighFiber
+M11.11.27.17	M11	2017-11-28	1	0	20.8	169	TFSCS023	Thai	FALSE	5	LabDiet 5061	HighFiber	165.3	NA	lots of stuff in GI tract	20.8		endpoint	8	Thai.HighFiber	Thai.HighFiber
+M12.10.3.17	M12	2017-10-03	2	0	18.8	187	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	NA	266.1	"4, 7 weeks old"			baseline	0	Thai.HighFiber	Thai.HighFiber
+M12.10.17.17	M12	2017-10-17	2	0	20.6	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	43.2	286.6				middle	2	Thai.HighFiber	Thai.HighFiber
+M12.10.31.17	M12	2017-10-31	2	0	21.1	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	81.9	449.1	Additional feed added on 11/9/17 because looked low			middle	4	Thai.HighFiber	Thai.HighFiber
+M12.11.14.17	M12	2017-11-14	2	0	22.3	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	157.7	309.5	77.9g food added to Box 3 with cohoused mice only on 11/27/17			middle	6	Thai.HighFiber	Thai.HighFiber
+M12.11.28.17	M12	2017-11-28	2	0	22.4	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	96	369.9	222.6g feed added by Will on 12/6/17	22.4		middle	8	Thai.HighFiber	Thai.HighFiber
+M12.12.11.17	M12	2017-12-12	2	0	23.5	190	TFSCS023	Thai	TRUE	C3-4	LabDiet 5061	HighFiber	149.6	NA	Cohouse	23.5		endpoint	10	Thai.HighFiber	Thai.HighFiber.Cohoused
+M13.10.3.17	M13	2017-10-03	2	1	13.8	129	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	NA	266.1	"4, 7 weeks old"			baseline	0	Thai.HighFiber	Thai.HighFiber
+M13.10.17.17	M13	2017-10-17	2	1	15.9	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	43.2	286.6				middle	2	Thai.HighFiber	Thai.HighFiber
+M13.10.31.17	M13	2017-10-31	2	1	17	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	81.9	449.1	Additional feed added on 11/9/17 because looked low			middle	4	Thai.HighFiber	Thai.HighFiber
+M13.11.14.17	M13	2017-11-14	2	1	18.4	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	157.7	231.6				middle	6	Thai.HighFiber	Thai.HighFiber
+M13.11.27.17	M13	2017-11-28	2	1	18.7	143	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	135.6	NA	lots of stuff in GI tract	18.7		endpoint	8	Thai.HighFiber	Thai.HighFiber
+M14.10.3.17	M14	2017-10-03	1	1	20.3	131	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	NA	266.1	"4, 7 weeks old"			baseline	0	Thai.HighFiber	Thai.HighFiber
+M14.10.17.17	M14	2017-10-17	1	1	21.6	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	43.2	286.6				middle	2	Thai.HighFiber	Thai.HighFiber
+M14.10.31.17	M14	2017-10-31	1	1	21.9	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	81.9	449.1	Additional feed added on 11/9/17 because looked low			middle	4	Thai.HighFiber	Thai.HighFiber
+M14.11.14.17	M14	2017-11-14	1	1	23.3	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	157.7	231.6				middle	6	Thai.HighFiber	Thai.HighFiber
+M14.11.27.17	M14	2017-11-28	1	1	23.2	176	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	135.6	NA	food weight calculated since not measured	23.2		endpoint	8	Thai.HighFiber	Thai.HighFiber
+M15.10.3.17	M15	2017-10-03	0	0	15.6	128	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	NA	266.1	"4, 7 weeks old"			baseline	0	Thai.HighFiber	Thai.HighFiber
+M15.10.17.17	M15	2017-10-17	0	0	18.5	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	43.2	286.6				middle	2	Thai.HighFiber	Thai.HighFiber
+M15.10.31.17	M15	2017-10-31	0	0	19.8	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	81.9	449.1	Additional feed added on 11/9/17 because looked low			middle	4	Thai.HighFiber	Thai.HighFiber
+M15.11.14.17	M15	2017-11-14	0	0	20.8	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	157.7	309.5	77.9g food added to Box 3 with cohoused mice only on 11/27/17			middle	6	Thai.HighFiber	Thai.HighFiber
+M15.11.28.17	M15	2017-11-28	0	0	22.1	NA	TFSCS023	Thai	FALSE	3	LabDiet 5061	HighFiber	96	369.9	222.6g feed added by Will on 12/6/17	22.1		middle	8	Thai.HighFiber	Thai.HighFiber
+M15.12.11.17	M15	2017-12-12	0	0	21.7	112	TFSCS023	Thai	TRUE	C3-4	LabDiet 5061	HighFiber	149.6	NA	"Cohouse, NO fat, couldn't collect gut fat"	21.7		endpoint	10	Thai.HighFiber	Thai.HighFiber.Cohoused
+M16.10.3.17	M16	2017-10-03	0	1	12.7	117	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	NA	251.9	"4, 7 weeks old"			baseline	0	US.HighFiber	US.HighFiber
+M16.10.17.17	M16	2017-10-17	0	1	11.7	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	3.2	294.8				middle	2	US.HighFiber	US.HighFiber
+M16.10.31.17	M16	2017-10-31	0	1	16.5	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	35	474.6	Additional feed added on 11/9/17 because looked low			middle	4	US.HighFiber	US.HighFiber
+M16.11.14.17	M16	2017-11-14	0	1	17.1	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	138.6	233.9				middle	6	US.HighFiber	US.HighFiber
+M16.11.27.17	M16	2017-11-28	0	1	17.8	113	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	167.6	NA	food weight calculated since not measured	17.8		endpoint	8	US.HighFiber	US.HighFiber
+M17.10.3.17	M17	2017-10-03	0	2	15.7	118	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	NA	251.9	"4, 7 weeks old"			baseline	0	US.HighFiber	US.HighFiber
+M17.10.17.17	M17	2017-10-17	0	2	15.1	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	3.2	294.8				middle	2	US.HighFiber	US.HighFiber
+M17.10.31.17	M17	2017-10-31	0	2	18.1	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	35	474.6	Additional feed added on 11/9/17 because looked low			middle	4	US.HighFiber	US.HighFiber
+M17.11.14.17	M17	2017-11-14	0	2	19.1	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	138.6	233.9				middle	6	US.HighFiber	US.HighFiber
+M17.11.27.17	M17	2017-11-28	0	2	20.6	240	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	167.6	NA	food weight calculated since not measured	20.6		endpoint	8	US.HighFiber	US.HighFiber
+M18.10.3.17	M18	2017-10-03	1	2	17.3	102	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	NA	251.9	"4, 7 weeks old"			baseline	0	US.HighFiber	US.HighFiber
+M18.10.17.17	M18	2017-10-17	1	2	17.2	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	3.2	294.8				middle	2	US.HighFiber	US.HighFiber
+M18.10.31.17	M18	2017-10-31	1	2	19.7	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	35	474.6	Additional feed added on 11/9/17 because looked low			middle	4	US.HighFiber	US.HighFiber
+M18.11.14.17	M18	2017-11-14	1	2	20.2	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	138.6	314.8	80.9g food added to Box 4 with cohoused mice only on 11/27/17			middle	6	US.HighFiber	US.HighFiber
+M18.11.28.17	M18	2017-11-28	1	2	22.2	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	66.3	369.9	222.6g feed added by Will on 12/6/17	22.2		middle	8	US.HighFiber	US.HighFiber
+M18.12.11.17	M18	2017-12-12	1	2	21.6	177	IMP.263	US	TRUE	C3-4	LabDiet 5061	HighFiber	149.6	NA	"Cohouse, very fatty"	21.6		endpoint	10	US.HighFiber	US.HighFiber.Cohoused
+M19.10.3.17	M19	2017-10-03	2	2	20	142	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	NA	251.9	"4, 7 weeks old"			baseline	0	US.HighFiber	US.HighFiber
+M19.10.17.17	M19	2017-10-17	2	2	19.5	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	3.2	294.8				middle	2	US.HighFiber	US.HighFiber
+M19.10.31.17	M19	2017-10-31	2	2	23.3	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	35	474.6	Additional feed added on 11/9/17 because looked low			middle	4	US.HighFiber	US.HighFiber
+M19.11.14.17	M19	2017-11-14	2	2	22.6	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	138.6	314.8	80.9g food added to Box 4 with cohoused mice only on 11/27/17			middle	6	US.HighFiber	US.HighFiber
+M19.11.28.17	M19	2017-11-28	2	2	25.2	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	66.3	369.9	222.6g feed added by Will on 12/6/17	25.2		middle	8	US.HighFiber	US.HighFiber
+M19.12.11.17	M19	2017-12-12	2	2	24.7	155	IMP.263	US	TRUE	C3-4	LabDiet 5061	HighFiber	149.6	NA	"Cohouse, very very fatty!"	24.7		endpoint	10	US.HighFiber	US.HighFiber.Cohoused
+M2.7.11.17	M2	2017-07-11	1	0	18.7	218	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	NA	227.4	5-6 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M2.7.25.17	M2	2017-07-25	1	0	19.7	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	14.3	228.8				middle	2	Thai.LowFiber	Thai.LowFiber
+M2.8.8.17	M2	2017-08-08	1	0	20.3	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	29.9	206				middle	4	Thai.LowFiber	Thai.LowFiber
+M2.8.22.17	M2	2017-08-22	1	0	21.5	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	7.4	229				middle	6	Thai.LowFiber	Thai.LowFiber
+M2.9.5.17	M2	2017-09-05	1	0	22.7	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	34.9	197.1	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		middle	8	Thai.LowFiber	Thai.LowFiber
+M2.9.19.17	M2	2017-09-19	1	0	24.2	188	TFSCS023	Thai	TRUE	C1-2	TD.86489	LowFiber	6.5	NA	Cohoused	Weights are after fasting		endpoint	10	Thai.LowFiber	Thai.LowFiber.Cohoused
+M20.10.3.17	M20	2017-10-03	0	3	19.3	131	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	NA	251.9	"4, 7 weeks old"			baseline	0	US.HighFiber	US.HighFiber
+M20.10.17.17	M20	2017-10-17	0	3	18.9	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	3.2	294.8				middle	2	US.HighFiber	US.HighFiber
+M20.10.31.17	M20	2017-10-31	0	3	20.7	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	35	474.6	Additional feed added on 11/9/17 because looked low			middle	4	US.HighFiber	US.HighFiber
+M20.11.14.17	M20	2017-11-14	0	3	22.4	NA	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	138.6	233.9				middle	6	US.HighFiber	US.HighFiber
+M20.11.27.17	M20	2017-11-28	0	3	22.7	157	IMP.263	US	FALSE	4	LabDiet 5061	HighFiber	167.6	NA	food weight calculated since not measured	22.7		endpoint	8	US.HighFiber	US.HighFiber
+M21.10.25.17	M21	2017-10-25	1	0	11.5	126	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	NA	233.3	4 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M21.11.8.17	M21	2017-11-08	1	0	17.6	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	14.6	208				middle	2	Thai.LowFiber	Thai.LowFiber
+M21.11.22.17	M21	2017-11-22	1	0	20.6	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	58.3	181.2				middle	4	Thai.LowFiber	Thai.LowFiber
+M21.12.6.17	M21	2017-12-06	1	0	21.2	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	7.6	255.5				middle	6	Thai.LowFiber	Thai.LowFiber
+M21.12.19.17	M21	2017-12-20	1	0	22.4	173	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	83.8	NA		22.4		endpoint	8	Thai.LowFiber	Thai.LowFiber
+M22.10.25.17	M22	2017-10-25	2	0	16.6	128	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	NA	233.3	6 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M22.11.8.17	M22	2017-11-08	2	0	20.5	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	14.6	208				middle	2	Thai.LowFiber	Thai.LowFiber
+M22.11.22.17	M22	2017-11-22	2	0	20.9	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	58.3	181.2				middle	4	Thai.LowFiber	Thai.LowFiber
+M22.12.6.17	M22	2017-12-06	2	0	21.5	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	7.6	255.5				middle	6	Thai.LowFiber	Thai.LowFiber
+M22.12.19.17	M22	2017-12-20	2	0	22	172	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	83.8	NA	fat	22		endpoint	8	Thai.LowFiber	Thai.LowFiber
+M23.10.25.17	M23	2017-10-25	2	1	17.4	144	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	NA	233.3	"6 weeks old, difficulty getting blood"			baseline	0	Thai.LowFiber	Thai.LowFiber
+M23.11.8.17	M23	2017-11-08	2	1	21.2	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	14.6	208				middle	2	Thai.LowFiber	Thai.LowFiber
+M23.11.22.17	M23	2017-11-22	2	1	22	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	58.3	181.2				middle	4	Thai.LowFiber	Thai.LowFiber
+M23.12.6.17	M23	2017-12-06	2	1	22.3	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	7.6	255.5				middle	6	Thai.LowFiber	Thai.LowFiber
+M23.12.19.17	M23	2017-12-20	2	1	23.7	182	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	83.8	NA	enlarged spleen	23.7		endpoint	8	Thai.LowFiber	Thai.LowFiber
+M24.10.25.17	M24	2017-10-25	1	1	16.6	111	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	NA	233.3	6 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M24.11.8.17	M24	2017-11-08	1	1	20.8	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	14.6	208				middle	2	Thai.LowFiber	Thai.LowFiber
+M24.11.22.17	M24	2017-11-22	1	1	21.9	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	58.3	181.2				middle	4	Thai.LowFiber	Thai.LowFiber
+M24.12.6.17	M24	2017-12-06	1	1	22.4	NA	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	7.6	255.5				middle	6	Thai.LowFiber	Thai.LowFiber
+M24.12.19.17	M24	2017-12-20	1	1	23.6	98	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	83.8	NA		23.6		endpoint	8	Thai.LowFiber	Thai.LowFiber
+M25.10.25.17	M25	2017-10-25	0	0	16.8	102	TFSCS026	Thai	FALSE	6	TD.86489	LowFiber	NA	233.3	6 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M26.10.25.17	M26	2017-10-25	0	1	14.7	114	IMP.264	US	FALSE	7	TD.86489	LowFiber	NA	221.4	6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M27.10.25.17	M27	2017-10-25	0	2	15.6	73	IMP.264	US	FALSE	7	TD.86489	LowFiber	NA	221.4	6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M27.11.8.17	M27	2017-11-08	0	2	18.9	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	7.8	209.6				middle	2	US.LowFiber	US.LowFiber
+M27.11.22.17	M27	2017-11-22	1	2	20.4	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	76.3	198.6				middle	4	US.LowFiber	US.LowFiber
+M27.12.6.17	M27	2017-12-06	1	2	20.1	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	66.6	197.2				middle	6	US.LowFiber	US.LowFiber
+M27.12.19.17	M27	2017-12-20	1	2	21	249	IMP.264	US	FALSE	7	TD.86489	LowFiber	67.5	NA	"barbered on stomach, little fatty"	21		endpoint	8	US.LowFiber	US.LowFiber
+M28.10.25.17	M28	2017-10-25	1	2	16.8	103	IMP.264	US	FALSE	7	TD.86489	LowFiber	NA	221.4	6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M28.11.8.17	M28	2017-11-08	1	2	19.4	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	7.8	209.6				middle	2	US.LowFiber	US.LowFiber
+M29.10.25.17	M29	2017-10-25	2	2	15.9	80	IMP.264	US	FALSE	7	TD.86489	LowFiber	NA	221.4	6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M29.11.8.17	M29	2017-11-08	2	2	22.3	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	7.8	209.6				middle	2	US.LowFiber	US.LowFiber
+M29.11.22.17	M29	2017-11-22	2	2	20.7	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	76.3	198.6				middle	4	US.LowFiber	US.LowFiber
+M29.12.6.17	M29	2017-12-06	2	2	21.9	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	66.6	197.2				middle	6	US.LowFiber	US.LowFiber
+M29.12.19.17	M29	2017-12-20	2	2	23	228	IMP.264	US	FALSE	7	TD.86489	LowFiber	67.5	NA	"barbered on head, very fatty gut"	23		endpoint	8	US.LowFiber	US.LowFiber
+M3.7.11.17	M3	2017-07-11	0	1	16.8	167	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	NA	227.4	5-6 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M3.7.25.17	M3	2017-07-25	0	1	18.1	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	14.3	228.8				middle	2	Thai.LowFiber	Thai.LowFiber
+M3.8.8.17	M3	2017-08-08	0	1	19	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	29.9	206				middle	4	Thai.LowFiber	Thai.LowFiber
+M3.8.22.17	M3	2017-08-22	0	1	20.8	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	7.4	229				middle	6	Thai.LowFiber	Thai.LowFiber
+M3.9.5.17	M3	2017-09-05	0	1	20.2	365	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	34.9	NA	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		endpoint	8	Thai.LowFiber	Thai.LowFiber
+M30.10.25.17	M30	2017-10-25	0	3	16.1	125	IMP.264	US	FALSE	7	TD.86489	LowFiber	NA	221.4	6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M30.11.8.17	M30	2017-11-08	0	3	23.5	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	7.8	209.6				middle	2	US.LowFiber	US.LowFiber
+M30.11.22.17	M30	2017-11-22	0	3	23.8	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	76.3	198.6				middle	4	US.LowFiber	US.LowFiber
+M30.12.6.17	M30	2017-12-06	0	3	24	NA	IMP.264	US	FALSE	7	TD.86489	LowFiber	66.6	197.2				middle	6	US.LowFiber	US.LowFiber
+M30.12.19.17	M30	2017-12-20	0	3	24.8	155	IMP.264	US	FALSE	7	TD.86489	LowFiber	67.5	NA	"mean mouse, very fatty gut"	24.8		endpoint	8	US.LowFiber	US.LowFiber
+M31.1.16.18	M31	2018-01-16	0	0	19	187	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	NA	503.6	281.6g of food added on 1/25/18			baseline	0	US.HighFiber	US.HighFiber
+M31.1.30.18	M31	2018-01-30	0	0	21.4	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	262	323.1	99g food added on 2/12/18			middle	2	US.HighFiber	US.HighFiber
+M31.2.13.18	M31	2018-02-13	0	0	22.2	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	110.3	250.8	"dropped on ground, separated into a different cage; 163.7g added on 2/16/18"			middle	4	US.HighFiber	US.HighFiber
+M31.2.27.18	M31	2018-02-27	0	0	23.8	NA	IMP.264	US	FALSE	9	LabDiet 5061	HighFiber	128.1	231.5				middle	6	US.HighFiber	US.HighFiber
+M31.3.12.18	M31	2018-03-13	0	0	23.3	204	IMP.264	US	FALSE	9	LabDiet 5061	HighFiber	110.2	NA	"large cecum, lots of content"			endpoint	8	US.HighFiber	US.HighFiber
+M32.1.16.18	M32	2018-01-16	1	0	16.5	163	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	NA	503.6	281.6g of food added on 1/25/18			baseline	0	US.HighFiber	US.HighFiber
+M32.1.30.18	M32	2018-01-30	1	0	18.7	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	262	323.1	99g food added on 2/12/18			middle	2	US.HighFiber	US.HighFiber
+M32.2.13.18	M32	2018-02-13	1	0	19.9	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	110.3	207.3	155.1 added on 2/16/18			middle	4	US.HighFiber	US.HighFiber
+M32.2.27.18	M32	2018-02-27	1	0	21.9	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	89.4	232.9				middle	6	US.HighFiber	US.HighFiber
+M32.3.12.18	M32	2018-03-13	1	0	22.3	212	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	114.8	NA				endpoint	8	US.HighFiber	US.HighFiber
+M33.1.16.18	M33	2018-01-16	0	1	16.8	131	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	NA	503.6	281.6g of food added on 1/25/18			baseline	0	US.HighFiber	US.HighFiber
+M33.1.30.18	M33	2018-01-30	0	1	20.1	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	262	323.1	99g food added on 2/12/18			middle	2	US.HighFiber	US.HighFiber
+M33.2.13.18	M33	2018-02-13	0	1	20.6	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	110.3	207.3	155.1 added on 2/16/18			middle	4	US.HighFiber	US.HighFiber
+M33.2.27.18	M33	2018-02-27	0	1	23.2	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	89.4	232.9				middle	6	US.HighFiber	US.HighFiber
+M33.3.12.18	M33	2018-03-13	0	1	21.1	254	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	114.8	NA				endpoint	8	US.HighFiber	US.HighFiber
+M34.1.16.18	M34	2018-01-16	1	1	17.8	146	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	NA	503.6	281.6g of food added on 1/25/18			baseline	0	US.HighFiber	US.HighFiber
+M34.1.30.18	M34	2018-01-30	1	1	19	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	262	323.1	99g food added on 2/12/18			middle	2	US.HighFiber	US.HighFiber
+M34.2.13.18	M34	2018-02-13	1	1	22.1	NA	IMP.264	US	FALSE	8	LabDiet 5061	HighFiber	110.3	250.8	"dropped on table, also separated; 163.7g added on 2/16/18"			middle	4	US.HighFiber	US.HighFiber
+M34.2.27.18	M34	2018-02-27	1	1	21.5	NA	IMP.264	US	FALSE	9	LabDiet 5061	HighFiber	128.1	231.5				middle	6	US.HighFiber	US.HighFiber
+M34.3.12.18	M34	2018-03-13	1	1	21.4	171	IMP.264	US	FALSE	9	LabDiet 5061	HighFiber	110.2	NA				endpoint	8	US.HighFiber	US.HighFiber
+M35.2.13.18	M35	2018-02-13	0	0	19.2	138	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	NA	223.9	gavage material not stored in glycerol			baseline	0	Thai.HighFiber	Thai.HighFiber
+M35.2.27.18	M35	2018-02-27	0	0	19.4	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	101.4	431.4				middle	2	Thai.HighFiber	Thai.HighFiber
+M35.3.13.18	M35	2018-03-13	0	0	20.8	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	90.2	313				middle	4	Thai.HighFiber	Thai.HighFiber
+M35.3.27.18	M35	2018-03-27	0	0	22.4	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	63	356				middle	6	Thai.HighFiber	Thai.HighFiber
+M35.4.9.18	M35	2018-04-10	0	0	23.4	187	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	111.9	NA	"All mice in this cage had enlarged spleens, white cecums, lumpy fat in the gut, and pale livers"			endpoint	8	Thai.HighFiber	Thai.HighFiber
+M36.2.13.18	M36	2018-02-13	1	0	19.7	133	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	NA	223.9	gavage material not stored in glycerol			baseline	0	Thai.HighFiber	Thai.HighFiber
+M36.2.27.18	M36	2018-02-27	1	0	19.9	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	101.4	431.4				middle	2	Thai.HighFiber	Thai.HighFiber
+M36.3.13.18	M36	2018-03-13	1	0	21	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	90.2	313				middle	4	Thai.HighFiber	Thai.HighFiber
+M36.3.27.18	M36	2018-03-27	1	0	21.7	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	63	356				middle	6	Thai.HighFiber	Thai.HighFiber
+M36.4.9.18	M36	2018-04-10	1	0	22.3	160	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	111.9	NA	"All mice in this cage had enlarged spleens, white cecums, lumpy fat in the gut, and pale livers"			endpoint	8	Thai.HighFiber	Thai.HighFiber
+M37.2.13.18	M37	2018-02-13	0	1	17.4	122	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	NA	223.9	gavage material not stored in glycerol			baseline	0	Thai.HighFiber	Thai.HighFiber
+M37.2.27.18	M37	2018-02-27	0	1	18	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	101.4	431.4				middle	2	Thai.HighFiber	Thai.HighFiber
+M37.3.13.18	M37	2018-03-13	0	1	19.2	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	90.2	313				middle	4	Thai.HighFiber	Thai.HighFiber
+M37.3.27.18	M37	2018-03-27	0	1	21	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	63	356				middle	6	Thai.HighFiber	Thai.HighFiber
+M37.4.9.18	M37	2018-04-10	0	1	20.8	231	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	111.9	NA	"All mice in this cage had enlarged spleens, white cecums, lumpy fat in the gut, and pale livers"			endpoint	8	Thai.HighFiber	Thai.HighFiber
+M38.2.13.18	M38	2018-02-13	1	1	18.9	153	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	NA	223.9	gavage material not stored in glycerol			baseline	0	Thai.HighFiber	Thai.HighFiber
+M38.2.27.18	M38	2018-02-27	1	1	19.6	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	101.4	431.4				middle	2	Thai.HighFiber	Thai.HighFiber
+M38.3.13.18	M38	2018-03-13	1	1	20.7	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	90.2	313				middle	4	Thai.HighFiber	Thai.HighFiber
+M38.3.27.18	M38	2018-03-27	1	1	21.7	NA	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	63	356				middle	6	Thai.HighFiber	Thai.HighFiber
+M38.4.9.18	M38	2018-04-10	1	1	22.8	114	TFSCS026	Thai	FALSE	10	LabDiet 5061	HighFiber	111.9	NA	"All mice in this cage had enlarged spleens, white cecums, lumpy fat in the gut, and pale livers"			endpoint	8	Thai.HighFiber	Thai.HighFiber
+M4.7.11.17	M4	2017-07-11	1	1	15.9	113	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	NA	227.4	5-6 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M4.7.25.17	M4	2017-07-25	1	1	17.8	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	14.3	228.8				middle	2	Thai.LowFiber	Thai.LowFiber
+M4.8.8.17	M4	2017-08-08	1	1	18.4	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	29.9	206				middle	4	Thai.LowFiber	Thai.LowFiber
+M4.8.22.17	M4	2017-08-22	1	1	21.1	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	7.4	229				middle	6	Thai.LowFiber	Thai.LowFiber
+M4.9.5.17	M4	2017-09-05	1	1	22.9	362	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	34.9	NA	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		endpoint	8	Thai.LowFiber	Thai.LowFiber
+M5.7.11.17	M5	2017-07-11	2	0	16.7	155	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	NA	227.4	5-6 weeks old			baseline	0	Thai.LowFiber	Thai.LowFiber
+M5.7.25.17	M5	2017-07-25	2	0	18.2	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	14.3	228.8				middle	2	Thai.LowFiber	Thai.LowFiber
+M5.8.8.17	M5	2017-08-08	2	0	19.5	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	29.9	206				middle	4	Thai.LowFiber	Thai.LowFiber
+M5.8.22.17	M5	2017-08-22	2	0	22.4	NA	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	7.4	229				middle	6	Thai.LowFiber	Thai.LowFiber
+M5.9.5.17	M5	2017-09-05	2	0	22.8	221	TFSCS023	Thai	FALSE	1	TD.86489	LowFiber	34.9	NA	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		endpoint	8	Thai.LowFiber	Thai.LowFiber
+M6.7.11.17	M6	2017-07-11	0	0	18	98	IMP.263	US	FALSE	2	TD.86489	LowFiber	NA	226.8	8 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M6.7.25.17	M6	2017-07-25	0	0	20.9	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	7.1	227.9				middle	2	US.LowFiber	US.LowFiber
+M6.8.8.17	M6	2017-08-08	0	0	20.1	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	37.1	214.7				middle	4	US.LowFiber	US.LowFiber
+M6.8.22.17	M6	2017-08-22	0	0	20.9	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	2	403.4				middle	6	US.LowFiber	US.LowFiber
+M6.9.5.17	M6	2017-09-05	0	0	23.7	277	IMP.263	US	FALSE	2	TD.86489	LowFiber	162.2	NA	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		endpoint	8	US.LowFiber	US.LowFiber
+M7.7.11.17	M7	2017-07-11	1	0	18.5	126	IMP.263	US	FALSE	2	TD.86489	LowFiber	NA	226.8	5-6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M7.7.25.17	M7	2017-07-25	1	0	20	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	7.1	227.9				middle	2	US.LowFiber	US.LowFiber
+M7.8.8.17	M7	2017-08-08	1	0	19.1	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	37.1	214.7				middle	4	US.LowFiber	US.LowFiber
+M7.8.22.17	M7	2017-08-22	1	0	22.3	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	2	403.4				middle	6	US.LowFiber	US.LowFiber
+M7.9.5.17	M7	2017-09-05	1	0	21.5	144	IMP.263	US	FALSE	2	TD.86489	LowFiber	162.2	NA	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		endpoint	8	US.LowFiber	US.LowFiber
+M8.7.11.17	M8	2017-07-11	0	1	17.3	99	IMP.263	US	FALSE	2	TD.86489	LowFiber	NA	226.8	5-6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M8.7.25.17	M8	2017-07-25	0	1	19.4	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	7.1	227.9				middle	2	US.LowFiber	US.LowFiber
+M8.8.8.17	M8	2017-08-08	0	1	19.7	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	37.1	214.7				middle	4	US.LowFiber	US.LowFiber
+M8.8.22.17	M8	2017-08-22	0	1	19.7	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	2	403.4				middle	6	US.LowFiber	US.LowFiber
+M8.9.5.17	M8	2017-09-05	0	1	21.4	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	162.2	197.1	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		middle	8	US.LowFiber	US.LowFiber
+M8.9.19.17	M8	2017-09-19	0	1	21.8	319	IMP.263	US	TRUE	C1-2	TD.86489	LowFiber	6.5	NA	Cohoused	Weights are after fasting		endpoint	10	US.LowFiber	US.LowFiber.Cohoused
+M9.7.11.17	M9	2017-07-11	1	1	18.6	104	IMP.263	US	FALSE	2	TD.86489	LowFiber	NA	226.8	5-6 weeks old			baseline	0	US.LowFiber	US.LowFiber
+M9.7.25.17	M9	2017-07-25	1	1	20.6	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	7.1	227.9				middle	2	US.LowFiber	US.LowFiber
+M9.8.8.17	M9	2017-08-08	1	1	20.1	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	37.1	214.7				middle	4	US.LowFiber	US.LowFiber
+M9.8.22.17	M9	2017-08-22	1	1	20.5	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	2	403.4				middle	6	US.LowFiber	US.LowFiber
+M9.9.5.17	M9	2017-09-05	1	1	23.9	NA	IMP.263	US	FALSE	2	TD.86489	LowFiber	162.2	197.1	Diet weights have been swapped here - cages may have been mislabeled	Weights are after fasting		middle	8	US.LowFiber	US.LowFiber
+M9.9.19.17	M9	2017-09-19	1	1	24.2	263	IMP.263	US	TRUE	C1-2	TD.86489	LowFiber	6.5	NA	Cohoused	placeholder	placeholder	endpoint	10	US.LowFiber	US.LowFiber.Cohoused

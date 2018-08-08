@@ -1,0 +1,1 @@
+Sample.ID	Donor	Group.End	Group.StartCS.224	IMP.263	US.LowFiber	DonorTFS.026	TFSCS026	Thai.LowFiber	DonorTFS.023	TFSCS023	Thai.LowFiber	DonorCS.283	IMP.264	US.LowFiber	Donor
