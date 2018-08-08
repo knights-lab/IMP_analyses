@@ -1,7 +1,0 @@
-Sample.Group	Lean	NotLean
-KarenThai	45	39
-HmongThai	42	53
-Karen1st	77	67
-Hmong1st	52	85
-Hmong2nd	19	35
-Control	23	13
