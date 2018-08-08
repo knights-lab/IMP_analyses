@@ -1,1 +1,0 @@
-generated on 9/20/17 by Robin using taxa table L7 (picked with BURST and PROK database)
