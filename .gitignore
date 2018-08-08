@@ -6,6 +6,10 @@
 .AppleDouble
 .LSOverride
 
+*.pptx
+*.docx
+*.xlsx
+
 # Icon must end with two \r
 Icon
 

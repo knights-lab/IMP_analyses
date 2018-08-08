@@ -1,7 +1,0 @@
-
-Unweighted Unifrac
-1st-Gen:Lean-Obese=0.4; 2nd-Gen:Lean-Obese=0.67
-Weighted Unifrac
-1st-Gen:Lean-Obese=0.046; 2nd-Gen:Lean-Obese=0.18
-Bray-Curtis
-1st-Gen:Lean-Obese=0.086; 2nd-Gen:Lean-Obese=0.42
