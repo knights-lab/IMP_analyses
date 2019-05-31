@@ -1,2 +1,0 @@
-Linear model interactions and main effects
-
