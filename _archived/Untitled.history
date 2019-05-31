@@ -1,254 +1,0 @@
-pwr.anova.test(k=2, f=abs(0.03345/(2*0.00928)), power=.8)
-pwr.anova.test(k=2, f=abs(0.013/(2*.03)), power=.8)
-pwr.anova.test(k=2, f=abs(0.006/(2*.011)), power=.8)
-pwr.anova.test(k=2, f=abs(0.005/(2*.009)), power=.8)
-pwr.anova.test(k=2, f=abs(0.001/(2*.0002)), power=.8)
-x <- (0.7628,0.0147,0.9342,0.1107,0.6797,3.77E-08)
-x <- c(0.7628,0.0147,0.9342,0.1107,0.6797,3.77E-08)
-apply(p.adjust, x, n=118)
-apply(x, 1, p.adjust, n=118)
-lapply(x, p.adjust, n=118)
-unlist(lapply(x, p.adjust, n=118))
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- c(0.99027,0.01113,0.4947,0.00593,0.68112,2.00E-16)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- c(0.762751,0.014663,0.934182,0.110733,0.6797,0.000474)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.99027,0.01113,0.4947,0.00593,0.68112,0.11016)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.0151,0.2543,0.5273,0.1373,0.6461)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.24,0.982,0.711,0.135,0.252)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(00.23701,0.00406,0.5826,0.17664,0.35576)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.7822,0.00425,0.49998,0.00642,0.83877)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.62879,0.24398,0.85792,0.56728,0.17594,0.00197,0.34862)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.595889,0.057916,0.783039,0.699298,0.195882,0.000785,0.905865)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.422,0.103,0.596,0.188,0.281,0.445,0.434)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.859907,0.019876,0.927471,0.210074,0.912991,0.033952,0.000183)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.39105,0.00896,0.56906,0.85463,0.82854,0.00265,0.6415)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.842973,0.191493,0.899186,0.697909,0.624673,0.000883,0.100037)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.6204,0.0262,0.8081,0.2157,0.5274)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.5176,0.0166,0.8463,0.1508,0.3899)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.685,0.0109,0.6065,0.1982,0.3044)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.83045,0.000583,0.629129,0.593527,0.735863)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <-c(0.93858,0.00515,0.83757,0.49479,0.92551)
-unlist(lapply(x, p.adjust, n=118, method="fdr"))
-x <- rep(0.0147, 119)
-p.adjust(x, method="fdr")
-x
-x <- cbind(c(1,1,1), c(2,2,2))
-x
-colMeans(x)
-x <- cbind(c(1,1,1), c(2,2,2))
-x
-rownames(x) <- c("a","b","c")
-rownames(x)[which(x[,1] %in% c(1,2))]
-rownames(x)[x[,1] %in% c(1,2)]
-x[,1] %in% c(1,2)
-?rank
-library(beeswarm)
-beeswarm(x=-log10(rep(1:10)), main="Alpha Diversity",#
-			ylab="Effect Size", pwpch=rep(23,length(unlist(cols))), pwcol=unlist(cols), pwbg=unlist(cols))#
-legend("topright", legend = c("Yes", "No"), pch = pch , col = 1:2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity",#
-			ylab="Effect Size", pwpch=rep(23,length(unlist(cols))), pwcol=unlist(cols), pwbg=unlist(cols))#
-legend("topright", legend = c("Yes", "No"), pch = pch , col = 1:2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity")
-line(1)
-abline(h=2)
-beeswarm(x=(rep(1:10)), main="Alpha Diversity")
-abline(h=2, lty=2)
-?wilcox.test
-?lm
-test <- cbind(1:2,1:2)
-rownames(test) <- "#S"
-rownames(test) <- c("#S", "1")
-test
-x <- 1:10
-y <- 1:10
-cbind(x,y)
-z <- cbind(x,y)
-cbind(z,y)
-cbind(z,apple=y)
-setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.alphadiv.r")source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/lib/plot.relative.distance.r")datadir <- "/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/rare10002"# load datawuf_dm <- read.table(paste(datadir,"weighted_unifrac_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)uwuf_dm <- read.table(paste(datadir,"unweighted_unifrac_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)bc_dm <- read.table(paste(datadir,"bray_curtis_dm.txt",sep="/"), sep="\t", quote="", row=1, head=T)# let's try uwuf firstdm <- uwuf_dmalphadiv0 <- read.table(paste(datadir,"alpha_div.txt",sep="/"),    sep="\t", quote="", row=1, head=T, comment.char="")map <- read.table("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt",    sep="\t", quote="", row=1, head=T, comment.char="", as.is=T)map$Age <- as.numeric(map$Age)map$Years.in.US <- as.numeric(map$Years.in.US)# refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # only work with samples that are in both the mapping AND the dm/alpha filesvalid_samples <- intersect(rownames(dm), rownames(map))map <- map[valid_samples,]dm <- dm[valid_samples, valid_samples]alphadiv <- alphadiv0[valid_samples,"observed_otus"] # also consider: PD_whole_tree# subset samplesasian_born <- rownames(map)[map$Ethnicity %in% c("Hmong", "Karen") & map$Years.in.US != 0]asian_born_20 <- rownames(map)[map$Ethnicity %in% c("Hmong", "Karen") & map$Years.in.US != 0 & map$Years.in.US < 20] US_born <- rownames(map)[map$Ethnicity %in% c("Hmong") & map$Years.in.US == 0]
-d <- cbind(map[valid_samples, c("Years.in.US", "Ethnicity", "BMI.Class")], alphadiv)plot.alphadiv(d)
-normality.pval <- shapiro.test(d$alphadiv)$p.value    if(normality.pval <= 0.05) {        m <- kruskal.test(d$alphadiv ~ d$BMI.Class)    } else {        m <- lm(d$alphadiv ~ d$BMI.Class)    }
-normality.pval
-m
-summary(m)
-summary(m)$p.value
-class(summary(m))
-t.test(d[d$BMI.Class!="Lean",]$alphadiv ~ d[d$BMI.Class!="Lean",]$BMI.Class)
-d.temp <- d[d$BMI.Class!="Lean",]
-droplevels(d.temp$BMI.Class, "Lean")
-t.test(d[d$BMI.Class!="Normal",]$alphadiv ~ d[d$BMI.Class!="Normal",]$BMI.Class)
-t.test(d[d$BMI.Class!="Obese",]$alphadiv ~ d[d$BMI.Class!="Obese",]$BMI.Class)
-t.test(d[d$BMI.Class!="Overweight",]$alphadiv ~ d[d$BMI.Class!="Overweight",]$BMI.Class)
-p.adjust(c(0.02579, 0.05571, 0.7473),method="fdr")
-anova(d$alphadiv ~ d$BMI.Class)
-aov(d$alphadiv ~ d$BMI.Class)
-summary(aov(d$alphadiv ~ d$BMI.Class))
-alphadiv <- alphadiv0[valid_samples,"PD_whole_tree"] #observed_otus also consider: PD_whole_tree
-d <- cbind(map[valid_samples, c("Years.in.US", "Ethnicity", "BMI.Class")], alphadiv)
-normality.pval <- shapiro.test(d$alphadiv)$p.value
-normality.pval
-summary(aov(d$alphadiv ~ d$BMI.Class))
-TukeyHSD(aov(d$alphadiv ~ d$BMI.Class))
-?pairwise.t.test
-m <- pairwise.t.test(d$alphadiv, d$BMI.Class, p.adjust.method="bonf")
-m
-class(m)
-m$p.value
-which(m$p.value <= .05)
-m$p.value[2]
-rbPal <- colorRampPalette(c('wheat', "red"))    cols2 <- rbPal(10)[as.numeric(cut(d$Years.in.US, breaks = 10))]    names(cols2) <- rownames(data)    pch2 <- lookup[as.character(d$Ethnicity)]     names(pch2) <- rownames(data)    # change color of US-born    cols2[d$Years.in.US==0] <- "DarkGray"
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(100,650),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19), col=c("black","black","DarkGray","white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=510, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3, 505, 3.05, 600, angle=270)
-lookup <- c(19,17) # point type    names(lookup) <- sort(unique(d$Ethnicity)) # let's Hmong to solid filled circle, Karen to filled triangle    pch2 <- lookup[as.character(d$Ethnicity)]     names(pch2) <- rownames(data)    # change color of US-born    cols2[d$Years.in.US==0] <- "DarkGray"
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(100,650),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19), col=c("black","black","DarkGray","white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=510, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3, 505, 3.05, 600, angle=270)
-library(beeswarm)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(100,650),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19), col=c("black","black","DarkGray","white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=510, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3, 505, 3.05, 600, angle=270)
-d
-map <- read.table("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/mapping.txt",    sep="\t", quote="", row=1, head=T, comment.char="", as.is=T)map$Age <- as.numeric(map$Age)map$Years.in.US <- as.numeric(map$Years.in.US)
-map$Years.in.US
-map$Years.in.US[is.na(map$Years.in.US)] <- 0
-map$Years.in.US
-map$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # only work with samples that are in both the mapping AND the dm/alpha filesvalid_samples <- intersect(rownames(dm), rownames(map))map <- map[valid_samples,]dm <- dm[valid_samples, valid_samples]alphadiv <- alphadiv0[valid_samples,"PD_whole_tree"] #observed_otus also consider: PD_whole_tree# subset samplesasian_born <- rownames(map)[map$Ethnicity %in% c("Hmong", "Karen") & map$Years.in.US != 0]asian_born_20 <- rownames(map)[map$Ethnicity %in% c("Hmong", "Karen") & map$Years.in.US != 0 & map$Years.in.US < 20] US_born <- rownames(map)[map$Ethnicity %in% c("Hmong") & map$Years.in.US == 0]
-d <- cbind(map[valid_samples, c("Years.in.US", "Ethnicity", "BMI.Class")], alphadiv)
-normality.pval <- shapiro.test(d$alphadiv)$p.value    if(normality.pval <= 0.05) {        m <- kruskal.test(d$alphadiv ~ d$BMI.Class)    } else {        m <- pairwise.t.test(d$alphadiv, d$BMI.Class, p.adjust.method="bonf")    }    print(m)    rbPal <- colorRampPalette(c('wheat', "red"))    cols2 <- rbPal(10)[as.numeric(cut(d$Years.in.US, breaks = 10))]    names(cols2) <- rownames(data)    lookup <- c(19,17) # point type    names(lookup) <- sort(unique(d$Ethnicity)) # let's Hmong to solid filled circle, Karen to filled triangle    pch2 <- lookup[as.character(d$Ethnicity)]     names(pch2) <- rownames(data)    # change color of US-born    cols2[d$Years.in.US==0] <- "DarkGray"
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(100,650),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19), col=c("black","black","DarkGray","white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=510, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3, 505, 3.05, 600, angle=270)
-map$Age <- as.numeric(map$Age)map$Years.in.US <- as.numeric(map$Years.in.US)# originally NAmap$Years.in.US[is.na(map$Years.in.US)] <- 0# refactor BMI.Class to order by BMI instead of alphabeticalmap$BMI.Class <- factor(map$BMI.Class, levels=c("Normal", "Overweight", "Obese")) # let's interpret Karenni as Karen - they are essentially the same (n=2)map$Ethnicity[map$Ethnicity=="Karenni"] <- "Karen"# only work with samples that are in both the mapping AND the dm/alpha filesvalid_samples <- intersect(rownames(dm), rownames(map))map <- map[valid_samples,]dm <- dm[valid_samples, valid_samples]alphadiv <- alphadiv0[valid_samples,"PD_whole_tree"] #observed_otus also consider: PD_whole_tree
-asian_born <- rownames(map)[map$Ethnicity %in% c("Hmong", "Karen") & map$Years.in.US != 0]asian_born_20 <- rownames(map)[map$Ethnicity %in% c("Hmong", "Karen") & map$Years.in.US != 0 & map$Years.in.US < 20] US_born <- rownames(map)[map$Ethnicity %in% c("Hmong") & map$Years.in.US == 0]
-d <- cbind(map[valid_samples, c("Years.in.US", "Ethnicity", "BMI.Class")], alphadiv)
-normality.pval <- shapiro.test(d$alphadiv)$p.value    if(normality.pval <= 0.05) {        m <- kruskal.test(d$alphadiv ~ d$BMI.Class)    } else {        m <- pairwise.t.test(d$alphadiv, d$BMI.Class, p.adjust.method="bonf")    }    print(m)    rbPal <- colorRampPalette(c('wheat', "red"))    cols2 <- rbPal(10)[as.numeric(cut(d$Years.in.US, breaks = 10))]    names(cols2) <- rownames(data)    lookup <- c(19,17) # point type    names(lookup) <- sort(unique(d$Ethnicity)) # let's Hmong to solid filled circle, Karen to filled triangle    pch2 <- lookup[as.character(d$Ethnicity)]     names(pch2) <- rownames(data)    # change color of US-born    cols2[d$Years.in.US==0] <- "DarkGray"
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(100,650),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19), col=c("black","black","DarkGray","white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=510, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3, 505, 3.05, 600, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(100,800),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19), col=c("black","black","DarkGray","white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=510, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3, 505, 3.05, 600, angle=270)
-d
-d$alphadiv
-lookup <- c(19,17) # point type    names(lookup) <- sort(unique(d$Ethnicity)) # let's Hmong to solid filled circle, Karen to filled triangle    pch2 <- lookup[as.character(d$Ethnicity)]     names(pch2) <- rownames(d)    # change color of US-born    cols2[d$Years.in.US==0] <- "DarkGray"
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(100,800),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")
-names(cols2) <- rownames(d)
-# check for normality     normality.pval <- shapiro.test(d$alphadiv)$p.value    if(normality.pval <= 0.05) {        m <- kruskal.test(d$alphadiv ~ d$BMI.Class)    } else {        m <- pairwise.t.test(d$alphadiv, d$BMI.Class, p.adjust.method="bonf")    }    print(m)    rbPal <- colorRampPalette(c('wheat', "red"))    cols2 <- rbPal(10)[as.numeric(cut(d$Years.in.US, breaks = 10))]    names(cols2) <- rownames(d)    lookup <- c(19,17) # point type    names(lookup) <- sort(unique(d$Ethnicity)) # let's Hmong to solid filled circle, Karen to filled triangle    pch2 <- lookup[as.character(d$Ethnicity)]     names(pch2) <- rownames(d)    # change color of US-born    cols2[d$Years.in.US==0] <- "DarkGray"
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(100,800),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")
-d$alphadiv
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2,        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")
-bxplot(d$alphadiv ~ d$BMI.Class,add=T)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,40),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,50),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")
-bxplot(d$alphadiv ~ d$BMI.Class,add=T)
-legend(pch=c(19,17,19,19), col=c("black","black","DarkGray","white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=510, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3, 505, 3.05, 600, angle=270)
-rasterImage(legend_image, 3, 40, 3.05, 45, angle=270)
-text(y=42, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3, 42, 3.05, 48, angle=270)
-rasterImage(legend_image, 3, 41, 3.05, 47, angle=270)
-rasterImage(legend_image, 3, 41.5, 3.05, 47, angle=270)
-rasterImage(legend_image, 3.1, 41.5, 3.15, 47, angle=270)
-rasterImage(legend_image, 3.05, 41.5, 3.1, 47, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19), col=c("black","black","DarkGray","white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=42, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.05, 41.5, 3.1, 47, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=42, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.05, 41.5, 3.1, 47, angle=270)
-rasterImage(legend_image, 3.05, 41, 3.1, 47, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=42, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.05, 40.5, 3.1, 47, angle=270)
-rasterImage(legend_image, 3.0, 40.5, 3.05, 47, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=42, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.0, 40.5, 3.05, 47.5, angle=270)
-text(y=40.5, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))
-text(y=41, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=41, x = c(3.02,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.0, 40.5, 3.05, 47.5, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=41, x = c(3.01,3.3,3.55), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.0, 40.5, 3.05, 47.5, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=41, x = c(3.01,3.3,3.53), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.0, 40.5, 3.05, 47.5, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=41, x = c(3.01,3.28,3.53), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.0, 40.5, 3.05, 47.5, angle=270)
-beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="Number of Observed OTUs", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=41, x = c(3.01,3.265,3.53), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.0, 40.5, 3.05, 47.5, angle=270)
-pdf(file="beeswarm_alphadiv_PD.pdf",useDingbats=F)    beeswarm(d$alphadiv ~ d$BMI.Class, pwcol=cols2, pwpch=pch2, ylim=c(10,45),        main="Biodiversity by BMI Class", ylab="PD Whole Tree", xlab="")    bxplot(d$alphadiv ~ d$BMI.Class,add=T)    legend(pch=c(19,17,19,19,19), col=c("black","black","DarkGray","white", "white"), x="topright", cex=.8, legend=c("Hmong", "Karen", "US-born Hmong", "", ""))    # add gradient image for age colors    legend_image <- as.raster(rbPal(10)[10:1])    text(y=41, x = c(3.01,3.265,3.53), labels = c("0","Yrs in US","40"), cex=c(.6,.7,.6))    rasterImage(legend_image, 3.0, 40.5, 3.05, 47.5, angle=270)    dev.off()
-dev.off()
-fraction <- read.table(paste(datadir,"fraction_hitting_GG99.txt",sep="/"), row=1, head=F, quote="", sep=" ")imp_fraction <- fraction[valid_samples,1] # load in fraction of hits that hit GG 99 that was previously calculatedcols<-rep("blue",nrow(map))cols[map$Years.in.US==0]<-"DarkGray"plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=cols)
-fraction <- read.table(paste(datadir,"fraction_hitting_GG99.txt",sep="/"), row=1, head=F, quote="", sep=" ")imp_fraction <- fraction[valid_samples,1] # load in fraction of hits that hit GG 99 that was previously calculatedcols<-rep("blue",nrow(map))cols[map$Years.in.US==0]<-"DarkGray"plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=cols)
-fraction <- read.table("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/fraction_hitting_GG99.txt"), row=1, head=F, quote="", sep=" ")imp_fraction <- fraction[valid_samples,1] # load in fraction of hits that hit GG 99 that was previously calculatedcols<-rep("blue",nrow(map))cols[map$Years.in.US==0]<-"DarkGray"plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=cols)
-fraction <- read.table("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/fraction_hitting_GG99.txt"), row=1, head=F, quote="", sep=" ")imp_fraction <- fraction[valid_samples,1] # load in fraction of hits that hit GG 99 that was previously calculatedcols<-rep("blue",nrow(map))cols[map$Years.in.US==0]<-"DarkGray"plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=cols)
-fraction <- read.table("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/data/fraction_hitting_GG99.txt", row=1, head=F, quote="", sep=" ")
-imp_fraction <- fraction[valid_samples,1] # load in fraction of hits that hit GG 99 that was previously calculatedcols<-rep("blue",nrow(map))cols[map$Years.in.US==0]<-"DarkGray"plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=cols)
-cols[map$Years.in.US==0]<-"Red"plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=cols)
-plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=cols,pch=19)
-plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=alpha(cols, 0.5),pch=19)
-library(scales)
-plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=alpha(cols, 0.5),pch=19)
-plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=alpha(cols, 0.4),pch=19)
-plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=alpha(cols, 0.3),pch=19)
-pdf(file="beeswarm_alphadiv_PD.pdf",useDingbats=F)plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=alpha(cols, 0.5),pch=19)dev.off()
-pdf(file="fraction_hits.pdf",useDingbats=F)plot(map$Years.in.US, imp_fraction, ylab="Fraction of known sequences", xlab="Years in the US", col=alpha(cols, 0.5),pch=19)dev.off()
-?cbind
-?data.frame
-d
-class(d$Ethnicity)
-class(d$BMI.class)
-class(d$BMI.Class)
-?cbind
-?cbind
-sum(d$Years.in.US < .5)
-d$Years.in.US
-sum(d$Years.in.US < .5 && d$Years.in.US > 0)
-sum(d$Years.in.US ==0 )
-sum(d$Years.in.US < .5 & d$Years.in.US > 0)
-hist(d$Years.in.US)
-hist(d$Years.in.US[d$Years.in.US > 0])
-hist(d$Years.in.US[d$Years.in.US > 0], breaks=50)
-hist(d$Years.in.US[d$Years.in.US > 0], breaks=100)
-length(d)
-nrow(d)
-sum(d[d$Years.in.US > 0 & d$Years.in.US < 5 & d$Ethnicity == "Hmong",])
-d
-d$Years.in.US > 0 & d$Years.in.US < 5 & d$Ethnicity == "Hmong"
-sum(d$Years.in.US > 0 & d$Years.in.US < 5 & d$Ethnicity == "Hmong")
-d[(d$Years.in.US > 0 & d$Years.in.US < 5 & d$Ethnicity == "Hmong"),]
-sum(d$Years.in.US > 0 & d$Years.in.US < 5 & d$Ethnicity == "Karen")
-sum(d$Years.in.US >= 5 & d$Years.in.US < 10 & d$Ethnicity == "Karen")
-sum(d$Years.in.US >= 5 & d$Years.in.US < 10 & d$Ethnicity == "Hmong")
-sum(d$Years.in.US >= 10 & d$Years.in.US < 15 & d$Ethnicity == "Hmong")
-sum(d$Years.in.US >= 10 & d$Years.in.US < 15 & d$Ethnicity == "Karen")
-sum(d$Years.in.US > 0 & d$Years.in.US < 2 & d$Ethnicity == "Karen")
-sum(d$Years.in.US > 0 & d$Years.in.US < 2 & d$Ethnicity == "Hmong")
-sum(d$Years.in.US > 0 & d$Years.in.US < 1 & d$Ethnicity == "Hmong")
-d[(d$Years.in.US > 0 & d$Years.in.US < 5 & d$Ethnicity == "Karen"),]
-d[(d$Years.in.US > 5 & d$Years.in.US < 10 & d$Ethnicity == "Hmong"),]
-d[(d$Years.in.US >= 5 & d$Years.in.US < 10 & d$Ethnicity == "Hmong"),]
-sum(d$Ethnicity=="Hmong")
-sum(d$Ethnicity=="Karne")
-sum(d$Ethnicity=="Karen")
-sum(d$Ethnicity=="Karen" & d$BMI.Class=="Obease")
-sum(d$Ethnicity=="Karen" & d$BMI.Class=="Obese")
-sum(d$Ethnicity=="Karen" & d$BMI.Class=="Normal")
-sum(d$Ethnicity=="Karen" & d$BMI.Class=="Overweight")
-sum(d$Ethnicity=="Hmong" & d$BMI.Class=="Obese")
-sum(d$Ethnicity=="Hmong" & d$BMI.Class=="Normal")
-sum(d$Ethnicity=="Hmong" & d$BMI.Class=="Overweight")
-hist(d[d$Ethnicity=="Hmong","Years.in.US"])
-hist(d[d$Ethnicity=="Hmong" & d$Years.in.US != 0,"Years.in.US"],breaks=100)
-hist(d[d$Ethnicity=="Karen" & d$Years.in.US != 0,"Years.in.US"],breaks=100)
-hist(d[d$Ethnicity=="Hmong" & d$Years.in.US != 0,"Years.in.US"],breaks=100)
-d[(d$Years.in.US > 0 & d$Years.in.US < 2 & d$Ethnicity == "Hmong"),]
-d[(d$Years.in.US > 0 & d$Years.in.US < 2 & d$Ethnicity == "Karen"),]
-d[(d$Years.in.US > 2 & d$Years.in.US < 15 & d$Ethnicity == "Karen"),]
-d[(d$Years.in.US > 2 & d$Years.in.US < 15 & d$Ethnicity == "Hmong"),]
-table(d[,c("BMI.Class", "Ethnicity")])
-temp <- d$Years.in.US
-temp <- character(nrow(d))
-temp[d$Years.in.US != 0 & d$Years.in.US < 5] <- "new"
-temp[d$Years.in.US >=5 & d$Years.in.US < 10] <- "moderate"
-temp[d$Years.in.US >=10 & d$Years.in.US < 15] <- "old"
-temp
-temp[d$Years.in.US >=15 ] <- "veryold"
-temp
-d[37,]
-temp[d$Years.in.US == 0 ] <- "USborn"
-d2 <- cbind(d, temp)
-table(d2[,c("Ethnicity","BMI.Class","temp")])
